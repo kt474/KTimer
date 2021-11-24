@@ -1,4 +1,4 @@
-# rubiks cube timer
+# Rubik's cube timer
 
 ## Project setup
 

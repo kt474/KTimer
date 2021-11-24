@@ -1,5 +1,5 @@
 <template>
-  <v-card height="400" width="256" class="mx-auto card">
+  <v-card height="400" width="300" class="mx-auto card">
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="text-h6">
@@ -13,16 +13,15 @@
 
     <v-divider></v-divider>
     <v-list dense nav>
-      <v-btn
-        depressed
-        small
-        color="error"
-        @click="clearTimes()"
-        class="my-2 ml-2"
-      >
-        Reset
-      </v-btn>
+      <div class="stats-heading">
+        <v-btn depressed small color="error" @click="clearTimes()" class="my-2">
+          Reset
+        </v-btn>
+        <h4 class="font-weight-medium">ao5: {{ averageFive }}</h4>
+        <h4 class="font-weight-medium">ao12: {{ averageTwelve }}</h4>
+      </div>
     </v-list>
+    <v-divider></v-divider>
     <v-data-table
       :headers="headers"
       :items="currentTimes"
@@ -41,9 +40,12 @@
         {{ item.remove }}
       </template>
     </v-data-table>
+    <v-divider></v-divider>
   </v-card>
 </template>
 <script>
+import dateFormat from "dateformat";
+import { mean } from "lodash";
 export default {
   data() {
     return {
@@ -67,6 +69,30 @@ export default {
       });
       return temp;
     },
+    averageFive() {
+      let currentLength = this.$store.getters.length;
+      if (currentLength >= 5) {
+        let temp = this.$store.state.times.map((time) => time.baseTime);
+        temp = temp.slice(currentLength - 5, currentLength + 1);
+        temp.sort((a, b) => a - b);
+        temp.shift();
+        temp.pop();
+        return this.convertTime(mean(temp));
+      }
+      return "0:00";
+    },
+    averageTwelve() {
+      let currentLength = this.$store.getters.length;
+      if (currentLength >= 12) {
+        let temp = this.$store.state.times.map((time) => time.baseTime);
+        temp = temp.slice(currentLength - 12, currentLength + 1);
+        temp.sort((a, b) => a - b);
+        temp.shift();
+        temp.pop();
+        return this.convertTime(mean(temp));
+      }
+      return "0:00";
+    },
   },
   methods: {
     removeTime(index) {
@@ -75,11 +101,20 @@ export default {
     clearTimes() {
       this.$store.commit("clearTimes");
     },
+    convertTime(time) {
+      let date = new Date(time);
+      return dateFormat(date, "ss:L");
+    },
   },
 };
 </script>
 <style scoped>
 .card {
   box-shadow: none !important;
+}
+.stats-heading {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 </style>

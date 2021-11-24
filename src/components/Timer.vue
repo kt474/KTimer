@@ -41,6 +41,7 @@ export default {
       } else if (this.currentTime !== 0) {
         this.stop();
         this.$store.commit("addTime", {
+          baseTime: this.currentTime,
           time: this.time,
           remove: null,
         });

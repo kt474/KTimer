@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-if="drawer" v-model="drawer" app>
+    <v-navigation-drawer v-if="drawer" v-model="drawer" width="300" app>
       <side-nav />
     </v-navigation-drawer>
 
@@ -31,3 +31,4 @@ export default {
   }),
 };
 </script>
+<style scoped></style>
