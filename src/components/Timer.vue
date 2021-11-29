@@ -73,6 +73,6 @@ export default {
   align-items: center;
 }
 .timer {
-  font-size: 11rem;
+  font-size: 12rem;
 }
 </style>

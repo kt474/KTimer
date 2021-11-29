@@ -47,7 +47,7 @@
           :class="{
             'disable-cursor': $store.state.times[item.name - 1].plusTwo,
           }"
-          class="plus-two"
+          class="danger-text"
         >
           +2
         </h4>
@@ -64,6 +64,16 @@
       </template>
       <template v-slot:[`item.dnf`]="{ item }">
         <h4
+          v-if="$store.state.times[item.name - 1].dnf"
+          :class="{
+            'disable-cursor': $store.state.times[item.name - 1].dnf,
+          }"
+          class="danger-text"
+        >
+          DNF
+        </h4>
+        <h4
+          v-else
           class="font-weight-regular pointer"
           :class="{
             'disable-cursor': $store.state.times[item.name - 1].dnf,
@@ -176,7 +186,7 @@ export default {
 .disable-cursor {
   cursor: not-allowed !important;
 }
-.plus-two {
+.danger-text {
   color: #d32f2f;
 }
 .text-start span {
