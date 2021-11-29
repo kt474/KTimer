@@ -44,6 +44,8 @@ export default {
           baseTime: this.currentTime,
           time: this.time,
           remove: null,
+          plusTwo: false,
+          dnf: false,
         });
         this.resetTime = true;
       }
