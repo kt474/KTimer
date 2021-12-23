@@ -12,7 +12,6 @@ export default {
   data: () => ({
     currentTime: 0,
     resetTime: false,
-    timer: null,
   }),
 
   mounted() {

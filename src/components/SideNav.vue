@@ -13,12 +13,21 @@
 
     <v-divider></v-divider>
     <v-list dense nav>
-      <div class="stats-heading">
-        <v-btn depressed small color="error" @click="clearTimes()" class="my-2">
-          Reset
-        </v-btn>
-        <h4 class="font-weight-regular">ao5: {{ averageFive }}</h4>
-        <h4 class="font-weight-regular">ao12: {{ averageTwelve }}</h4>
+      <div>
+        <div class="stats-heading">
+          <v-btn depressed small color="error" @click="clearTimes()" class="my-2">
+            Reset
+          </v-btn>
+          <h4 class="font-weight-regular">ao5: {{ averageFive }}</h4>
+          <h4 class="font-weight-regular">ao12: {{ averageTwelve }}</h4>
+        </div>
+        <div class="stats-heading">
+          <v-btn depressed small color="primary" @click="clearTimes()" class="my-2">
+            Add Time
+          </v-btn>
+          <h4 class="font-weight-regular">Mean: {{ currentMean }}</h4>
+          <h4 class="font-weight-regular">Best: {{ currentBest }}</h4>
+        </div>
       </div>
     </v-list>
     <v-divider></v-divider>
@@ -108,6 +117,20 @@ export default {
     };
   },
   computed: {
+    currentBest() {
+      if (this.$store.state.times.length) {
+        let temp = this.$store.state.times.map((time) => time.baseTime);
+        return this.convertTime(Math.min(...temp));
+      }
+      return "0:00";
+    },
+    currentMean() {
+      if (this.$store.state.times.length) {
+        let temp = this.$store.state.times.map((time) => time.baseTime);
+        return this.convertTime(mean(temp));
+      }
+      return "0:00";
+    },
     currentTimes() {
       let temp = this.$store.state.times;
       temp.forEach((item, index) => {
@@ -205,7 +228,7 @@ export default {
 }
 .stats-heading {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 .flex {
