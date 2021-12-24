@@ -1,5 +1,5 @@
 <template>
-  <v-card height="400" width="300" class="mx-auto card">
+  <v-card height="400" width="350" class="mx-auto card">
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="text-h6">
@@ -22,9 +22,41 @@
           <h4 class="font-weight-regular">ao12: {{ averageTwelve }}</h4>
         </div>
         <div class="stats-heading">
-          <v-btn depressed small color="primary" @click="clearTimes()" class="my-2">
-            Add Time
-          </v-btn>
+          <v-dialog v-model="dialog" max-width="400px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn small depressed class="my-2" color="primary" dark v-bind="attrs" v-on="on">
+                Add Time
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Add Time</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Time"
+                        v-model="addedTime"
+                        :rules="rules"
+                        hide-details="auto"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog = false">
+                  Close
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="addTime()">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
           <h4 class="font-weight-regular">Mean: {{ currentMean }}</h4>
           <h4 class="font-weight-regular">Best: {{ currentBest }}</h4>
         </div>
@@ -102,6 +134,13 @@ import { mean } from "lodash";
 export default {
   data() {
     return {
+      rules: [
+        (value) => !!value || "Input required",
+        (value) => (value && value.length >= 3) || "Min 3 characters",
+        (value) => value.includes(":") || "':' required",
+      ],
+      addedTime: null,
+      dialog: false,
       headers: [
         {
           text: "Times",
@@ -197,6 +236,22 @@ export default {
     },
     clearTimes() {
       this.$store.commit("clearTimes");
+    },
+    addTime() {
+      this.$store.commit("addTime", {
+        baseTime: this.convertDatetoTime(this.addedTime),
+        time: this.addedTime,
+        remove: null,
+        plusTwo: false,
+        dnf: false,
+      });
+      this.dialog = false;
+    },
+    convertDatetoTime(date) {
+      console.log(date);
+      if (date) {
+        return Number(date.split(":")[0]) * 1000 + Number(date.split(":")[1]) * 10;
+      }
     },
     convertTime(time) {
       let date = new Date(time);

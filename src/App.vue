@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-if="drawer" v-model="drawer" width="300" app>
+    <v-navigation-drawer permanent v-if="drawer" v-model="drawer" width="350" app>
       <side-nav />
     </v-navigation-drawer>
 
