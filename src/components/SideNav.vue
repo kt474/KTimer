@@ -57,8 +57,12 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <h4 class="font-weight-regular">Mean: {{ currentMean }}</h4>
-          <h4 class="font-weight-regular">Best: {{ currentBest }}</h4>
+          <h4 class="font-weight-regular pr-2">Mean: {{ currentMean }}</h4>
+          <h4 class="font-weight-regular pr-1">Best: {{ currentBest }}</h4>
+        </div>
+        <v-divider></v-divider>
+        <div class="flex">
+          <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
         </div>
       </div>
     </v-list>
@@ -156,19 +160,22 @@ export default {
     };
   },
   computed: {
+    solves() {
+      return this.$store.state.times.length;
+    },
     currentBest() {
       if (this.$store.state.times.length) {
         let temp = this.$store.state.times.map((time) => time.baseTime);
         return this.convertTime(Math.min(...temp));
       }
-      return "0:00";
+      return "00:00";
     },
     currentMean() {
       if (this.$store.state.times.length) {
         let temp = this.$store.state.times.map((time) => time.baseTime);
         return this.convertTime(mean(temp));
       }
-      return "0:00";
+      return "00:00";
     },
     currentTimes() {
       let temp = this.$store.state.times;
@@ -195,7 +202,7 @@ export default {
         temp.pop();
         return this.convertTime(mean(temp));
       }
-      return "0:00";
+      return "00:00";
     },
     averageTwelve() {
       let currentLength = this.$store.getters.length;
@@ -215,7 +222,7 @@ export default {
         temp.pop();
         return this.convertTime(mean(temp));
       }
-      return "0:00";
+      return "00:00";
     },
   },
   methods: {
