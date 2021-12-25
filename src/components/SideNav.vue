@@ -1,27 +1,36 @@
 <template>
   <v-card height="400" width="350" class="mx-auto card">
     <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="text-h6">
+      <div>
+        <v-list-item-title class="text-h6 pt-4">
           Timer
         </v-list-item-title>
-        <v-list-item-subtitle>
-          Session 1
-        </v-list-item-subtitle>
-      </v-list-item-content>
+        <div class="d-flex mt-1">
+          <p class="text--secondary pr-3">
+            Session
+          </p>
+          <v-select
+            dense
+            height="20"
+            v-model="session"
+            :items="items"
+            class="mt-0 session-select"
+          ></v-select>
+        </div>
+      </div>
     </v-list-item>
 
     <v-divider></v-divider>
     <v-list dense nav>
       <div>
-        <div class="stats-heading">
+        <div class="d-flex justify-space-between align-center">
           <v-btn depressed small color="error" @click="clearTimes()" class="my-2">
             Reset
           </v-btn>
           <h4 class="font-weight-regular">ao5: {{ averageFive }}</h4>
           <h4 class="font-weight-regular">ao12: {{ averageTwelve }}</h4>
         </div>
-        <div class="stats-heading">
+        <div class="d-flex justify-space-between align-center">
           <v-dialog v-model="dialog" max-width="400px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn small depressed class="my-2" color="primary" dark v-bind="attrs" v-on="on">
@@ -61,7 +70,7 @@
           <h4 class="font-weight-regular pr-1">Best: {{ currentBest }}</h4>
         </div>
         <v-divider></v-divider>
-        <div class="flex">
+        <div class="d-flex">
           <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
         </div>
       </div>
@@ -138,6 +147,8 @@ import { mean } from "lodash";
 export default {
   data() {
     return {
+      session: 1,
+      items: [1, 2, 3],
       rules: [
         (value) => !!value || "Input required",
         (value) => (value && value.length >= 3) || "Min 3 characters",
@@ -287,12 +298,7 @@ export default {
 .card {
   box-shadow: none !important;
 }
-.stats-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.flex {
-  display: flex;
+.session-select {
+  width: 4rem;
 }
 </style>

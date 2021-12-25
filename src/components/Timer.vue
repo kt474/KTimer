@@ -1,5 +1,5 @@
 <template>
-  <v-container class="main">
+  <v-container class="d-flex justify-center align-center main">
     <p class="timer">{{ time }}</p>
   </v-container>
 </template>
@@ -68,9 +68,6 @@ export default {
 <style scoped>
 .main {
   height: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .timer {
   font-size: 14rem;
