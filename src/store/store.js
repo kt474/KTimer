@@ -24,8 +24,9 @@ export const store = new Vuex.Store({
     },
     plusTwo(state, index) {
       let newBaseTime = state.times[index - 1].baseTime + 2000;
+      let format = newBaseTime > 60000 ? "M:ss:L" : "ss:L";
       let time = new Date(newBaseTime);
-      let newTime = dateFormat(time, "ss:L");
+      let newTime = dateFormat(time, format);
       state.times[index - 1].baseTime = newBaseTime;
       state.times[index - 1].time = newTime;
     },

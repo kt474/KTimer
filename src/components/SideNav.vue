@@ -137,7 +137,7 @@ export default {
       rules: [
         (value) => !!value || "Input required",
         (value) => (value && value.length >= 3) || "Min 3 characters",
-        (value) => value.includes(":") || "':' required",
+        (value) => (value && value.includes(":")) || "':' required",
       ],
       addedTime: null,
       dialog: false,
@@ -248,14 +248,13 @@ export default {
       this.dialog = false;
     },
     convertDatetoTime(date) {
-      console.log(date);
-      if (date) {
-        return Number(date.split(":")[0]) * 1000 + Number(date.split(":")[1]) * 10;
-      }
+      let t = date.split(":");
+      return t.length >= 3 ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10 : +t[0] * 1000 + +t[1] * 10;
     },
     convertTime(time) {
+      let format = time > 60000 ? "M:ss:L" : "ss:L";
       let date = new Date(time);
-      return dateFormat(date, "ss:L");
+      return dateFormat(date, format);
     },
   },
 };

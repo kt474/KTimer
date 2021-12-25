@@ -23,8 +23,9 @@ export default {
   },
   computed: {
     time() {
+      let format = this.currentTime > 60000 ? "M:ss:L" : "ss:L";
       let date = new Date(this.currentTime);
-      return dateFormat(date, "ss:L");
+      return dateFormat(date, format);
     },
   },
 
