@@ -91,15 +91,15 @@
         <p class="font-weight-bold mb-0">{{ item.time }}</p>
       </template>
       <template v-slot:[`item.remove`]="{ item }">
-        <v-icon @click="removeTime(item.name)" medium color="red darken-2">
+        <v-icon @click="removeTime(item.session, item.name)" medium color="red darken-2">
           mdi-close
         </v-icon>
       </template>
       <template v-slot:[`item.plusTwo`]="{ item }">
         <h4
-          v-if="$store.state.times[item.name - 1].plusTwo"
+          v-if="currentSessionTimes[item.name - 1].plusTwo"
           :class="{
-            'disable-cursor': $store.state.times[item.name - 1].plusTwo,
+            'disable-cursor': currentSessionTimes[item.name - 1].plusTwo,
           }"
           class="danger-text"
         >
@@ -109,18 +109,18 @@
           v-else
           class="font-weight-regular pointer"
           :class="{
-            'disable-cursor': $store.state.times[item.name - 1].dnf,
+            'disable-cursor': currentSessionTimes[item.name - 1].dnf,
           }"
-          @click="plusTwo(item.name)"
+          @click="plusTwo(item.session, item.name)"
         >
           +2
         </h4>
       </template>
       <template v-slot:[`item.dnf`]="{ item }">
         <h4
-          v-if="$store.state.times[item.name - 1].dnf"
+          v-if="currentSessionTimes[item.name - 1].dnf"
           :class="{
-            'disable-cursor': $store.state.times[item.name - 1].dnf,
+            'disable-cursor': currentSessionTimes[item.name - 1].dnf,
           }"
           class="danger-text"
         >
@@ -130,9 +130,9 @@
           v-else
           class="font-weight-regular pointer"
           :class="{
-            'disable-cursor': $store.state.times[item.name - 1].dnf,
+            'disable-cursor': currentSessionTimes[item.name - 1].dnf,
           }"
-          @click="dnf(item.name)"
+          @click="dnf(item.session, item.name)"
         >
           DNF
         </h4>
@@ -147,8 +147,7 @@ import { mean } from "lodash";
 export default {
   data() {
     return {
-      session: 1,
-      items: [1, 2, 3],
+      items: [1, 2],
       rules: [
         (value) => !!value || "Input required",
         (value) => (value && value.length >= 3) || "Min 3 characters",
@@ -171,36 +170,54 @@ export default {
     };
   },
   computed: {
+    session: {
+      get() {
+        return this.$store.state.session;
+      },
+      set(value) {
+        this.$store.commit("updateSession", value);
+      },
+    },
     solves() {
-      return this.$store.state.times.length;
+      return this.currentSessionTimes.length;
+    },
+    currentSessionTimes() {
+      if (this.$store.state.session === 1) {
+        return this.$store.state.times;
+      } else if (this.$store.state.session === 2) {
+        return this.$store.state.timesS2;
+      }
+      return [];
     },
     currentBest() {
-      if (this.$store.state.times.length) {
-        let temp = this.$store.state.times.map((time) => time.baseTime);
-        return this.convertTime(Math.min(...temp));
+      const validTimes = this.currentSessionTimes.filter((time) => !time.dnf);
+      if (validTimes.length) {
+        const times = validTimes.map((time) => time.baseTime);
+        return this.convertTime(Math.min(...times));
       }
       return "00:00";
     },
     currentMean() {
-      if (this.$store.state.times.length) {
-        let temp = this.$store.state.times.map((time) => time.baseTime);
-        return this.convertTime(mean(temp));
+      const validTimes = this.currentSessionTimes.filter((time) => !time.dnf);
+      if (validTimes.length) {
+        const times = validTimes.map((time) => time.baseTime);
+        return this.convertTime(mean(times));
       }
       return "00:00";
     },
     currentTimes() {
-      let temp = this.$store.state.times;
-      temp.forEach((item, index) => {
+      const times = this.currentSessionTimes;
+      times.forEach((item, index) => {
         item["name"] = index + 1;
       });
-      return temp;
+      return times;
     },
     averageFive() {
-      let currentLength = this.$store.getters.length;
+      const currentLength = this.currentSessionTimes.length;
       if (currentLength >= 5) {
-        let temp = this.$store.state.times.map((time) => time.baseTime);
+        let temp = this.currentSessionTimes.map((time) => time.baseTime);
         temp = temp.slice(currentLength - 5, currentLength + 1);
-        let dnfCount = temp.filter((time) => time == "DNF").length;
+        const dnfCount = temp.filter((time) => time == "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
@@ -216,11 +233,11 @@ export default {
       return "00:00";
     },
     averageTwelve() {
-      let currentLength = this.$store.getters.length;
+      const currentLength = this.currentSessionTimes.length;
       if (currentLength >= 12) {
-        let temp = this.$store.state.times.map((time) => time.baseTime);
+        let temp = this.currentSessionTimes.map((time) => time.baseTime);
         temp = temp.slice(currentLength - 12, currentLength + 1);
-        let dnfCount = temp.filter((time) => time == "DNF").length;
+        const dnfCount = temp.filter((time) => time == "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
@@ -237,23 +254,23 @@ export default {
     },
   },
   methods: {
-    dnf(index) {
-      this.$store.commit("dnf", index);
+    dnf(session, index) {
+      this.$store.commit("dnf", { session: session, index: index });
     },
-    plusTwo(index) {
+    plusTwo(session, index) {
       if (
-        !this.$store.state.times[index - 1].plusTwo &&
-        this.$store.state.times[index - 1].baseTime !== "DNF"
+        !this.currentSessionTimes[index - 1].plusTwo &&
+        this.currentSessionTimes[index - 1].baseTime !== "DNF"
       ) {
-        this.$store.commit("plusTwo", index);
-        this.$store.commit("buttonPressed", { index: index, prop: "plusTwo" });
+        this.$store.commit("plusTwo", { session: session, index: index });
+        this.$store.commit("buttonPressed", { session: session, index: index, prop: "plusTwo" });
       }
     },
-    removeTime(index) {
-      this.$store.commit("removeTime", index);
+    removeTime(session, index) {
+      this.$store.commit("removeTime", { session: session, index: index });
     },
     clearTimes() {
-      this.$store.commit("clearTimes");
+      this.$store.commit("clearTimes", this.$store.state.session);
     },
     addTime() {
       this.$store.commit("addTime", {
@@ -262,16 +279,17 @@ export default {
         remove: null,
         plusTwo: false,
         dnf: false,
+        session: this.$store.state.session,
       });
       this.dialog = false;
     },
     convertDatetoTime(date) {
-      let t = date.split(":");
+      const t = date.split(":");
       return t.length >= 3 ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10 : +t[0] * 1000 + +t[1] * 10;
     },
     convertTime(time) {
-      let format = time > 60000 ? "M:ss:L" : "ss:L";
-      let date = new Date(time);
+      const format = time > 60000 ? "M:ss:L" : "ss:L";
+      const date = new Date(time);
       return dateFormat(date, format);
     },
   },

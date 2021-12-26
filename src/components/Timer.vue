@@ -46,6 +46,7 @@ export default {
           remove: null,
           plusTwo: false,
           dnf: false,
+          session: this.$store.state.session,
         });
         this.resetTime = true;
       }
