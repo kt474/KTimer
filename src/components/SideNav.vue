@@ -24,7 +24,13 @@
     <v-list dense nav>
       <div>
         <div class="d-flex justify-space-between align-center">
-          <v-btn depressed small color="error" @click="clearTimes()" class="my-2">
+          <v-btn
+            depressed
+            small
+            color="error"
+            @click="clearTimes()"
+            class="my-2"
+          >
             Reset
           </v-btn>
           <h4 class="font-weight-regular">ao5: {{ averageFive }}</h4>
@@ -33,7 +39,15 @@
         <div class="d-flex justify-space-between align-center">
           <v-dialog v-model="dialog" max-width="400px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn small depressed class="my-2" color="primary" dark v-bind="attrs" v-on="on">
+              <v-btn
+                small
+                depressed
+                class="my-2"
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
                 Add Time
               </v-btn>
             </template>
@@ -91,7 +105,11 @@
         <p class="font-weight-bold mb-0">{{ item.time }}</p>
       </template>
       <template v-slot:[`item.remove`]="{ item }">
-        <v-icon @click="removeTime(item.session, item.name)" medium color="red darken-2">
+        <v-icon
+          @click="removeTime(item.session, item.name)"
+          medium
+          color="red darken-2"
+        >
           mdi-close
         </v-icon>
       </template>
@@ -145,6 +163,7 @@
 import dateFormat from "dateformat";
 import { mean } from "lodash";
 export default {
+  name: "SideNav",
   data() {
     return {
       items: [1, 2],
@@ -263,7 +282,11 @@ export default {
         this.currentSessionTimes[index - 1].baseTime !== "DNF"
       ) {
         this.$store.commit("plusTwo", { session: session, index: index });
-        this.$store.commit("buttonPressed", { session: session, index: index, prop: "plusTwo" });
+        this.$store.commit("buttonPressed", {
+          session: session,
+          index: index,
+          prop: "plusTwo",
+        });
       }
     },
     removeTime(session, index) {
@@ -285,7 +308,9 @@ export default {
     },
     convertDatetoTime(date) {
       const t = date.split(":");
-      return t.length >= 3 ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10 : +t[0] * 1000 + +t[1] * 10;
+      return t.length >= 3
+        ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10
+        : +t[0] * 1000 + +t[1] * 10;
     },
     convertTime(time) {
       const format = time > 60000 ? "M:ss:L" : "ss:L";

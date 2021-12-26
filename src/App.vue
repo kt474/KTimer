@@ -1,16 +1,17 @@
 <template>
   <v-app>
-    <v-navigation-drawer permanent v-if="drawer" v-model="drawer" width="350" app>
+    <v-navigation-drawer
+      permanent
+      v-if="drawer"
+      v-model="drawer"
+      width="350"
+      app
+    >
       <side-nav />
     </v-navigation-drawer>
-
-    <v-app-bar app color="primary" dark>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Scramble</v-toolbar-title>
-    </v-app-bar>
-
+    <nav-bar @openDrawer="onClickChild" />
     <v-main>
-      <Timer />
+      <timer />
     </v-main>
   </v-app>
 </template>
@@ -18,17 +19,24 @@
 <script>
 import Timer from "./components/Timer.vue";
 import SideNav from "./components/SideNav.vue";
+import NavBar from "./components/NavBar.vue";
 export default {
   name: "App",
-
+  data() {
+    return {
+      drawer: true,
+    };
+  },
   components: {
     Timer,
     SideNav,
+    NavBar,
   },
-
-  data: () => ({
-    drawer: true,
-  }),
+  methods: {
+    onClickChild(value) {
+      this.drawer = value;
+    },
+  },
 };
 </script>
 <style scoped></style>

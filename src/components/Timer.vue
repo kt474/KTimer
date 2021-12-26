@@ -8,7 +8,6 @@
 import dateFormat from "dateformat";
 export default {
   name: "Timer",
-
   data: () => ({
     currentTime: 0,
     resetTime: false,
