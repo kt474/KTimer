@@ -34,7 +34,7 @@
             Reset
           </v-btn>
           <h4 class="font-weight-regular">ao5: {{ averageFive }}</h4>
-          <h4 class="font-weight-regular">ao12: {{ averageTwelve }}</h4>
+          <h4 class="font-weight-regular pr-3">ao12: {{ averageTwelve }}</h4>
         </div>
         <div class="d-flex justify-space-between align-center">
           <v-dialog v-model="dialog" max-width="400px">
@@ -81,7 +81,7 @@
             </v-card>
           </v-dialog>
           <h4 class="font-weight-regular pr-2">Mean: {{ currentMean }}</h4>
-          <h4 class="font-weight-regular pr-1">Best: {{ currentBest }}</h4>
+          <h4 class="font-weight-regular pr-4">Best: {{ currentBest }}</h4>
         </div>
         <v-divider></v-divider>
         <div class="d-flex">

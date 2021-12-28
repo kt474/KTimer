@@ -11,6 +11,7 @@ export default {
   data: () => ({
     currentTime: 0,
     resetTime: false,
+    scramble: [],
   }),
 
   mounted() {
@@ -19,6 +20,8 @@ export default {
         this.onSpacebar();
       }
     });
+    this.generateSramble();
+    this.$store.commit("newScramble", this.scramble);
   },
   computed: {
     time() {
@@ -27,7 +30,6 @@ export default {
       return dateFormat(date, format);
     },
   },
-
   methods: {
     onSpacebar() {
       if (this.resetTime) {
@@ -46,7 +48,10 @@ export default {
           plusTwo: false,
           dnf: false,
           session: this.$store.state.session,
+          scramble: this.scramble,
         });
+        this.generateSramble();
+        this.$store.commit("newScramble", this.scramble);
         this.resetTime = true;
       }
     },
@@ -61,6 +66,25 @@ export default {
     reset() {
       this.currentTime = 0;
       this.savedTime = 0;
+    },
+    generateSramble() {
+      const pool = ["R", "U", "L", "D", "B", "F"];
+      const append = ["2", "'", ""];
+      const baseMoves = [pool[Math.floor(Math.random() * 6)]];
+      for (let i = 1; i < 20; i++) {
+        const newMove = pool[Math.floor(Math.random() * 6)];
+        if (baseMoves[i - 1] === newMove) {
+          const newPool = pool.filter((move) => move !== newMove);
+          baseMoves.push(newPool[Math.floor(Math.random() * 5)]);
+        } else {
+          baseMoves.push(newMove);
+        }
+      }
+      const result = [];
+      baseMoves.forEach((move) => {
+        result.push(move + append[Math.floor(Math.random() * 3)]);
+      });
+      this.scramble = result;
     },
   },
 };
