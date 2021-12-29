@@ -4,7 +4,7 @@
     <v-toolbar-title class="text-h5 mr-3">Scramble: </v-toolbar-title>
     <div class="d-flex justify-center align-center">
       <h5
-        class="mr-6 text-h5"
+        class="mr-5 text-h5"
         v-for="(i, index) in currentScramble"
         :key="index"
       >

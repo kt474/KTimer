@@ -52,9 +52,9 @@
               </v-btn>
             </template>
             <v-card>
-              <v-card-title>
-                <span class="text-h5">Add Time</span>
-              </v-card-title>
+              <v-toolbar color="primary" class="text-h5" dark
+                >Add Time</v-toolbar
+              >
               <v-card-text>
                 <v-container>
                   <v-row>
@@ -85,9 +85,39 @@
         </div>
         <v-divider></v-divider>
         <div class="d-flex align-center">
-          <v-btn class="mt-2" text icon color="black" @click="toggleOrder()">
-            <v-icon>mdi-cog</v-icon>
-          </v-btn>
+          <v-dialog v-model="settings" max-width="400px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                text
+                icon
+                class="mt-2"
+                color="black"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-cog</v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-toolbar color="primary" class="text-h5" dark
+                >Settings</v-toolbar
+              >
+              <v-card-text>
+                <v-checkbox
+                  class="mt-4"
+                  v-model="sortDesc"
+                  label="Sort Descending"
+                ></v-checkbox>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="settings = false">
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
           <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
         </div>
       </div>
@@ -181,6 +211,7 @@ export default {
       ],
       addedTime: null,
       dialog: false,
+      settings: false,
       headers: [
         {
           text: "Times",
