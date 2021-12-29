@@ -84,7 +84,10 @@
           <h4 class="font-weight-regular pr-4">Best: {{ currentBest }}</h4>
         </div>
         <v-divider></v-divider>
-        <div class="d-flex">
+        <div class="d-flex align-center">
+          <v-btn class="mt-2" text icon color="black" @click="toggleOrder()">
+            <v-icon>mdi-cog</v-icon>
+          </v-btn>
           <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
         </div>
       </div>
@@ -94,6 +97,8 @@
       :headers="headers"
       :items="currentTimes"
       :items-per-page="50"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
       hide-default-header
       hide-default-footer
       class="elevation-0"
@@ -166,6 +171,8 @@ export default {
   name: "SideNav",
   data() {
     return {
+      sortBy: "name",
+      sortDesc: false,
       items: [1, 2],
       rules: [
         (value) => !!value || "Input required",
@@ -273,6 +280,9 @@ export default {
     },
   },
   methods: {
+    toggleOrder() {
+      this.sortDesc = !this.sortDesc;
+    },
     dnf(session, index) {
       this.$store.commit("dnf", { session: session, index: index });
     },
