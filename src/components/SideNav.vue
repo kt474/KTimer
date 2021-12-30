@@ -202,7 +202,7 @@ export default {
   data() {
     return {
       sortBy: "name",
-      sortDesc: false,
+      sortDesc: true,
       items: [1, 2],
       rules: [
         (value) => !!value || "Input required",

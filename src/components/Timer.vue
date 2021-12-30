@@ -1,6 +1,8 @@
 <template>
   <v-container class="d-flex justify-center align-center main">
-    <p class="timer">{{ time }}</p>
+    <p class="timer" :class="{ 'timer-color': greenTimer }">
+      {{ time }}
+    </p>
   </v-container>
 </template>
 
@@ -10,18 +12,25 @@ export default {
   name: "Timer",
   data: () => ({
     currentTime: 0,
-    resetTime: false,
+    greenTimer: false,
+    resetTime: true,
+    timeStep: 400,
+    pressedAt: 0,
+    startEnable: false,
     scramble: [],
   }),
 
   mounted() {
-    window.addEventListener("keyup", (e) => {
-      if (e.code == "Space") {
-        this.onSpacebar();
-      }
-    });
+    window.addEventListener("keypress", this.onKeyPress);
+    window.addEventListener("keyup", this.onKeyUp);
+    window.addEventListener("keydown", this.onKeyDown);
     this.generateSramble();
     this.$store.commit("newScramble", this.scramble);
+  },
+  beforeDestroy() {
+    window.removeEventListener("keypress", this.onKeyPress);
+    window.removeEventListener("keyup", this.onKeyUp);
+    window.removeEventListener("keydown", this.onKeyDown);
   },
   computed: {
     time() {
@@ -31,14 +40,40 @@ export default {
     },
   },
   methods: {
+    onKeyDown(event) {
+      if (event.code == "Space") {
+        if (this.pressedAt == 0) {
+          this.pressedAt = Date.now();
+        }
+        if (Date.now() - this.pressedAt >= this.timeStep) {
+          this.startEnable = true;
+          this.pressedAt = 0;
+        }
+      }
+    },
+    onKeyPress(event) {
+      if (event.code == "Space") {
+        if (this.resetTime) {
+          this.greenTimer = true;
+          this.currentTime = 0;
+        }
+      }
+    },
+    onKeyUp(event) {
+      if (event.code == "Space") {
+        this.pressedAt = 0;
+        this.onSpacebar();
+      }
+    },
     onSpacebar() {
       if (this.resetTime) {
         this.reset();
-        this.currentTime = 0;
         this.resetTime = false;
       }
-      if (this.currentTime == 0) {
+      if (this.currentTime == 0 && this.startEnable) {
         this.start();
+        this.startEnable = false;
+        this.greenTimer = false;
       } else if (this.currentTime !== 0) {
         this.stop();
         this.$store.commit("addTime", {
@@ -52,6 +87,9 @@ export default {
         });
         this.generateSramble();
         this.$store.commit("newScramble", this.scramble);
+        this.resetTime = true;
+      } else {
+        this.greenTimer = false;
         this.resetTime = true;
       }
     },
@@ -95,5 +133,20 @@ export default {
 }
 .timer {
   font-size: 14rem;
+}
+.timer-color {
+  animation-name: color-change;
+  animation-fill-mode: forwards;
+  animation-duration: 400ms;
+  animation-timing-function: step-end;
+  color: #000;
+}
+@keyframes color-change {
+  0% {
+    color: #ff1744;
+  }
+  100% {
+    color: #00c853;
+  }
 }
 </style>
