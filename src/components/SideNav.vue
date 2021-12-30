@@ -37,20 +37,17 @@
           <h4 class="font-weight-regular pr-3">ao12: {{ averageTwelve }}</h4>
         </div>
         <div class="d-flex justify-space-between align-center">
+          <v-btn
+            small
+            depressed
+            class="my-2"
+            color="primary"
+            dark
+            @click.stop="dialog = true"
+          >
+            Add Time
+          </v-btn>
           <v-dialog v-model="dialog" max-width="400px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                small
-                depressed
-                class="my-2"
-                color="primary"
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                Add Time
-              </v-btn>
-            </template>
             <v-card>
               <v-toolbar color="primary" class="text-h5" dark
                 >Add Time</v-toolbar
@@ -85,29 +82,29 @@
         </div>
         <v-divider></v-divider>
         <div class="d-flex align-center">
+          <v-btn
+            text
+            icon
+            @click.stop="settings = true"
+            class="mt-2"
+            color="black"
+            dark
+          >
+            <v-icon>mdi-cog</v-icon>
+          </v-btn>
           <v-dialog v-model="settings" max-width="400px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                text
-                icon
-                class="mt-2"
-                color="black"
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>mdi-cog</v-icon>
-              </v-btn>
-            </template>
             <v-card>
               <v-toolbar color="primary" class="text-h5" dark
                 >Settings</v-toolbar
               >
               <v-card-text>
                 <v-checkbox
-                  class="mt-4"
                   v-model="sortDesc"
-                  label="Sort Descending"
+                  label="Sort descending"
+                ></v-checkbox>
+                <v-checkbox
+                  v-model="hideAll"
+                  label="Hide all during solve"
                 ></v-checkbox>
               </v-card-text>
               <v-card-actions>
@@ -140,13 +137,17 @@
         <p class="font-weight-bold mb-0">{{ item.time }}</p>
       </template>
       <template v-slot:[`item.remove`]="{ item }">
-        <v-icon
+        <v-btn
+          text
+          icon
           @click="removeTime(item.session, item.name)"
           medium
           color="red darken-2"
         >
-          mdi-close
-        </v-icon>
+          <v-icon>
+            mdi-close
+          </v-icon>
+        </v-btn>
       </template>
       <template v-slot:[`item.plusTwo`]="{ item }">
         <h4
@@ -203,6 +204,7 @@ export default {
     return {
       sortBy: "name",
       sortDesc: true,
+      hideAll: false,
       items: [1, 2],
       rules: [
         (value) => !!value || "Input required",
