@@ -1,12 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      permanent
-      v-if="drawer"
-      v-model="drawer"
-      width="350"
-      app
-    >
+    <v-navigation-drawer permanent width="340" app>
       <side-nav />
     </v-navigation-drawer>
     <nav-bar @openDrawer="onClickChild" />

@@ -1,6 +1,6 @@
 <template>
-  <v-card height="400" width="350" class="mx-auto card">
-    <v-list-item>
+  <v-card width="340" class="mx-auto card">
+    <v-list-item class="px-3">
       <div>
         <v-list-item-title class="text-h6 pt-4">
           Timer
@@ -19,9 +19,8 @@
         </div>
       </div>
     </v-list-item>
-
     <v-divider></v-divider>
-    <v-list dense nav>
+    <v-list-item class="px-3">
       <div>
         <div class="d-flex justify-space-between align-center">
           <v-btn
@@ -33,8 +32,8 @@
           >
             Reset
           </v-btn>
-          <h4 class="font-weight-regular">ao5: {{ averageFive }}</h4>
-          <h4 class="font-weight-regular pr-3">ao12: {{ averageTwelve }}</h4>
+          <h4 class="font-weight-regular pl-4">ao5: {{ averageFive }}</h4>
+          <h4 class="font-weight-regular pl-1">ao12: {{ averageTwelve }}</h4>
         </div>
         <div class="d-flex justify-space-between align-center">
           <v-btn
@@ -77,48 +76,42 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <h4 class="font-weight-regular pr-2">Mean: {{ currentMean }}</h4>
-          <h4 class="font-weight-regular pr-4">Best: {{ currentBest }}</h4>
-        </div>
-        <v-divider></v-divider>
-        <div class="d-flex align-center">
-          <v-btn
-            text
-            icon
-            @click.stop="settings = true"
-            class="mt-2"
-            color="black"
-            dark
-          >
-            <v-icon>mdi-cog</v-icon>
-          </v-btn>
-          <v-dialog v-model="settings" max-width="400px">
-            <v-card>
-              <v-toolbar color="primary" class="text-h5" dark
-                >Settings</v-toolbar
-              >
-              <v-card-text>
-                <v-checkbox
-                  v-model="sortDesc"
-                  label="Sort descending"
-                ></v-checkbox>
-                <v-checkbox
-                  v-model="hideAll"
-                  label="Hide all during solve"
-                ></v-checkbox>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="settings = false">
-                  Close
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
+          <h4 class="font-weight-regular pl-4">Mean: {{ currentMean }}</h4>
+          <h4 class="font-weight-regular pl-4">Best: {{ currentBest }}</h4>
         </div>
       </div>
-    </v-list>
+    </v-list-item>
+    <v-divider></v-divider>
+    <v-list-item class="d-flex align-center pb-2">
+      <v-btn
+        small
+        @click.stop="settings = true"
+        class="mt-2"
+        color="blue-grey lighten-2"
+        dark
+      >
+        <v-icon small>mdi-cog</v-icon>
+      </v-btn>
+      <v-dialog v-model="settings" max-width="400px">
+        <v-card>
+          <v-toolbar color="primary" class="text-h5" dark>Settings</v-toolbar>
+          <v-card-text>
+            <v-checkbox v-model="sortDesc" label="Sort descending"></v-checkbox>
+            <v-checkbox
+              v-model="hideAll"
+              label="Hide all during solve"
+            ></v-checkbox>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="settings = false">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
+    </v-list-item>
     <v-divider></v-divider>
     <v-data-table
       :headers="headers"
@@ -131,7 +124,7 @@
       class="elevation-0"
     >
       <template v-slot:[`item.name`]="{ item }">
-        <p class="font-weight-bold mb-0">{{ item.name }}</p>
+        <p class="font-weight-bold mb-0 ml-1">{{ item.name }}</p>
       </template>
       <template v-slot:[`item.time`]="{ item }">
         <p class="font-weight-bold mb-0">{{ item.time }}</p>
