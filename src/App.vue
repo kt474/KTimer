@@ -12,6 +12,7 @@
     <nav-bar @openDrawer="onClickChild" />
     <v-main>
       <timer />
+      <chart />
     </v-main>
   </v-app>
 </template>
@@ -20,6 +21,7 @@
 import Timer from "./components/Timer.vue";
 import SideNav from "./components/SideNav.vue";
 import NavBar from "./components/NavBar.vue";
+import Chart from "./components/Chart.vue";
 export default {
   name: "App",
   data() {
@@ -31,6 +33,7 @@ export default {
     Timer,
     SideNav,
     NavBar,
+    Chart,
   },
   methods: {
     onClickChild(value) {

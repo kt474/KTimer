@@ -82,7 +82,7 @@
       </div>
     </v-list-item>
     <v-divider></v-divider>
-    <v-list-item class="d-flex align-center pb-2">
+    <v-list-item class="d-flex align-center px-3 pb-2">
       <v-btn
         small
         @click.stop="settings = true"

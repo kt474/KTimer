@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex justify-center align-center main">
+  <v-container class="d-flex justify-center align-center">
     <p class="timer" :class="{ 'timer-color': greenTimer }">
       {{ time }}
     </p>
@@ -130,9 +130,6 @@ export default {
 };
 </script>
 <style scoped>
-.main {
-  height: 90%;
-}
 .timer {
   font-size: 14rem;
 }
