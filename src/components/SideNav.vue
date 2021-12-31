@@ -203,8 +203,8 @@ export default {
   data() {
     return {
       sortBy: "name",
-      sortDesc: true,
-      hideAll: false,
+      sortDesc: null,
+      hideAll: null,
       items: [1, 2],
       rules: [
         (value) => !!value || "Input required",
@@ -310,6 +310,23 @@ export default {
         return this.convertTime(mean(temp));
       }
       return "00:00";
+    },
+  },
+  mounted() {
+    if (localStorage.sortDesc) {
+      this.sortDesc = JSON.parse(localStorage.sortDesc);
+    }
+    if (localStorage.hideAll) {
+      this.hideAll = JSON.parse(localStorage.hideAll);
+    }
+  },
+  watch: {
+    sortDesc() {
+      localStorage.sortDesc = this.sortDesc;
+    },
+    hideAll() {
+      localStorage.hideAll = this.hideAll;
+      this.$store.commit("updateHideAll", this.hideAll);
     },
   },
   methods: {

@@ -71,11 +71,13 @@ export default {
         this.resetTime = false;
       }
       if (this.currentTime == 0 && this.startEnable) {
+        this.$store.commit("updateIsSolving", true);
         this.start();
         this.startEnable = false;
         this.greenTimer = false;
       } else if (this.currentTime !== 0) {
         this.stop();
+        this.$store.commit("updateIsSolving", false);
         this.$store.commit("addTime", {
           baseTime: this.currentTime,
           time: this.time,

@@ -10,8 +10,16 @@ export const store = new Vuex.Store({
     timesS2: [],
     session: 1,
     currentScramble: "",
+    hideAll: false,
+    isSolving: false,
   },
   mutations: {
+    updateIsSolving(state, payload) {
+      state.isSolving = payload;
+    },
+    updateHideAll(state, payload) {
+      state.hideAll = payload;
+    },
     newScramble(state, scramble) {
       state.currentScramble = scramble;
     },
@@ -72,7 +80,7 @@ export const store = new Vuex.Store({
       if (session === 1) {
         state.times = [];
       } else if (session === 2) {
-        state.timesS2;
+        state.timesS2 = [];
       }
     },
   },
