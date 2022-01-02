@@ -19,7 +19,9 @@ export default {
   },
   computed: {
     solveTimes() {
-      return this.$store.state.times;
+      return this.$store.state.session === 1
+        ? this.$store.state.times
+        : this.$store.state.timesS2;
     },
     hideChart() {
       if (this.$store.state.isSolving && this.$store.state.hideAll) {
@@ -30,10 +32,13 @@ export default {
   },
   methods: {
     updateChart() {
+      const session = this.$store.state.session;
+      const times =
+        session === 1 ? this.$store.state.times : this.$store.state.timesS2;
       this.series = [
         {
           name: "Time",
-          data: this.$store.state.times.map((solve) => solve.baseTime / 1000),
+          data: times.map((solve) => solve.baseTime / 1000),
         },
       ];
     },
@@ -78,6 +83,15 @@ export default {
             opacity: 0.5,
           },
         },
+        yaxis: [
+          {
+            labels: {
+              formatter: function(val) {
+                return val.toFixed(2);
+              },
+            },
+          },
+        ],
       },
     };
   },
