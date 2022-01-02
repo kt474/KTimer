@@ -1,6 +1,7 @@
 <template>
   <apexchart
     class="d-flex justify-center align-center"
+    :class="{ 'apex-chart': hideChart }"
     type="line"
     height="300"
     width="700"
@@ -19,6 +20,12 @@ export default {
   computed: {
     solveTimes() {
       return this.$store.state.times;
+    },
+    hideChart() {
+      if (this.$store.state.isSolving && this.$store.state.hideAll) {
+        return true;
+      }
+      return false;
     },
   },
   methods: {
@@ -77,4 +84,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.apex-chart {
+  display: none !important;
+}
+</style>
