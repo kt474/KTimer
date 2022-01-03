@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer
+      class="navigation-drawer"
       v-if="drawer"
       v-model="drawer"
       permanent
@@ -42,4 +43,8 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.navigation-drawer >>> .v-navigation-drawer__content {
+  overflow: hidden;
+}
+</style>

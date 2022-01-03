@@ -35,12 +35,25 @@ export default {
       const session = this.$store.state.session;
       const times =
         session === 1 ? this.$store.state.times : this.$store.state.timesS2;
+      const timesArray = times.map((solve) => solve.baseTime / 1000);
+      const maxValue =
+        timesArray.length > 0 ? Math.round(Math.max(...timesArray)) + 1 : 10;
       this.series = [
         {
           name: "Time",
           data: times.map((solve) => solve.baseTime / 1000),
         },
       ];
+      this.chartOptions = {
+        ...this.chartOptions,
+        ...{
+          yaxis: {
+            min: 0,
+            max: maxValue,
+            decimalsInFloat: 2,
+          },
+        },
+      };
     },
   },
   watch: {
@@ -85,11 +98,9 @@ export default {
         },
         yaxis: [
           {
-            labels: {
-              formatter: function(val) {
-                return val.toFixed(2);
-              },
-            },
+            min: 0,
+            max: 10,
+            decimalsInFloat: 2,
           },
         ],
       },

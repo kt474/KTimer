@@ -22,7 +22,7 @@
     <v-divider></v-divider>
     <v-list-item class="px-3">
       <div>
-        <div class="d-flex justify-space-between align-center">
+        <div class="d-flex justify-space-between align-center pt-2">
           <v-btn
             depressed
             small
@@ -35,7 +35,7 @@
           <h4 class="font-weight-regular pl-4">ao5: {{ averageFive }}</h4>
           <h4 class="font-weight-regular pl-1">ao12: {{ averageTwelve }}</h4>
         </div>
-        <div class="d-flex justify-space-between align-center">
+        <div class="d-flex justify-space-between align-center pb-2">
           <v-btn
             small
             depressed
@@ -121,7 +121,7 @@
       :sort-desc.sync="sortDesc"
       hide-default-header
       hide-default-footer
-      class="elevation-0"
+      class="elevation-0 solve-table"
     >
       <template v-slot:[`item.name`]="{ item }">
         <p class="font-weight-bold mb-0 ml-1">{{ item.name }}</p>
@@ -374,6 +374,10 @@ export default {
 };
 </script>
 <style scoped>
+.solve-table {
+  overflow: auto;
+  max-height: 70vh;
+}
 .disable-cursor {
   cursor: not-allowed !important;
 }

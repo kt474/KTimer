@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex justify-center align-center">
+  <v-container class="d-flex justify-center align-center py-8">
     <p class="timer" :class="{ 'timer-color': greenTimer }">
       {{ time }}
     </p>
