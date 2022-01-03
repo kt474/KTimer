@@ -37,7 +37,7 @@ export default {
         session === 1 ? this.$store.state.times : this.$store.state.timesS2;
       const timesArray = times.map((solve) => solve.baseTime / 1000);
       const maxValue =
-        timesArray.length > 0 ? Math.round(Math.max(...timesArray)) + 1 : 10;
+        timesArray.length > 0 ? Math.ceil(Math.max(...timesArray)) : 10;
       this.series = [
         {
           name: "Time",
@@ -51,6 +51,7 @@ export default {
             min: 0,
             max: maxValue,
             decimalsInFloat: 2,
+            tickAmount: 4,
           },
         },
       };
@@ -74,7 +75,7 @@ export default {
       ],
       chartOptions: {
         chart: {
-          height: 350,
+          height: 300,
           type: "line",
           zoom: {
             enabled: false,
@@ -101,6 +102,7 @@ export default {
             min: 0,
             max: 10,
             decimalsInFloat: 2,
+            tickAmount: 4,
           },
         ],
       },
