@@ -312,6 +312,29 @@ export default {
     if (localStorage.hideAll) {
       this.hideAll = JSON.parse(localStorage.hideAll);
     }
+    if (localStorage.session) {
+      this.session = JSON.parse(localStorage.session);
+    }
+    if (localStorage.getItem("solves")) {
+      try {
+        const solves = JSON.parse(localStorage.getItem("solves"));
+        solves.forEach((solve) => {
+          this.$store.commit("addTime", solve);
+        });
+      } catch (e) {
+        localStorage.removeItem("solves");
+      }
+    }
+    if (localStorage.getItem("solves2")) {
+      try {
+        const solves = JSON.parse(localStorage.getItem("solves2"));
+        solves.forEach((solve) => {
+          this.$store.commit("addTime", solve);
+        });
+      } catch (e) {
+        localStorage.removeItem("solves2");
+      }
+    }
   },
   watch: {
     sortDesc() {
@@ -320,6 +343,17 @@ export default {
     hideAll() {
       localStorage.hideAll = this.hideAll;
       this.$store.commit("updateHideAll", this.hideAll);
+    },
+    session() {
+      localStorage.session = this.session;
+    },
+    currentSessionTimes() {
+      const parsed = JSON.stringify(this.currentTimes);
+      if (this.$store.state.session === 1) {
+        localStorage.setItem("solves", parsed);
+      } else if (this.$store.state.session === 2) {
+        localStorage.setItem("solves2", parsed);
+      }
     },
   },
   methods: {
