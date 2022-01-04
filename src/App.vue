@@ -1,15 +1,17 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      class="navigation-drawer"
-      v-if="drawer"
-      v-model="drawer"
-      permanent
-      width="340"
-      app
-    >
-      <side-nav />
-    </v-navigation-drawer>
+    <keep-alive>
+      <v-navigation-drawer
+        class="navigation-drawer"
+        v-if="drawer"
+        v-model="drawer"
+        permanent
+        width="340"
+        app
+      >
+        <side-nav />
+      </v-navigation-drawer>
+    </keep-alive>
     <nav-bar @openDrawer="onClickChild" />
     <v-main>
       <timer />
