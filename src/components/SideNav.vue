@@ -101,7 +101,16 @@
               v-model="hideAll"
               label="Hide all during solve"
             ></v-checkbox>
+            <p class="footer-text mb-0 mt-3">
+              Created by Kevin Tian, please report any bugs/issues
+              <a
+                href="https://github.com/kt474/rubiks-cube-timer/issues"
+                target="_blank"
+                >here</a
+              >
+            </p>
           </v-card-text>
+          <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="settings = false">
@@ -408,6 +417,9 @@ export default {
 };
 </script>
 <style scoped>
+.footer-text {
+  font-size: 0.75rem;
+}
 .solve-table {
   overflow: auto;
   max-height: 70vh;
