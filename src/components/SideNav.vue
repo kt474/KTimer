@@ -388,7 +388,8 @@ export default {
     exportTimes() {
       let result = [];
       this.currentSessionTimes.forEach((solve, index) => {
-        result.push([index + 1, solve.time, solve.scramble.join(" ")]);
+        let scramble = solve.scramble ? solve.scramble.join(" ") : "";
+        result.push([index + 1, solve.time, scramble]);
       });
       let csv = "Solve,Time,Scramble\n";
       result.forEach((row) => {
