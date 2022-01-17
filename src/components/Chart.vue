@@ -29,8 +29,32 @@ export default {
       }
       return false;
     },
+    darkMode() {
+      return this.$vuetify.theme.dark;
+    },
+    textColor() {
+      return this.darkMode ? "#fff" : "#000";
+    },
   },
   methods: {
+    updateLegendColors() {
+      this.chartOptions = {
+        ...this.chartOptions,
+        ...{
+          chart: {
+            height: 300,
+            foreColor: this.textColor,
+            type: "line",
+            zoom: {
+              enabled: false,
+            },
+            toolbar: {
+              show: false,
+            },
+          },
+        },
+      };
+    },
     updateChart() {
       const session = this.$store.state.session;
       const times =
@@ -64,6 +88,12 @@ export default {
       },
       immediate: true,
     },
+    darkMode: {
+      handler: function() {
+        this.updateLegendColors();
+      },
+      immediate: true,
+    },
   },
   data: () => {
     return {
@@ -76,9 +106,13 @@ export default {
       chartOptions: {
         chart: {
           height: 300,
+          foreColor: "#fff",
           type: "line",
           zoom: {
             enabled: false,
+          },
+          toolbar: {
+            show: false,
           },
         },
         dataLabels: {

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <keep-alive>
       <v-navigation-drawer
         class="navigation-drawer"
@@ -37,6 +37,11 @@ export default {
     SideNav,
     NavBar,
     Chart,
+  },
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? "dark" : "light";
+    },
   },
   methods: {
     onClickChild(value) {
