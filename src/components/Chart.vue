@@ -30,10 +30,10 @@ export default {
       return false;
     },
     darkMode() {
-      return this.$vuetify.theme.dark;
+      return this.$vuetify.theme.dark ? "dark" : "light";
     },
     textColor() {
-      return this.darkMode ? "#fff" : "#000";
+      return this.darkMode === "dark" ? "#fff" : "#000";
     },
   },
   methods: {
@@ -51,6 +51,9 @@ export default {
             toolbar: {
               show: false,
             },
+          },
+          tooltip: {
+            theme: this.darkMode,
           },
         },
       };
@@ -106,7 +109,7 @@ export default {
       chartOptions: {
         chart: {
           height: 300,
-          foreColor: "#fff",
+          foreColor: "#000",
           type: "line",
           zoom: {
             enabled: false,
@@ -139,6 +142,9 @@ export default {
             tickAmount: 4,
           },
         ],
+        tooltip: {
+          theme: "light",
+        },
       },
     };
   },
