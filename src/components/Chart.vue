@@ -118,6 +118,9 @@ export default {
             show: false,
           },
         },
+        markers: {
+          size: 5,
+        },
         dataLabels: {
           enabled: false,
         },

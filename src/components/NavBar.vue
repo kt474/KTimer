@@ -7,7 +7,7 @@
         v-for="(i, index) in currentScramble"
         :key="index"
       >
-        {{ i }}<span v-if="index != 19">,</span>
+        {{ i }}
       </h5>
     </div>
   </v-app-bar>

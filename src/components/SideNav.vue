@@ -102,6 +102,16 @@
               label="Hide all during solve"
             ></v-checkbox>
             <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
+            <v-btn
+              small
+              @click.stop="exportTimes"
+              class="my-3"
+              color="primary"
+              dark
+            >
+              Export
+              <v-icon class="export-icon" small>mdi-download</v-icon>
+            </v-btn>
             <p class="footer-text mb-0 mt-3">
               Created by Kevin Tian, please report any bugs/issues
               <a
@@ -207,8 +217,8 @@ export default {
     return {
       darkMode: this.$vuetify.theme.dark,
       sortBy: "name",
-      sortDesc: null,
-      hideAll: null,
+      sortDesc: true,
+      hideAll: false,
       items: [1, 2],
       rules: [
         (value) => !!value || "Input required",
@@ -375,6 +385,22 @@ export default {
     },
   },
   methods: {
+    exportTimes() {
+      let result = [];
+      this.currentSessionTimes.forEach((solve, index) => {
+        result.push([index + 1, solve.time, solve.scramble.join(" ")]);
+      });
+      let csv = "Solve,Time,Scramble\n";
+      result.forEach((row) => {
+        csv += row.join(",");
+        csv += "\n";
+      });
+      const anchor = document.createElement("a");
+      anchor.href = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+      anchor.target = "_blank";
+      anchor.download = "timer_solves.csv";
+      anchor.click();
+    },
     toggleOrder() {
       this.sortDesc = !this.sortDesc;
     },
@@ -426,6 +452,10 @@ export default {
 };
 </script>
 <style scoped>
+.export-icon {
+  margin-top: 2px;
+  margin-left: 4px;
+}
 .footer-text {
   font-size: 0.75rem;
 }
