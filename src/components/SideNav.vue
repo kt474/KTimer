@@ -101,6 +101,7 @@
               v-model="hideAll"
               label="Hide all during solve"
             ></v-checkbox>
+            <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
             <p class="footer-text mb-0 mt-3">
               Created by Kevin Tian, please report any bugs/issues
               <a
@@ -204,6 +205,7 @@ export default {
   name: "SideNav",
   data() {
     return {
+      darkMode: this.$vuetify.theme.dark,
       sortBy: "name",
       sortDesc: null,
       hideAll: null,
@@ -315,6 +317,9 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.darkMode) {
+      this.darkMode = JSON.parse(localStorage.darkMode);
+    }
     if (localStorage.sortDesc) {
       this.sortDesc = JSON.parse(localStorage.sortDesc);
     }
@@ -346,6 +351,10 @@ export default {
     }
   },
   watch: {
+    darkMode() {
+      this.$vuetify.theme.dark = this.darkMode;
+      localStorage.darkMode = this.darkMode;
+    },
     sortDesc() {
       localStorage.sortDesc = this.sortDesc;
     },
