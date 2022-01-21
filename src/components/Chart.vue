@@ -15,7 +15,7 @@ import VueApexCharts from "vue-apexcharts";
 export default {
   name: "Chart",
   components: {
-    apexchart: VueApexCharts,
+    apexchart: VueApexCharts
   },
   computed: {
     solveTimes() {
@@ -34,7 +34,7 @@ export default {
     },
     textColor() {
       return this.darkMode === "dark" ? "#fff" : "#000";
-    },
+    }
   },
   methods: {
     updateLegendColors() {
@@ -46,30 +46,30 @@ export default {
             foreColor: this.textColor,
             type: "line",
             zoom: {
-              enabled: false,
+              enabled: false
             },
             toolbar: {
-              show: false,
-            },
+              show: false
+            }
           },
           tooltip: {
-            theme: this.darkMode,
-          },
-        },
+            theme: this.darkMode
+          }
+        }
       };
     },
     updateChart() {
       const session = this.$store.state.session;
       const times =
         session === 1 ? this.$store.state.times : this.$store.state.timesS2;
-      const timesArray = times.map((solve) => solve.baseTime / 1000);
+      const timesArray = times.map(solve => solve.baseTime / 1000);
       const maxValue =
         timesArray.length > 0 ? Math.ceil(Math.max(...timesArray)) : 10;
       this.series = [
         {
           name: "Time",
-          data: times.map((solve) => solve.baseTime / 1000),
-        },
+          data: times.map(solve => solve.baseTime / 1000)
+        }
       ];
       this.chartOptions = {
         ...this.chartOptions,
@@ -78,33 +78,33 @@ export default {
             min: 0,
             max: maxValue,
             decimalsInFloat: 2,
-            tickAmount: 4,
-          },
-        },
+            tickAmount: 4
+          }
+        }
       };
-    },
+    }
   },
   watch: {
     solveTimes: {
       handler: function() {
         this.updateChart();
       },
-      immediate: true,
+      immediate: true
     },
     darkMode: {
       handler: function() {
         this.updateLegendColors();
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   data: () => {
     return {
       series: [
         {
           name: "Time",
-          data: [],
-        },
+          data: []
+        }
       ],
       chartOptions: {
         chart: {
@@ -112,45 +112,45 @@ export default {
           foreColor: "#000",
           type: "line",
           zoom: {
-            enabled: false,
+            enabled: false
           },
           toolbar: {
-            show: false,
-          },
+            show: false
+          }
         },
         markers: {
-          size: 5,
+          size: 5
         },
         dataLabels: {
-          enabled: false,
+          enabled: false
         },
         stroke: {
-          curve: "straight",
+          curve: "straight"
         },
         title: {
           text: "Solve Times",
-          align: "left",
+          align: "left"
         },
         grid: {
           row: {
             colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-            opacity: 0.5,
-          },
+            opacity: 0.5
+          }
         },
         yaxis: [
           {
             min: 0,
             max: 10,
             decimalsInFloat: 2,
-            tickAmount: 4,
-          },
+            tickAmount: 4
+          }
         ],
         tooltip: {
-          theme: "light",
-        },
-      },
+          theme: "light"
+        }
+      }
     };
-  },
+  }
 };
 </script>
 

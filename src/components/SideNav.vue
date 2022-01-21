@@ -166,7 +166,7 @@
         <h4
           v-if="currentSessionTimes[item.name - 1].plusTwo"
           :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].plusTwo,
+            'disable-cursor': currentSessionTimes[item.name - 1].plusTwo
           }"
           class="danger-text"
         >
@@ -176,7 +176,7 @@
           v-else
           class="font-weight-regular pointer"
           :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].dnf,
+            'disable-cursor': currentSessionTimes[item.name - 1].dnf
           }"
           @click="plusTwo(item.session, item.name)"
         >
@@ -187,7 +187,7 @@
         <h4
           v-if="currentSessionTimes[item.name - 1].dnf"
           :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].dnf,
+            'disable-cursor': currentSessionTimes[item.name - 1].dnf
           }"
           class="danger-text"
         >
@@ -197,7 +197,7 @@
           v-else
           class="font-weight-regular pointer"
           :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].dnf,
+            'disable-cursor': currentSessionTimes[item.name - 1].dnf
           }"
           @click="dnf(item.session, item.name)"
         >
@@ -221,9 +221,9 @@ export default {
       hideAll: false,
       items: [1, 2],
       rules: [
-        (value) => !!value || "Input required",
-        (value) => (value && value.length >= 3) || "Min 3 characters",
-        (value) => (value && value.includes(":")) || "':' required",
+        value => !!value || "Input required",
+        value => (value && value.length >= 3) || "Min 3 characters",
+        value => (value && value.includes(":")) || "':' required"
       ],
       addedTime: null,
       dialog: false,
@@ -233,13 +233,13 @@ export default {
           text: "Times",
           align: "start",
           sortable: false,
-          value: "name",
+          value: "name"
         },
         { text: "time", value: "time" },
         { text: "plusTwo", value: "plusTwo" },
         { text: "dnf", value: "dnf" },
-        { text: "remove", value: "remove" },
-      ],
+        { text: "remove", value: "remove" }
+      ]
     };
   },
   computed: {
@@ -249,7 +249,7 @@ export default {
       },
       set(value) {
         this.$store.commit("updateSession", value);
-      },
+      }
     },
     solves() {
       return this.currentSessionTimes.length;
@@ -263,17 +263,17 @@ export default {
       return [];
     },
     currentBest() {
-      const validTimes = this.currentSessionTimes.filter((time) => !time.dnf);
+      const validTimes = this.currentSessionTimes.filter(time => !time.dnf);
       if (validTimes.length) {
-        const times = validTimes.map((time) => time.baseTime);
+        const times = validTimes.map(time => time.baseTime);
         return this.convertTime(Math.min(...times));
       }
       return "00:00";
     },
     currentMean() {
-      const validTimes = this.currentSessionTimes.filter((time) => !time.dnf);
+      const validTimes = this.currentSessionTimes.filter(time => !time.dnf);
       if (validTimes.length) {
-        const times = validTimes.map((time) => time.baseTime);
+        const times = validTimes.map(time => time.baseTime);
         return this.convertTime(mean(times));
       }
       return "00:00";
@@ -288,14 +288,14 @@ export default {
     averageFive() {
       const currentLength = this.currentSessionTimes.length;
       if (currentLength >= 5) {
-        let temp = this.currentSessionTimes.map((time) => time.baseTime);
+        let temp = this.currentSessionTimes.map(time => time.baseTime);
         temp = temp.slice(currentLength - 5, currentLength + 1);
-        const dnfCount = temp.filter((time) => time == "DNF").length;
+        const dnfCount = temp.filter(time => time == "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
         if (dnfCount == 1) {
-          temp = temp.filter((item) => item !== "DNF");
+          temp = temp.filter(item => item !== "DNF");
           temp.push("filler");
         }
         temp.sort((a, b) => a - b);
@@ -308,14 +308,14 @@ export default {
     averageTwelve() {
       const currentLength = this.currentSessionTimes.length;
       if (currentLength >= 12) {
-        let temp = this.currentSessionTimes.map((time) => time.baseTime);
+        let temp = this.currentSessionTimes.map(time => time.baseTime);
         temp = temp.slice(currentLength - 12, currentLength + 1);
-        const dnfCount = temp.filter((time) => time == "DNF").length;
+        const dnfCount = temp.filter(time => time == "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
         if (dnfCount == 1) {
-          temp = temp.filter((item) => item !== "DNF");
+          temp = temp.filter(item => item !== "DNF");
           temp.push("filler");
         }
         temp.sort((a, b) => a - b);
@@ -324,7 +324,7 @@ export default {
         return this.convertTime(mean(temp));
       }
       return "00:00";
-    },
+    }
   },
   mounted() {
     if (localStorage.darkMode) {
@@ -342,7 +342,7 @@ export default {
     if (localStorage.getItem("solves")) {
       try {
         const solves = JSON.parse(localStorage.getItem("solves"));
-        solves.forEach((solve) => {
+        solves.forEach(solve => {
           this.$store.commit("addTime", solve);
         });
       } catch (e) {
@@ -352,7 +352,7 @@ export default {
     if (localStorage.getItem("solves2")) {
       try {
         const solves = JSON.parse(localStorage.getItem("solves2"));
-        solves.forEach((solve) => {
+        solves.forEach(solve => {
           this.$store.commit("addTime", solve);
         });
       } catch (e) {
@@ -382,7 +382,7 @@ export default {
       } else if (this.$store.state.session === 2) {
         localStorage.setItem("solves2", parsed);
       }
-    },
+    }
   },
   methods: {
     exportTimes() {
@@ -392,7 +392,7 @@ export default {
         result.push([index + 1, solve.time, scramble]);
       });
       let csv = "Solve,Time,Scramble\n";
-      result.forEach((row) => {
+      result.forEach(row => {
         csv += row.join(",");
         csv += "\n";
       });
@@ -417,7 +417,7 @@ export default {
         this.$store.commit("buttonPressed", {
           session: session,
           index: index,
-          prop: "plusTwo",
+          prop: "plusTwo"
         });
       }
     },
@@ -434,7 +434,7 @@ export default {
         remove: null,
         plusTwo: false,
         dnf: false,
-        session: this.$store.state.session,
+        session: this.$store.state.session
       });
       this.dialog = false;
     },
@@ -448,8 +448,8 @@ export default {
       const format = time > 60000 ? "M:ss:L" : "ss:L";
       const date = new Date(time);
       return dateFormat(date, format);
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

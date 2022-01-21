@@ -29,25 +29,25 @@ export default {
   name: "App",
   data() {
     return {
-      drawer: true,
+      drawer: true
     };
   },
   components: {
     Timer,
     SideNav,
     NavBar,
-    Chart,
+    Chart
   },
   computed: {
     theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
-    },
+    }
   },
   methods: {
     onClickChild(value) {
       this.drawer = value;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

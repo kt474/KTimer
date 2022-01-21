@@ -17,7 +17,7 @@
 export default {
   name: "NavBar",
   data: () => ({
-    drawer: true,
+    drawer: true
   }),
   computed: {
     currentScramble() {
@@ -34,21 +34,21 @@ export default {
         return true;
       }
       return !(this.hideAll && this.isSolving);
-    },
+    }
   },
   watch: {
     isSolving() {
       if (this.hideAll) {
         this.openDrawer();
       }
-    },
+    }
   },
   methods: {
     openDrawer() {
       this.drawer = !this.drawer;
       this.$emit("openDrawer", this.drawer);
-    },
-  },
+    }
+  }
 };
 </script>
 

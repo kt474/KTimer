@@ -17,7 +17,7 @@ export default {
     timeStep: 400,
     pressedAt: 0,
     startEnable: false,
-    scramble: [],
+    scramble: []
   }),
 
   mounted() {
@@ -37,7 +37,7 @@ export default {
       let format = this.currentTime > 60000 ? "M:ss:L" : "ss:L";
       let date = new Date(this.currentTime);
       return dateFormat(date, format);
-    },
+    }
   },
   methods: {
     onKeyDown(event) {
@@ -85,7 +85,7 @@ export default {
           plusTwo: false,
           dnf: false,
           session: this.$store.state.session,
-          scramble: this.scramble,
+          scramble: this.scramble
         });
         this.generateSramble();
         this.$store.commit("newScramble", this.scramble);
@@ -114,19 +114,19 @@ export default {
       for (let i = 1; i < 20; i++) {
         const newMove = pool[Math.floor(Math.random() * 6)];
         if (baseMoves[i - 1] === newMove) {
-          const newPool = pool.filter((move) => move !== newMove);
+          const newPool = pool.filter(move => move !== newMove);
           baseMoves.push(newPool[Math.floor(Math.random() * 5)]);
         } else {
           baseMoves.push(newMove);
         }
       }
       const result = [];
-      baseMoves.forEach((move) => {
+      baseMoves.forEach(move => {
         result.push(move + append[Math.floor(Math.random() * 3)]);
       });
       this.scramble = result;
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

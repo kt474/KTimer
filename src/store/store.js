@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
     session: 1,
     currentScramble: "",
     hideAll: false,
-    isSolving: false,
+    isSolving: false
   },
   mutations: {
     updateIsSolving(state, payload) {
@@ -69,10 +69,10 @@ export const store = new Vuex.Store({
     },
     removeTime(state, payload) {
       if (payload.session === 1) {
-        state.times = state.times.filter((item) => item.name != payload.index);
+        state.times = state.times.filter(item => item.name != payload.index);
       } else if (payload.session === 2) {
         state.timesS2 = state.timesS2.filter(
-          (item) => item.name != payload.index
+          item => item.name != payload.index
         );
       }
     },
@@ -82,6 +82,6 @@ export const store = new Vuex.Store({
       } else if (session === 2) {
         state.timesS2 = [];
       }
-    },
-  },
+    }
+  }
 });
