@@ -1,5 +1,7 @@
 <template>
   <v-container
+    @mousedown="onMouseDown"
+    @mouseup="onMouseUp"
     class="d-flex justify-center align-center py-4"
     :class="{ 'timer-height': noChart }"
   >
@@ -24,14 +26,12 @@ export default {
   }),
 
   mounted() {
-    window.addEventListener("keypress", this.onKeyPress);
     window.addEventListener("keyup", this.onKeyUp);
     window.addEventListener("keydown", this.onKeyDown);
     this.generateSramble();
     this.$store.commit("newScramble", this.scramble);
   },
   beforeDestroy() {
-    window.removeEventListener("keypress", this.onKeyPress);
     window.removeEventListener("keyup", this.onKeyUp);
     window.removeEventListener("keydown", this.onKeyDown);
   },
@@ -46,6 +46,32 @@ export default {
     }
   },
   methods: {
+    onMouseDown(event) {
+      if (event.type == "mousedown") {
+        console.log("mousedown");
+        if (this.pressedAt == 0) {
+          this.pressedAt = Date.now();
+        }
+        if (this.resetTime) {
+          this.greenTimer = true;
+          this.currentTime = 0;
+        }
+      }
+    },
+    onMouseUp(event) {
+      if (event.type == "mouseup") {
+        if (
+          this.currentTime == 0 &&
+          Date.now() - this.pressedAt >= this.timeStep
+        ) {
+          this.startEnable = true;
+          this.pressedAt = 0;
+          this.onSpacebar();
+        } else if (this.currentTime != 0) {
+          this.onSpacebar();
+        }
+      }
+    },
     onKeyDown(event) {
       if (event.code == "Space") {
         if (this.pressedAt == 0) {
@@ -55,10 +81,6 @@ export default {
           this.startEnable = true;
           this.pressedAt = 0;
         }
-      }
-    },
-    onKeyPress(event) {
-      if (event.code == "Space") {
         if (this.resetTime) {
           this.greenTimer = true;
           this.currentTime = 0;
