@@ -1,5 +1,8 @@
 <template>
-  <v-container class="d-flex justify-center align-center py-4">
+  <v-container
+    class="d-flex justify-center align-center py-4"
+    :class="{ 'timer-height': noChart }"
+  >
     <p class="timer" :class="{ 'timer-color': greenTimer }">
       {{ time }}
     </p>
@@ -33,6 +36,9 @@ export default {
     window.removeEventListener("keydown", this.onKeyDown);
   },
   computed: {
+    noChart() {
+      return this.$store.state.removeChart;
+    },
     time() {
       let format = this.currentTime > 60000 ? "M:ss:L" : "ss:L";
       let date = new Date(this.currentTime);
@@ -132,6 +138,9 @@ export default {
 <style scoped>
 .timer {
   font-size: 14rem;
+}
+.timer-height {
+  height: 90%;
 }
 .timer-color {
   animation-name: color-change;

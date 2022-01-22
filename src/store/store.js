@@ -11,9 +11,13 @@ export const store = new Vuex.Store({
     session: 1,
     currentScramble: "",
     hideAll: false,
-    isSolving: false
+    isSolving: false,
+    removeChart: false
   },
   mutations: {
+    updateRemoveChart(state, payload) {
+      state.removeChart = payload;
+    },
     updateIsSolving(state, payload) {
       state.isSolving = payload;
     },

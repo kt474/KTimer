@@ -1,7 +1,8 @@
 <template>
   <apexchart
+    v-if="!noChart"
     class="d-flex justify-center align-center"
-    :class="{ 'apex-chart': hideChart }"
+    :class="{ 'apex-chart': hideChartDuringSolve }"
     type="line"
     height="300"
     width="700"
@@ -23,7 +24,10 @@ export default {
         ? this.$store.state.times
         : this.$store.state.timesS2;
     },
-    hideChart() {
+    noChart() {
+      return this.$store.state.removeChart;
+    },
+    hideChartDuringSolve() {
       if (this.$store.state.isSolving && this.$store.state.hideAll) {
         return true;
       }
@@ -64,7 +68,7 @@ export default {
         session === 1 ? this.$store.state.times : this.$store.state.timesS2;
       const timesArray = times.map(solve => solve.baseTime / 1000);
       const maxValue =
-        timesArray.length > 0 ? Math.ceil(Math.max(...timesArray)) : 10;
+        timesArray.length > 0 ? Math.ceil(Math.max(...timesArray) + 1) : 10;
       this.series = [
         {
           name: "Time",

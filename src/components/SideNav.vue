@@ -32,8 +32,12 @@
           >
             Reset
           </v-btn>
-          <h4 class="font-weight-regular pl-4">ao5: {{ averageFive }}</h4>
-          <h4 class="font-weight-regular pl-1">ao12: {{ averageTwelve }}</h4>
+          <h4 class="font-weight-regular pl-4">
+            ao5: <span class="font-weight-bold">{{ averageFive }}</span>
+          </h4>
+          <h4 class="font-weight-regular pl-1">
+            ao12: <span class="font-weight-bold">{{ averageTwelve }}</span>
+          </h4>
         </div>
         <div class="d-flex justify-space-between align-center pb-2">
           <v-btn
@@ -76,8 +80,12 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <h4 class="font-weight-regular pl-4">Mean: {{ currentMean }}</h4>
-          <h4 class="font-weight-regular pl-4">Best: {{ currentBest }}</h4>
+          <h4 class="font-weight-regular pl-4">
+            Mean: <span class="font-weight-bold">{{ currentMean }}</span>
+          </h4>
+          <h4 class="font-weight-regular pl-4">
+            Best: <span class="font-weight-bold">{{ currentBest }}</span>
+          </h4>
         </div>
       </div>
     </v-list-item>
@@ -101,6 +109,7 @@
               v-model="hideAll"
               label="Hide all during solve"
             ></v-checkbox>
+            <v-checkbox v-model="removeChart" label="Remove chart"></v-checkbox>
             <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
             <v-btn
               small
@@ -219,6 +228,7 @@ export default {
       sortBy: "name",
       sortDesc: true,
       hideAll: false,
+      removeChart: false,
       items: [1, 2],
       rules: [
         value => !!value || "Input required",
@@ -336,6 +346,9 @@ export default {
     if (localStorage.hideAll) {
       this.hideAll = JSON.parse(localStorage.hideAll);
     }
+    if (localStorage.removeChart) {
+      this.removeChart = JSON.parse(localStorage.removeChart);
+    }
     if (localStorage.session) {
       this.session = JSON.parse(localStorage.session);
     }
@@ -371,6 +384,10 @@ export default {
     hideAll() {
       localStorage.hideAll = this.hideAll;
       this.$store.commit("updateHideAll", this.hideAll);
+    },
+    removeChart() {
+      localStorage.removeChart = this.removeChart;
+      this.$store.commit("updateRemoveChart", this.removeChart);
     },
     session() {
       localStorage.session = this.session;
