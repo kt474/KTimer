@@ -48,10 +48,7 @@ export default {
   methods: {
     onMouseDown(event) {
       if (event.type == "mousedown") {
-        console.log("mousedown");
-        if (this.pressedAt == 0) {
-          this.pressedAt = Date.now();
-        }
+        this.pressedAt = Date.now();
         if (this.resetTime) {
           this.greenTimer = true;
           this.currentTime = 0;
@@ -60,15 +57,15 @@ export default {
     },
     onMouseUp(event) {
       if (event.type == "mouseup") {
-        if (
-          this.currentTime == 0 &&
-          Date.now() - this.pressedAt >= this.timeStep
-        ) {
+        if (this.currentTime == 0 && Date.now() - this.pressedAt >= 400) {
           this.startEnable = true;
           this.pressedAt = 0;
           this.onSpacebar();
         } else if (this.currentTime != 0) {
           this.onSpacebar();
+        } else {
+          this.greenTimer = false;
+          this.currentTime = 0;
         }
       }
     },
