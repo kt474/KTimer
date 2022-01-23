@@ -140,6 +140,7 @@ export default {
             show: false
           }
         },
+        colors: ["#1976d2"],
         markers: {
           size: 5
         },
