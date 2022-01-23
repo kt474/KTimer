@@ -36,6 +36,9 @@ export default {
     window.removeEventListener("keydown", this.onKeyDown);
   },
   computed: {
+    clickStart() {
+      return this.$store.state.clickStart;
+    },
     noChart() {
       return this.$store.state.removeChart;
     },
@@ -47,25 +50,29 @@ export default {
   },
   methods: {
     onMouseDown(event) {
-      if (event.type == "mousedown") {
-        this.pressedAt = Date.now();
-        if (this.resetTime) {
-          this.greenTimer = true;
-          this.currentTime = 0;
+      if (this.clickStart) {
+        if (event.type == "mousedown") {
+          this.pressedAt = Date.now();
+          if (this.resetTime) {
+            this.greenTimer = true;
+            this.currentTime = 0;
+          }
         }
       }
     },
     onMouseUp(event) {
-      if (event.type == "mouseup") {
-        if (this.currentTime == 0 && Date.now() - this.pressedAt >= 400) {
-          this.startEnable = true;
-          this.pressedAt = 0;
-          this.onSpacebar();
-        } else if (this.currentTime != 0) {
-          this.onSpacebar();
-        } else {
-          this.greenTimer = false;
-          this.currentTime = 0;
+      if (this.clickStart) {
+        if (event.type == "mouseup") {
+          if (this.currentTime == 0 && Date.now() - this.pressedAt >= 400) {
+            this.startEnable = true;
+            this.pressedAt = 0;
+            this.onSpacebar();
+          } else if (this.currentTime != 0) {
+            this.onSpacebar();
+          } else {
+            this.greenTimer = false;
+            this.currentTime = 0;
+          }
         }
       }
     },

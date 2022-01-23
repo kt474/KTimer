@@ -12,9 +12,13 @@ export const store = new Vuex.Store({
     currentScramble: "",
     hideAll: false,
     isSolving: false,
-    removeChart: false
+    removeChart: false,
+    clickStart: false
   },
   mutations: {
+    updateClickStart(state, payload) {
+      state.clickStart = payload;
+    },
     updateRemoveChart(state, payload) {
       state.removeChart = payload;
     },

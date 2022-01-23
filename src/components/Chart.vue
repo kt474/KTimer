@@ -4,8 +4,8 @@
     class="d-flex justify-center align-center"
     :class="{ 'apex-chart': hideChartDuringSolve }"
     type="line"
-    height="300"
-    width="700"
+    height="40%"
+    width="55%"
     :options="chartOptions"
     :series="series"
   ></apexchart>
@@ -46,7 +46,6 @@ export default {
         ...this.chartOptions,
         ...{
           chart: {
-            height: 300,
             foreColor: this.textColor,
             type: "line",
             zoom: {
@@ -112,7 +111,6 @@ export default {
       ],
       chartOptions: {
         chart: {
-          height: 300,
           foreColor: "#000",
           type: "line",
           zoom: {

@@ -110,6 +110,10 @@
               label="Hide all during solve"
             ></v-checkbox>
             <v-checkbox v-model="removeChart" label="Remove chart"></v-checkbox>
+            <v-checkbox
+              v-model="clickStart"
+              label="Click to start"
+            ></v-checkbox>
             <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
             <v-btn
               small
@@ -229,6 +233,7 @@ export default {
       sortDesc: true,
       hideAll: false,
       removeChart: false,
+      clickStart: false,
       items: [1, 2],
       rules: [
         value => !!value || "Input required",
@@ -337,6 +342,9 @@ export default {
     }
   },
   mounted() {
+    if (localStorage.clickStart) {
+      this.clickStart = JSON.parse(localStorage.clickStart);
+    }
     if (localStorage.darkMode) {
       this.darkMode = JSON.parse(localStorage.darkMode);
     }
@@ -374,6 +382,10 @@ export default {
     }
   },
   watch: {
+    clickStart() {
+      localStorage.clickStart = this.clickStart;
+      this.$store.commit("updateClickStart", this.clickStart);
+    },
     darkMode() {
       this.$vuetify.theme.dark = this.darkMode;
       localStorage.darkMode = this.darkMode;
