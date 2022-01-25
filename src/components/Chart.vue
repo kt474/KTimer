@@ -5,7 +5,7 @@
     :class="{ 'apex-chart': hideChartDuringSolve }"
     type="line"
     height="40%"
-    width="55%"
+    width="675"
     :options="chartOptions"
     :series="series"
   ></apexchart>
