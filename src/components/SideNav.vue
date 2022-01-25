@@ -106,11 +106,17 @@
           <v-card-text>
             <v-checkbox v-model="sortDesc" label="Sort descending"></v-checkbox>
             <v-checkbox
+              class="mt-0"
               v-model="hideAll"
               label="Hide all during solve"
             ></v-checkbox>
-            <v-checkbox v-model="removeChart" label="Remove chart"></v-checkbox>
             <v-checkbox
+              class="mt-0"
+              v-model="removeChart"
+              label="Remove chart"
+            ></v-checkbox>
+            <v-checkbox
+              class="mt-0"
               v-model="clickStart"
               label="Click to start"
             ></v-checkbox>
