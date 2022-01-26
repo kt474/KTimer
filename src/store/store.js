@@ -13,9 +13,17 @@ export const store = new Vuex.Store({
     hideAll: false,
     isSolving: false,
     removeChart: false,
-    clickStart: false
+    clickStart: false,
+    chartWidth: 675,
+    chartHeight: 300
   },
   mutations: {
+    updateChartWidth(state, payload) {
+      state.chartWidth = payload;
+    },
+    updateChartHeight(state, payload) {
+      state.chartHeight = payload;
+    },
     updateClickStart(state, payload) {
       state.clickStart = payload;
     },

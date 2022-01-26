@@ -4,8 +4,8 @@
     class="d-flex justify-center align-center"
     :class="{ 'apex-chart': hideChartDuringSolve }"
     type="line"
-    height="40%"
-    width="675"
+    :width="chartWidth"
+    :height="chartHeight"
     :options="chartOptions"
     :series="series"
   ></apexchart>
@@ -19,6 +19,12 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
+    chartWidth() {
+      return this.$store.state.chartWidth;
+    },
+    chartHeight() {
+      return this.$store.state.chartHeight;
+    },
     solveTimes() {
       return this.$store.state.session === 1
         ? this.$store.state.times

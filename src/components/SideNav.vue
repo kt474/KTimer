@@ -103,34 +103,68 @@
       <v-dialog v-model="settings" max-width="400px">
         <v-card>
           <v-toolbar color="primary" class="text-h5" dark>Settings</v-toolbar>
+          <p class="text-h6 mt-3 mb-0 ml-4">General</p>
           <v-card-text>
-            <v-checkbox v-model="sortDesc" label="Sort descending"></v-checkbox>
+            <div class="d-flex justify-space-between mt-0">
+              <div>
+                <v-checkbox
+                  v-model="sortDesc"
+                  label="Sort descending"
+                ></v-checkbox>
+                <v-checkbox
+                  class="mt-0"
+                  v-model="hideAll"
+                  label="Hide all during solve"
+                ></v-checkbox>
+                <v-checkbox
+                  class="mt-0"
+                  v-model="clickStart"
+                  label="Click to start"
+                ></v-checkbox>
+              </div>
+              <div>
+                <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
+                <v-btn
+                  small
+                  @click.stop="exportTimes"
+                  class="my-3"
+                  color="primary"
+                  dark
+                >
+                  Export
+                  <v-icon class="export-icon" small>mdi-download</v-icon>
+                </v-btn>
+              </div>
+            </div>
+          </v-card-text>
+          <p class="text-h6 mt-2 ml-4">Chart Options</p>
+          <v-card-text>
             <v-checkbox
-              class="mt-0"
-              v-model="hideAll"
-              label="Hide all during solve"
-            ></v-checkbox>
-            <v-checkbox
-              class="mt-0"
+              class="mt-4"
               v-model="removeChart"
-              label="Remove chart"
+              label="Hide chart"
             ></v-checkbox>
-            <v-checkbox
-              class="mt-0"
-              v-model="clickStart"
-              label="Click to start"
-            ></v-checkbox>
-            <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
-            <v-btn
-              small
-              @click.stop="exportTimes"
-              class="my-3"
-              color="primary"
-              dark
-            >
-              Export
-              <v-icon class="export-icon" small>mdi-download</v-icon>
-            </v-btn>
+            <v-slider
+              v-model="chartWidth"
+              class="pt-4"
+              min="300"
+              max="900"
+              label="Width"
+              thumb-size="24"
+              thumb-color="blue"
+              thumb-label="always"
+            ></v-slider>
+            <v-slider
+              v-model="chartHeight"
+              class="pt-4"
+              min="200"
+              max="500"
+              label="Height"
+              thumb-size="24"
+              thumb-color="blue"
+              thumb-label="always"
+            ></v-slider>
+
             <p class="footer-text mb-0 mt-3">
               Created by Kevin Tian, please report any bugs/issues
               <a
@@ -234,6 +268,8 @@ export default {
   name: "SideNav",
   data() {
     return {
+      chartWidth: 675,
+      chartHeight: 300,
       darkMode: this.$vuetify.theme.dark,
       sortBy: "name",
       sortDesc: true,
@@ -348,6 +384,12 @@ export default {
     }
   },
   mounted() {
+    if (localStorage.chartWidth) {
+      this.chartWidth = JSON.parse(localStorage.chartWidth);
+    }
+    if (localStorage.chartHeight) {
+      this.chartHeight = JSON.parse(localStorage.chartHeight);
+    }
     if (localStorage.clickStart) {
       this.clickStart = JSON.parse(localStorage.clickStart);
     }
@@ -388,6 +430,14 @@ export default {
     }
   },
   watch: {
+    chartWidth() {
+      localStorage.chartWidth = this.chartWidth;
+      this.$store.commit("updateChartWidth", this.chartWidth);
+    },
+    chartHeight() {
+      localStorage.chartHeight = this.chartHeight;
+      this.$store.commit("updateChartHeight", this.chartHeight);
+    },
     clickStart() {
       localStorage.clickStart = this.clickStart;
       this.$store.commit("updateClickStart", this.clickStart);
