@@ -72,12 +72,17 @@ export default {
       const times =
         session === 1 ? this.$store.state.times : this.$store.state.timesS2;
       const timesArray = times.map(solve => solve.baseTime / 1000);
+      timesArray.forEach((val, index) => {
+        if (isNaN(val)) {
+          timesArray[index] = 0;
+        }
+      });
       const maxValue =
         timesArray.length > 0 ? Math.ceil(Math.max(...timesArray) + 1) : 10;
       this.series = [
         {
           name: "Time",
-          data: times.map(solve => solve.baseTime / 1000)
+          data: timesArray
         }
       ];
       this.chartOptions = {
