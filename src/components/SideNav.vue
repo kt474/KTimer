@@ -124,13 +124,7 @@
               </div>
               <div>
                 <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
-                <v-btn
-                  small
-                  @click.stop="exportTimes"
-                  class="my-3"
-                  color="primary"
-                  dark
-                >
+                <v-btn small @click.stop="exportTimes" color="primary" dark>
                   Export
                   <v-icon class="export-icon" small>mdi-download</v-icon>
                 </v-btn>
@@ -139,11 +133,22 @@
           </v-card-text>
           <p class="text-h6 mt-2 ml-4">Chart Options</p>
           <v-card-text>
-            <v-checkbox
-              class="mt-4"
-              v-model="removeChart"
-              label="Hide chart"
-            ></v-checkbox>
+            <div class="d-flex justify-space-between mb-2">
+              <v-checkbox
+                class="mt-0"
+                v-model="removeChart"
+                label="Hide chart"
+              ></v-checkbox>
+              <v-btn
+                small
+                @click.stop="resetDefault"
+                class="mr-2"
+                color="primary"
+                dark
+              >
+                Reset Default
+              </v-btn>
+            </div>
             <v-slider
               v-model="chartWidth"
               class="pt-4"
@@ -470,6 +475,10 @@ export default {
     }
   },
   methods: {
+    resetDefault() {
+      this.chartWidth = 675;
+      this.chartHeight = 300;
+    },
     exportTimes() {
       let result = [];
       this.currentSessionTimes.forEach((solve, index) => {
