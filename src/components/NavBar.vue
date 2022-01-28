@@ -1,5 +1,6 @@
 <template>
   <v-app-bar :value="hideNav" app color="primary" dark>
+    <v-app-bar-nav-icon @click="openDrawer"></v-app-bar-nav-icon>
     <v-toolbar-title class="text-h5 mr-3">Scramble: </v-toolbar-title>
     <div class="d-flex justify-center align-center">
       <h5
@@ -34,13 +35,6 @@ export default {
         return true;
       }
       return !(this.hideAll && this.isSolving);
-    }
-  },
-  watch: {
-    isSolving() {
-      if (this.hideAll) {
-        this.openDrawer();
-      }
     }
   },
   methods: {

@@ -2,10 +2,10 @@
   <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <keep-alive>
       <v-navigation-drawer
-        class="navigation-drawer"
-        v-if="drawer"
-        v-model="drawer"
         permanent
+        class="navigation-drawer"
+        v-if="drawer && !hideChartDuringSolve"
+        v-model="drawer"
         width="340"
         app
       >
@@ -41,6 +41,12 @@ export default {
   computed: {
     theme() {
       return this.$vuetify.theme.dark ? "dark" : "light";
+    },
+    hideChartDuringSolve() {
+      if (this.$store.state.isSolving && this.$store.state.hideAll) {
+        return true;
+      }
+      return false;
     }
   },
   methods: {
