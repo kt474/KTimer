@@ -2,8 +2,14 @@
   <v-card width="340" class="mx-auto card">
     <v-list-item class="px-3">
       <div>
-        <v-list-item-title class="text-h6 pt-4">
-          Timer
+        <v-list-item-title class="d-flex align-middle pt-2">
+          <img
+            width="24"
+            height="24"
+            src="../assets/logo.svg"
+            class="mt-1 mr-2"
+          />
+          <p class="text-h6">KTimer</p>
         </v-list-item-title>
         <div class="d-flex mt-1">
           <p class="text--secondary pr-3">
