@@ -5,7 +5,10 @@
     class="d-flex justify-center align-center py-4"
     :class="{ 'timer-height': noChart }"
   >
-    <p class="timer" :class="{ 'timer-color': greenTimer }">
+    <p
+      :style="`font-size: ${timerSize}rem`"
+      :class="{ 'timer-color': greenTimer }"
+    >
       {{ time }}
     </p>
   </v-container>
@@ -36,6 +39,9 @@ export default {
     window.removeEventListener("keydown", this.onKeyDown);
   },
   computed: {
+    timerSize() {
+      return this.$store.state.timerSize;
+    },
     clickStart() {
       return this.$store.state.clickStart;
     },
@@ -162,9 +168,6 @@ export default {
 };
 </script>
 <style scoped>
-.timer {
-  font-size: 14rem;
-}
 .timer-height {
   height: 90%;
 }

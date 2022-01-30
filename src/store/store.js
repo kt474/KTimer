@@ -15,9 +15,13 @@ export const store = new Vuex.Store({
     removeChart: false,
     clickStart: false,
     chartWidth: 675,
-    chartHeight: 300
+    chartHeight: 300,
+    timerSize: 14
   },
   mutations: {
+    updateTimerSize(state, payload) {
+      state.timerSize = payload;
+    },
     updateChartWidth(state, payload) {
       state.chartWidth = payload;
     },

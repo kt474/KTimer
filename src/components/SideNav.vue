@@ -136,8 +136,18 @@
                 </v-btn>
               </div>
             </div>
+            <v-slider
+              v-model="timerSize"
+              class="pt-4 mb-n3"
+              min="5"
+              max="20"
+              label="Timer Size"
+              thumb-size="24"
+              thumb-color="blue"
+              thumb-label="always"
+            ></v-slider>
           </v-card-text>
-          <p class="text-h6 mt-2 ml-4">Chart Options</p>
+          <p class="text-h6 ml-4">Chart Options</p>
           <v-card-text>
             <div class="d-flex justify-space-between mb-2">
               <v-checkbox
@@ -279,6 +289,7 @@ export default {
   name: "SideNav",
   data() {
     return {
+      timerSize: 14,
       chartWidth: 675,
       chartHeight: 300,
       darkMode: this.$vuetify.theme.dark,
@@ -395,6 +406,9 @@ export default {
     }
   },
   mounted() {
+    if (localStorage.timerSize) {
+      this.timerSize = JSON.parse(localStorage.timerSize);
+    }
     if (localStorage.chartWidth) {
       this.chartWidth = JSON.parse(localStorage.chartWidth);
     }
@@ -441,6 +455,10 @@ export default {
     }
   },
   watch: {
+    timerSize() {
+      localStorage.timerSize = this.timerSize;
+      this.$store.commit("updateTimerSize", this.timerSize);
+    },
     chartWidth() {
       localStorage.chartWidth = this.chartWidth;
       this.$store.commit("updateChartWidth", this.chartWidth);
