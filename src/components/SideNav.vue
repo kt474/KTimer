@@ -221,7 +221,36 @@
         <p class="font-weight-bold mb-0 ml-1">{{ item.name }}</p>
       </template>
       <template v-slot:[`item.time`]="{ item }">
-        <p class="font-weight-bold mb-0">{{ item.time }}</p>
+        <p class="font-weight-bold mb-0 pointer" @click="openSolveModal(item)">
+          {{ item.time }}
+        </p>
+        <v-dialog v-model="solveModal" max-width="400px" :retain-focus="false">
+          <v-card>
+            <v-toolbar color="primary" class="text-h5" dark>
+              Solve {{ clickedSolve.name }}
+            </v-toolbar>
+            <div class="ma-2 pa-2">
+              <p class="text-h6">
+                Time:
+                <span class="font-weight-regular">{{ clickedSolve.time }}</span>
+              </p>
+              <p class="text-h6">
+                Scramble:
+                <span class="font-weight-regular">
+                  {{
+                    clickedSolve.scramble ? clickedSolve.scramble.join(" ") : ""
+                  }}
+                </span>
+              </p>
+            </div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="solveModal = false">
+                Close
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </template>
       <template v-slot:[`item.remove`]="{ item }">
         <v-btn
@@ -305,6 +334,8 @@ export default {
         value => (value && value.includes(":")) || "':' required"
       ],
       addedTime: null,
+      solveModal: false,
+      clickedSolve: {},
       dialog: false,
       settings: false,
       headers: [
@@ -499,6 +530,10 @@ export default {
     }
   },
   methods: {
+    openSolveModal(item) {
+      this.solveModal = true;
+      this.clickedSolve = item;
+    },
     resetDefault() {
       this.chartWidth = 675;
       this.chartHeight = 300;
