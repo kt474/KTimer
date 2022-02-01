@@ -437,53 +437,7 @@ export default {
     }
   },
   mounted() {
-    if (localStorage.timerSize) {
-      this.timerSize = JSON.parse(localStorage.timerSize);
-    }
-    if (localStorage.chartWidth) {
-      this.chartWidth = JSON.parse(localStorage.chartWidth);
-    }
-    if (localStorage.chartHeight) {
-      this.chartHeight = JSON.parse(localStorage.chartHeight);
-    }
-    if (localStorage.clickStart) {
-      this.clickStart = JSON.parse(localStorage.clickStart);
-    }
-    if (localStorage.darkMode) {
-      this.darkMode = JSON.parse(localStorage.darkMode);
-    }
-    if (localStorage.sortDesc) {
-      this.sortDesc = JSON.parse(localStorage.sortDesc);
-    }
-    if (localStorage.hideAll) {
-      this.hideAll = JSON.parse(localStorage.hideAll);
-    }
-    if (localStorage.removeChart) {
-      this.removeChart = JSON.parse(localStorage.removeChart);
-    }
-    if (localStorage.session) {
-      this.session = JSON.parse(localStorage.session);
-    }
-    if (localStorage.getItem("solves")) {
-      try {
-        const solves = JSON.parse(localStorage.getItem("solves"));
-        solves.forEach(solve => {
-          this.$store.commit("addTime", solve);
-        });
-      } catch (e) {
-        localStorage.removeItem("solves");
-      }
-    }
-    if (localStorage.getItem("solves2")) {
-      try {
-        const solves = JSON.parse(localStorage.getItem("solves2"));
-        solves.forEach(solve => {
-          this.$store.commit("addTime", solve);
-        });
-      } catch (e) {
-        localStorage.removeItem("solves2");
-      }
-    }
+    this.loadLocalStorage();
   },
   watch: {
     timerSize() {
@@ -530,6 +484,55 @@ export default {
     }
   },
   methods: {
+    loadLocalStorage() {
+      if (localStorage.timerSize) {
+        this.timerSize = JSON.parse(localStorage.timerSize);
+      }
+      if (localStorage.chartWidth) {
+        this.chartWidth = JSON.parse(localStorage.chartWidth);
+      }
+      if (localStorage.chartHeight) {
+        this.chartHeight = JSON.parse(localStorage.chartHeight);
+      }
+      if (localStorage.clickStart) {
+        this.clickStart = JSON.parse(localStorage.clickStart);
+      }
+      if (localStorage.darkMode) {
+        this.darkMode = JSON.parse(localStorage.darkMode);
+      }
+      if (localStorage.sortDesc) {
+        this.sortDesc = JSON.parse(localStorage.sortDesc);
+      }
+      if (localStorage.hideAll) {
+        this.hideAll = JSON.parse(localStorage.hideAll);
+      }
+      if (localStorage.removeChart) {
+        this.removeChart = JSON.parse(localStorage.removeChart);
+      }
+      if (localStorage.session) {
+        this.session = JSON.parse(localStorage.session);
+      }
+      if (localStorage.getItem("solves")) {
+        try {
+          const solves = JSON.parse(localStorage.getItem("solves"));
+          solves.forEach(solve => {
+            this.$store.commit("addTime", solve);
+          });
+        } catch (e) {
+          localStorage.removeItem("solves");
+        }
+      }
+      if (localStorage.getItem("solves2")) {
+        try {
+          const solves = JSON.parse(localStorage.getItem("solves2"));
+          solves.forEach(solve => {
+            this.$store.commit("addTime", solve);
+          });
+        } catch (e) {
+          localStorage.removeItem("solves2");
+        }
+      }
+    },
     openSolveModal(item) {
       this.solveModal = true;
       this.clickedSolve = item;
