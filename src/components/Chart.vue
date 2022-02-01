@@ -96,27 +96,7 @@ export default {
           }
         }
       };
-    },
-    forceResize() {
-      //force apex chart to resize on mount
-      this.$store.commit("addTime", {
-        name: 1000,
-        baseTime: null,
-        time: null,
-        remove: null,
-        plusTwo: false,
-        dnf: false,
-        session: this.$store.state.session,
-        scramble: null
-      });
-      this.$store.commit("removeTime", {
-        session: this.$store.state.session,
-        index: 1000
-      });
     }
-  },
-  mounted() {
-    this.forceResize();
   },
   watch: {
     solveTimes: {
@@ -125,11 +105,8 @@ export default {
       },
       immediate: true
     },
-    darkMode: {
-      handler: function() {
-        this.updateLegendColors();
-      },
-      immediate: true
+    darkMode() {
+      this.updateLegendColors();
     }
   },
   data: () => {
