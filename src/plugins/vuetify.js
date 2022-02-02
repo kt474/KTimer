@@ -8,8 +8,8 @@ export default new Vuetify({
     themes: {
       light: {},
       dark: {
-        background: "#212121",
-      },
-    },
-  },
+        background: "#212121"
+      }
+    }
+  }
 });

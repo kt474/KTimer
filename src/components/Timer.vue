@@ -31,7 +31,7 @@ export default {
   mounted() {
     window.addEventListener("keyup", this.onKeyUp);
     window.addEventListener("keydown", this.onKeyDown);
-    this.generateSramble();
+    this.generateScramble();
     this.$store.commit("newScramble", this.scramble);
   },
   beforeDestroy() {
@@ -57,7 +57,7 @@ export default {
   methods: {
     onMouseDown(event) {
       if (this.clickStart) {
-        if (event.type == "mousedown") {
+        if (event.type === "mousedown") {
           this.pressedAt = Date.now();
           if (this.resetTime) {
             this.greenTimer = true;
@@ -68,12 +68,12 @@ export default {
     },
     onMouseUp(event) {
       if (this.clickStart) {
-        if (event.type == "mouseup") {
-          if (this.currentTime == 0 && Date.now() - this.pressedAt >= 400) {
+        if (event.type === "mouseup") {
+          if (this.currentTime === 0 && Date.now() - this.pressedAt >= 400) {
             this.startEnable = true;
             this.pressedAt = 0;
             this.onSpacebar();
-          } else if (this.currentTime != 0) {
+          } else if (this.currentTime !== 0) {
             this.onSpacebar();
           } else {
             this.greenTimer = false;
@@ -83,8 +83,8 @@ export default {
       }
     },
     onKeyDown(event) {
-      if (event.code == "Space") {
-        if (this.pressedAt == 0) {
+      if (event.code === "Space") {
+        if (this.pressedAt === 0) {
           this.pressedAt = Date.now();
         }
         if (Date.now() - this.pressedAt >= this.timeStep) {
@@ -98,7 +98,7 @@ export default {
       }
     },
     onKeyUp(event) {
-      if (event.code == "Space") {
+      if (event.code === "Space") {
         this.pressedAt = 0;
         this.onSpacebar();
       }
@@ -108,7 +108,7 @@ export default {
         this.reset();
         this.resetTime = false;
       }
-      if (this.currentTime == 0 && this.startEnable) {
+      if (this.currentTime === 0 && this.startEnable) {
         this.$store.commit("updateIsSolving", true);
         this.start();
         this.startEnable = false;
@@ -125,7 +125,7 @@ export default {
           session: this.$store.state.session,
           scramble: this.scramble
         });
-        this.generateSramble();
+        this.generateScramble();
         this.$store.commit("newScramble", this.scramble);
         this.resetTime = true;
       } else {
@@ -143,9 +143,8 @@ export default {
     },
     reset() {
       this.currentTime = 0;
-      this.savedTime = 0;
     },
-    generateSramble() {
+    generateScramble() {
       const pool = ["R", "U", "L", "D", "B", "F"];
       const append = ["2", "'", ""];
       const baseMoves = [pool[Math.floor(Math.random() * 6)]];

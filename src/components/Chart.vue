@@ -1,5 +1,5 @@
 <template>
-  <apexchart
+  <apex-chart
     v-if="!noChart"
     class="d-flex justify-center align-center"
     :class="{ 'apex-chart': hideChartDuringSolve }"
@@ -8,7 +8,7 @@
     :height="chartHeight"
     :options="chartOptions"
     :series="series"
-  ></apexchart>
+  ></apex-chart>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ import VueApexCharts from "vue-apexcharts";
 export default {
   name: "Chart",
   components: {
-    apexchart: VueApexCharts
+    apexChart: VueApexCharts
   },
   computed: {
     chartWidth() {
@@ -34,10 +34,7 @@ export default {
       return this.$store.state.removeChart;
     },
     hideChartDuringSolve() {
-      if (this.$store.state.isSolving && this.$store.state.hideAll) {
-        return true;
-      }
-      return false;
+      return this.$store.state.isSolving && this.$store.state.hideAll;
     },
     darkMode() {
       return this.$vuetify.theme.dark ? "dark" : "light";
@@ -68,9 +65,7 @@ export default {
       };
     },
     updateChart() {
-      const session = this.$store.state.session;
-      const times =
-        session === 1 ? this.$store.state.times : this.$store.state.timesS2;
+      const times = this.solveTimes;
       const timesArray = times.map(solve => solve.baseTime / 1000);
       timesArray.forEach((val, index) => {
         if (isNaN(val)) {

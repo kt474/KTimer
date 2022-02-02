@@ -4,6 +4,7 @@
       <div>
         <v-list-item-title class="d-flex align-middle pt-2">
           <img
+            alt="logo"
             width="24"
             height="24"
             src="../assets/logo.svg"
@@ -400,11 +401,11 @@ export default {
       if (currentLength >= 5) {
         let temp = this.currentSessionTimes.map(time => time.baseTime);
         temp = temp.slice(currentLength - 5, currentLength + 1);
-        const dnfCount = temp.filter(time => time == "DNF").length;
+        const dnfCount = temp.filter(time => time === "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
-        if (dnfCount == 1) {
+        if (dnfCount === 1) {
           temp = temp.filter(item => item !== "DNF");
           temp.push("filler");
         }
@@ -420,11 +421,11 @@ export default {
       if (currentLength >= 12) {
         let temp = this.currentSessionTimes.map(time => time.baseTime);
         temp = temp.slice(currentLength - 12, currentLength + 1);
-        const dnfCount = temp.filter(time => time == "DNF").length;
+        const dnfCount = temp.filter(time => time === "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
-        if (dnfCount == 1) {
+        if (dnfCount === 1) {
           temp = temp.filter(item => item !== "DNF");
           temp.push("filler");
         }
@@ -558,9 +559,6 @@ export default {
       anchor.download = "timer_solves.csv";
       anchor.click();
     },
-    toggleOrder() {
-      this.sortDesc = !this.sortDesc;
-    },
     dnf(session, index) {
       this.$store.commit("dnf", { session: session, index: index });
     },
@@ -585,7 +583,7 @@ export default {
     },
     addTime() {
       this.$store.commit("addTime", {
-        baseTime: this.convertDatetoTime(this.addedTime),
+        baseTime: this.convertDateToTime(this.addedTime),
         time: this.addedTime,
         remove: null,
         plusTwo: false,
@@ -594,7 +592,7 @@ export default {
       });
       this.dialog = false;
     },
-    convertDatetoTime(date) {
+    convertDateToTime(date) {
       const t = date.split(":");
       return t.length >= 3
         ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10

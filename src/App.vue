@@ -43,10 +43,7 @@ export default {
       return this.$vuetify.theme.dark ? "dark" : "light";
     },
     hideChartDuringSolve() {
-      if (this.$store.state.isSolving && this.$store.state.hideAll) {
-        return true;
-      }
-      return false;
+      return this.$store.state.isSolving && this.$store.state.hideAll;
     }
   },
   methods: {
@@ -56,8 +53,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.navigation-drawer >>> .v-navigation-drawer__content {
-  overflow: hidden;
-}
-</style>
+<style scoped></style>
