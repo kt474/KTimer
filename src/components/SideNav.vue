@@ -323,6 +323,7 @@ export default {
       chartWidth: 675,
       chartHeight: 300,
       darkMode: this.$vuetify.theme.dark,
+      session: 1,
       sortBy: "name",
       sortDesc: true,
       hideAll: false,
@@ -354,14 +355,6 @@ export default {
     };
   },
   computed: {
-    session: {
-      get() {
-        return this.$store.state.session;
-      },
-      set(value) {
-        this.$store.commit("updateSession", value);
-      }
-    },
     solves() {
       return this.currentSessionTimes.length;
     },
@@ -474,6 +467,7 @@ export default {
     },
     session() {
       localStorage.session = this.session;
+      this.$store.commit("updateSession", this.session);
     },
     currentSessionTimes() {
       const parsed = JSON.stringify(this.currentTimes);
