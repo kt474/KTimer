@@ -208,115 +208,19 @@
       <h3 class="mt-2 mx-auto">Solves: {{ solves }}</h3>
     </v-list-item>
     <v-divider></v-divider>
-    <v-data-table
-      :headers="headers"
-      :items="currentTimes"
-      :items-per-page="50"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      hide-default-header
-      hide-default-footer
-      class="elevation-0 solve-table"
-    >
-      <template v-slot:[`item.name`]="{ item }">
-        <p class="font-weight-bold mb-0 ml-1">{{ item.name }}</p>
-      </template>
-      <template v-slot:[`item.time`]="{ item }">
-        <p class="font-weight-bold mb-0 pointer" @click="openSolveModal(item)">
-          {{ item.time }}
-        </p>
-        <v-dialog v-model="solveModal" max-width="400px" :retain-focus="false">
-          <v-card>
-            <v-toolbar color="primary" class="text-h5" dark>
-              Solve {{ clickedSolve.name }}
-            </v-toolbar>
-            <div class="ma-2 pa-2">
-              <p class="text-h6">
-                Time:
-                <span class="font-weight-regular">{{ clickedSolve.time }}</span>
-              </p>
-              <p class="text-h6">
-                Scramble:
-                <span class="font-weight-regular">
-                  {{
-                    clickedSolve.scramble ? clickedSolve.scramble.join(" ") : ""
-                  }}
-                </span>
-              </p>
-            </div>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="solveModal = false">
-                Close
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </template>
-      <template v-slot:[`item.remove`]="{ item }">
-        <v-btn
-          text
-          icon
-          @click="removeTime(item.session, item.name)"
-          medium
-          color="red darken-2"
-        >
-          <v-icon>
-            mdi-close
-          </v-icon>
-        </v-btn>
-      </template>
-      <template v-slot:[`item.plusTwo`]="{ item }">
-        <h4
-          v-if="currentSessionTimes[item.name - 1].plusTwo"
-          :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].plusTwo
-          }"
-          class="danger-text"
-        >
-          +2
-        </h4>
-        <h4
-          v-else
-          class="font-weight-regular pointer"
-          :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].dnf
-          }"
-          @click="plusTwo(item.session, item.name)"
-        >
-          +2
-        </h4>
-      </template>
-      <template v-slot:[`item.dnf`]="{ item }">
-        <h4
-          v-if="currentSessionTimes[item.name - 1].dnf"
-          :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].dnf
-          }"
-          class="danger-text"
-        >
-          DNF
-        </h4>
-        <h4
-          v-else
-          class="font-weight-regular pointer"
-          :class="{
-            'disable-cursor': currentSessionTimes[item.name - 1].dnf
-          }"
-          @click="dnf(item.session, item.name)"
-        >
-          DNF
-        </h4>
-      </template>
-    </v-data-table>
+    <sideNavTable :sort-desc="sortDesc" />
     <v-divider></v-divider>
   </v-card>
 </template>
 <script>
+import sideNavTable from "@/components/SideNavTable";
 import dateFormat from "dateformat";
 import { mean } from "lodash";
 export default {
   name: "SideNav",
+  components: {
+    sideNavTable
+  },
   data() {
     return {
       timerSize: 14,
@@ -324,7 +228,6 @@ export default {
       chartHeight: 300,
       darkMode: this.$vuetify.theme.dark,
       session: 1,
-      sortBy: "name",
       sortDesc: true,
       hideAll: false,
       removeChart: false,
@@ -336,22 +239,8 @@ export default {
         value => (value && value.includes(":")) || "':' required"
       ],
       addedTime: null,
-      solveModal: false,
-      clickedSolve: {},
       dialog: false,
-      settings: false,
-      headers: [
-        {
-          text: "Times",
-          align: "start",
-          sortable: false,
-          value: "name"
-        },
-        { text: "time", value: "time" },
-        { text: "plusTwo", value: "plusTwo" },
-        { text: "dnf", value: "dnf" },
-        { text: "remove", value: "remove" }
-      ]
+      settings: false
     };
   },
   computed: {
@@ -528,10 +417,6 @@ export default {
         }
       }
     },
-    openSolveModal(item) {
-      this.solveModal = true;
-      this.clickedSolve = item;
-    },
     resetDefault() {
       this.chartWidth = 675;
       this.chartHeight = 300;
@@ -552,25 +437,6 @@ export default {
       anchor.target = "_blank";
       anchor.download = "timer_solves.csv";
       anchor.click();
-    },
-    dnf(session, index) {
-      this.$store.commit("dnf", { session: session, index: index });
-    },
-    plusTwo(session, index) {
-      if (
-        !this.currentSessionTimes[index - 1].plusTwo &&
-        this.currentSessionTimes[index - 1].baseTime !== "DNF"
-      ) {
-        this.$store.commit("plusTwo", { session: session, index: index });
-        this.$store.commit("buttonPressed", {
-          session: session,
-          index: index,
-          prop: "plusTwo"
-        });
-      }
-    },
-    removeTime(session, index) {
-      this.$store.commit("removeTime", { session: session, index: index });
     },
     clearTimes() {
       this.$store.commit("clearTimes", this.$store.state.session);
@@ -608,16 +474,6 @@ export default {
 .footer-text {
   font-size: 0.75rem;
 }
-.solve-table {
-  overflow: auto;
-  max-height: 70vh;
-}
-.disable-cursor {
-  cursor: not-allowed !important;
-}
-.danger-text {
-  color: #d32f2f;
-}
 .text-start span {
   margin-right: -1.7rem;
   padding-left: 0.7rem;
@@ -625,9 +481,6 @@ export default {
 .text-start h4 {
   margin-right: -1.7rem;
   padding-left: 0.7rem;
-}
-.pointer {
-  cursor: pointer;
 }
 .card {
   box-shadow: none !important;
