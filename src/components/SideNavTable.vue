@@ -184,4 +184,12 @@ export default {
 .pointer {
   cursor: pointer;
 }
+.text-start span {
+  margin-right: -1.7rem;
+  padding-left: 0.7rem;
+}
+.text-start h4 {
+  margin-right: -1.7rem;
+  padding-left: 0.7rem;
+}
 </style>

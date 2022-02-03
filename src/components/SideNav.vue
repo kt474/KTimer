@@ -17,10 +17,12 @@
             Session
           </p>
           <v-select
+            v-if="showSelect"
             dense
             height="20"
             v-model="session"
             :items="items"
+            @change="changeSelect"
             class="mt-0 session-select"
           ></v-select>
         </div>
@@ -223,6 +225,7 @@ export default {
   },
   data() {
     return {
+      showSelect: true,
       timerSize: 14,
       chartWidth: 675,
       chartHeight: 300,
@@ -368,6 +371,12 @@ export default {
     }
   },
   methods: {
+    changeSelect() {
+      this.showSelect = false;
+      this.$nextTick(() => {
+        this.showSelect = true;
+      });
+    },
     loadLocalStorage() {
       if (localStorage.timerSize) {
         this.timerSize = JSON.parse(localStorage.timerSize);
@@ -473,14 +482,6 @@ export default {
 }
 .footer-text {
   font-size: 0.75rem;
-}
-.text-start span {
-  margin-right: -1.7rem;
-  padding-left: 0.7rem;
-}
-.text-start h4 {
-  margin-right: -1.7rem;
-  padding-left: 0.7rem;
 }
 .card {
   box-shadow: none !important;
