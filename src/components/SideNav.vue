@@ -59,7 +59,7 @@
           >
             Add Time
           </v-btn>
-          <v-dialog v-model="dialog" max-width="400px">
+          <v-dialog overlay-opacity="0.2" v-model="dialog" max-width="400px">
             <v-card>
               <v-toolbar color="primary" class="text-h5" dark
                 >Add Time</v-toolbar
@@ -109,7 +109,7 @@
       >
         <v-icon small>mdi-cog</v-icon>
       </v-btn>
-      <v-dialog v-model="settings" max-width="400px">
+      <v-dialog overlay-opacity="0.2" v-model="settings" max-width="400px">
         <v-card>
           <v-toolbar color="primary" class="text-h5" dark>Settings</v-toolbar>
           <p class="text-h6 mt-3 mb-0 ml-4">General</p>

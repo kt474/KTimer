@@ -16,7 +16,12 @@
       <p class="font-weight-bold mb-0 pointer" @click="openSolveModal(item)">
         {{ item.time }}
       </p>
-      <v-dialog v-model="solveModal" max-width="400px" :retain-focus="false">
+      <v-dialog
+        overlay-opacity="0.2"
+        v-model="solveModal"
+        max-width="400px"
+        :retain-focus="false"
+      >
         <v-card>
           <v-toolbar color="primary" class="text-h5" dark>
             Solve {{ clickedSolve.name }}
