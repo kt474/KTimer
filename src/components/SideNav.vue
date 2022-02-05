@@ -234,7 +234,7 @@ export default {
       sortDesc: true,
       hideAll: false,
       removeChart: false,
-      clickStart: false,
+      clickStart: this.isMobile,
       items: [1, 2],
       rules: [
         value => !!value || "Input required",
@@ -247,6 +247,11 @@ export default {
     };
   },
   computed: {
+    isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+    },
     solves() {
       return this.currentSessionTimes.length;
     },

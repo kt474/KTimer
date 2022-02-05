@@ -2,6 +2,8 @@
   <v-container
     @mousedown="onMouseDown"
     @mouseup="onMouseUp"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
     class="d-flex justify-center align-center py-4"
     :class="{ 'timer-height': noChart }"
   >
@@ -55,6 +57,34 @@ export default {
     }
   },
   methods: {
+    onTouchStart(event) {
+      if (this.clickStart) {
+        if (event.type === "touchstart") {
+          event.preventDefault();
+          this.pressedAt = Date.now();
+          if (this.resetTime) {
+            this.greenTimer = true;
+            this.currentTime = 0;
+          }
+        }
+      }
+    },
+    onTouchEnd(event) {
+      if (this.clickStart) {
+        if (event.type === "touchend") {
+          if (this.currentTime === 0 && Date.now() - this.pressedAt >= 400) {
+            this.startEnable = true;
+            this.pressedAt = 0;
+            this.onSpacebar();
+          } else if (this.currentTime !== 0) {
+            this.onSpacebar();
+          } else {
+            this.greenTimer = false;
+            this.currentTime = 0;
+          }
+        }
+      }
+    },
     onMouseDown(event) {
       if (this.clickStart) {
         if (event.type === "mousedown") {
