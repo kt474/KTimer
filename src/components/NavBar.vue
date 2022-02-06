@@ -14,10 +14,11 @@
           class="mt-6 mr-4 scramble-select"
         ></v-select>
         <v-btn
-          fab
+          rounded
+          small
           dark
-          height="35"
-          width="35"
+          height="30"
+          width="30"
           color="#26C6DA"
           class="mb-1"
           @click.stop="newScramble"
@@ -71,7 +72,8 @@ export default {
   },
   methods: {
     newScramble() {
-      console.log("button clicked");
+      const newScramble = this.generateScramble();
+      this.$store.commit("newScramble", newScramble);
     },
     changeSelect() {
       this.showSelect = false;
@@ -82,6 +84,25 @@ export default {
     openDrawer() {
       this.drawer = !this.drawer;
       this.$emit("openDrawer", this.drawer);
+    },
+    generateScramble() {
+      const pool = ["R", "U", "L", "D", "B", "F"];
+      const append = ["2", "'", ""];
+      const baseMoves = [pool[Math.floor(Math.random() * 6)]];
+      for (let i = 1; i < 20; i++) {
+        const newMove = pool[Math.floor(Math.random() * 6)];
+        if (baseMoves[i - 1] === newMove) {
+          const newPool = pool.filter(move => move !== newMove);
+          baseMoves.push(newPool[Math.floor(Math.random() * 5)]);
+        } else {
+          baseMoves.push(newMove);
+        }
+      }
+      const result = [];
+      baseMoves.forEach(move => {
+        result.push(move + append[Math.floor(Math.random() * 3)]);
+      });
+      return result;
     }
   },
   mounted() {

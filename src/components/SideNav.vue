@@ -228,7 +228,7 @@ export default {
       showSelect: true,
       timerSize: 14,
       chartWidth: 675,
-      chartHeight: 300,
+      chartHeight: 275,
       darkMode: this.$vuetify.theme.dark,
       session: 1,
       sortDesc: true,
@@ -433,7 +433,7 @@ export default {
     },
     resetDefault() {
       this.chartWidth = 675;
-      this.chartHeight = 300;
+      this.chartHeight = 275;
     },
     exportTimes() {
       let result = [];
