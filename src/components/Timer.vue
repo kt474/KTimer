@@ -26,21 +26,24 @@ export default {
     resetTime: true,
     timeStep: 400,
     pressedAt: 0,
-    startEnable: false,
-    scramble: []
+    startEnable: false
   }),
 
   mounted() {
     window.addEventListener("keyup", this.onKeyUp);
     window.addEventListener("keydown", this.onKeyDown);
-    this.generateScramble();
-    this.$store.commit("newScramble", this.scramble);
   },
   beforeDestroy() {
     window.removeEventListener("keyup", this.onKeyUp);
     window.removeEventListener("keydown", this.onKeyDown);
   },
   computed: {
+    scrambleType() {
+      return this.$store.state.scrambleType;
+    },
+    scramble() {
+      return this.$store.state.currentScramble;
+    },
     timerSize() {
       return this.$store.state.timerSize;
     },
@@ -88,6 +91,7 @@ export default {
     onMouseDown(event) {
       if (this.clickStart) {
         if (event.type === "mousedown") {
+          event.preventDefault();
           this.pressedAt = Date.now();
           if (this.resetTime) {
             this.greenTimer = true;
@@ -155,8 +159,7 @@ export default {
           session: this.$store.state.session,
           scramble: this.scramble
         });
-        this.generateScramble();
-        this.$store.commit("newScramble", this.scramble);
+        this.newScramble();
         this.resetTime = true;
       } else {
         this.greenTimer = false;
@@ -174,11 +177,24 @@ export default {
     reset() {
       this.currentTime = 0;
     },
-    generateScramble() {
+    newScramble() {
+      let newScramble;
+      console.log(this.scrambleType);
+      if (this.scrambleType === "3x3") {
+        newScramble = this.generateScramble(20);
+      } else if (this.scrambleType === "2x2") {
+        newScramble = this.generateScramble(9);
+      } else if (this.scrambleType === "4x4") {
+        newScramble = this.generate4x4Scramble();
+      }
+      console.log(newScramble);
+      this.$store.commit("newScramble", newScramble);
+    },
+    generateScramble(length) {
       const pool = ["R", "U", "L", "D", "B", "F"];
       const append = ["2", "'", ""];
       const baseMoves = [pool[Math.floor(Math.random() * 6)]];
-      for (let i = 1; i < 20; i++) {
+      for (let i = 1; i < length; i++) {
         const newMove = pool[Math.floor(Math.random() * 6)];
         if (baseMoves[i - 1] === newMove) {
           const newPool = pool.filter(move => move !== newMove);
@@ -191,7 +207,26 @@ export default {
       baseMoves.forEach(move => {
         result.push(move + append[Math.floor(Math.random() * 3)]);
       });
-      this.scramble = result;
+      return result;
+    },
+    generate4x4Scramble() {
+      const pool = ["R", "U", "L", "D", "B", "F"];
+      const append = ["2", "'", "", "w", "w'", "w2"];
+      const baseMoves = [pool[Math.floor(Math.random() * 6)]];
+      for (let i = 1; i < 30; i++) {
+        const newMove = pool[Math.floor(Math.random() * 6)];
+        if (baseMoves[i - 1] === newMove) {
+          const newPool = pool.filter(move => move !== newMove);
+          baseMoves.push(newPool[Math.floor(Math.random() * 5)]);
+        } else {
+          baseMoves.push(newMove);
+        }
+      }
+      const result = [];
+      baseMoves.forEach(move => {
+        result.push(move + append[Math.floor(Math.random() * 6)]);
+      });
+      return result;
     }
   }
 };

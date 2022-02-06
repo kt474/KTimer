@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     timesS2: [],
     session: 1,
     currentScramble: "",
+    scrambleType: "3x3",
     hideAll: false,
     isSolving: false,
     removeChart: false,
@@ -19,6 +20,9 @@ export const store = new Vuex.Store({
     timerSize: 14
   },
   mutations: {
+    updateScrambleType(state, payload) {
+      state.scrambleType = payload;
+    },
     updateTimerSize(state, payload) {
       state.timerSize = payload;
     },
