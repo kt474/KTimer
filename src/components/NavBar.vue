@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar height="90" :value="hideNav" app color="primary" dark>
+  <v-app-bar :height="navBarHeight" :value="hideNav" app color="primary" dark>
     <v-app-bar-nav-icon @click="openDrawer"></v-app-bar-nav-icon>
     <div class="mt-n6 wrapper">
-      <div class="d-flex align-center mx-auto select-wrapper">
+      <div class="d-flex align-center mx-auto mt-3 select-wrapper">
         <v-toolbar-title class="text-h5 mr-3">Scramble: </v-toolbar-title>
         <v-select
           v-if="showSelect"
@@ -26,14 +26,8 @@
           <v-icon small>mdi-refresh</v-icon>
         </v-btn>
       </div>
-      <div class="d-flex justify-center mx-auto scramble-text mt-n6">
-        <h5
-          class="mr-4 text-h5"
-          v-for="(i, index) in currentScramble"
-          :key="index"
-        >
-          {{ i }}
-        </h5>
+      <div class="d-flex justify-center mx-auto mt-n4 text-wrap scramble-text ">
+        <p>{{ currentScrambleText }}</p>
       </div>
     </div>
   </v-app-bar>
@@ -49,6 +43,14 @@ export default {
     drawer: true
   }),
   computed: {
+    navBarHeight() {
+      if (this.scrambleType === "3x3" || this.scrambleType === "2x2") {
+        return 90;
+      } else return 110;
+    },
+    currentScrambleText() {
+      return this.currentScramble.join(" ");
+    },
     currentScramble() {
       return this.$store.state.currentScramble;
     },
@@ -158,8 +160,11 @@ export default {
   font-size: 1.25rem;
 }
 .scramble-text {
+  font-size: 1.5rem;
   max-width: 1000px;
-  overflow: auto;
+  letter-spacing: 4px;
+  line-height: 1.4rem;
+  text-align: center;
 }
 .wrapper {
   width: 100%;

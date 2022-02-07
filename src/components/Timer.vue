@@ -179,7 +179,6 @@ export default {
     },
     newScramble() {
       let newScramble;
-      console.log(this.scrambleType);
       if (this.scrambleType === "3x3") {
         newScramble = this.generateScramble(20);
       } else if (this.scrambleType === "2x2") {
@@ -187,7 +186,6 @@ export default {
       } else if (this.scrambleType === "4x4") {
         newScramble = this.generate4x4Scramble();
       }
-      console.log(newScramble);
       this.$store.commit("newScramble", newScramble);
     },
     generateScramble(length) {

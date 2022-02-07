@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     times: [],
     timesS2: [],
     session: 1,
-    currentScramble: "",
+    currentScramble: [],
     scrambleType: "3x3",
     hideAll: false,
     isSolving: false,
