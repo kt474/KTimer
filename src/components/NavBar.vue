@@ -37,7 +37,7 @@
 export default {
   name: "NavBar",
   data: () => ({
-    items: ["2x2", "3x3", "4x4"],
+    items: ["2x2", "3x3", "4x4", "5x5"],
     scrambleType: "3x3",
     showSelect: true,
     drawer: true
@@ -46,7 +46,8 @@ export default {
     navBarHeight() {
       if (this.scrambleType === "3x3" || this.scrambleType === "2x2") {
         return 90;
-      } else return 110;
+      } else if (this.scrambleType === "4x4") return 110;
+      else return 130;
     },
     currentScrambleText() {
       return this.currentScramble.join(" ");
@@ -85,7 +86,9 @@ export default {
       } else if (this.scrambleType === "2x2") {
         newScramble = this.generateScramble(9);
       } else if (this.scrambleType === "4x4") {
-        newScramble = this.generate4x4Scramble();
+        newScramble = this.generateBigScramble(35);
+      } else if (this.scrambleType === "5x5") {
+        newScramble = this.generateBigScramble(50);
       }
       this.$store.commit("newScramble", newScramble);
     },
@@ -99,11 +102,11 @@ export default {
       this.drawer = !this.drawer;
       this.$emit("openDrawer", this.drawer);
     },
-    generate4x4Scramble() {
+    generateBigScramble(length) {
       const pool = ["R", "U", "L", "D", "B", "F"];
       const append = ["2", "'", "", "w", "w'", "w2"];
       const baseMoves = [pool[Math.floor(Math.random() * 6)]];
-      for (let i = 1; i < 30; i++) {
+      for (let i = 1; i < length; i++) {
         const newMove = pool[Math.floor(Math.random() * 6)];
         if (baseMoves[i - 1] === newMove) {
           const newPool = pool.filter(move => move !== newMove);
@@ -163,7 +166,7 @@ export default {
   font-size: 1.5rem;
   max-width: 1000px;
   letter-spacing: 4px;
-  line-height: 1.4rem;
+  line-height: 1.5rem;
   text-align: center;
 }
 .wrapper {

@@ -184,7 +184,9 @@ export default {
       } else if (this.scrambleType === "2x2") {
         newScramble = this.generateScramble(9);
       } else if (this.scrambleType === "4x4") {
-        newScramble = this.generate4x4Scramble();
+        newScramble = this.generateBigScramble(35);
+      } else if (this.scrambleType === "5x5") {
+        newScramble = this.generateBigScramble(50);
       }
       this.$store.commit("newScramble", newScramble);
     },
@@ -207,11 +209,11 @@ export default {
       });
       return result;
     },
-    generate4x4Scramble() {
+    generateBigScramble(length) {
       const pool = ["R", "U", "L", "D", "B", "F"];
       const append = ["2", "'", "", "w", "w'", "w2"];
       const baseMoves = [pool[Math.floor(Math.random() * 6)]];
-      for (let i = 1; i < 30; i++) {
+      for (let i = 1; i < length; i++) {
         const newMove = pool[Math.floor(Math.random() * 6)];
         if (baseMoves[i - 1] === newMove) {
           const newPool = pool.filter(move => move !== newMove);
