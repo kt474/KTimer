@@ -118,6 +118,7 @@ export default {
     },
     onKeyDown(event) {
       if (event.code === "Space") {
+        event.preventDefault();
         if (this.pressedAt === 0) {
           this.pressedAt = Date.now();
         }
