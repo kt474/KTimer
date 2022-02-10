@@ -19,6 +19,9 @@ export default {
     apexChart: VueApexCharts
   },
   computed: {
+    themeColor() {
+      return this.$vuetify.theme.themes.light.primary;
+    },
     chartWidth() {
       return this.$store.state.chartWidth;
     },
@@ -44,6 +47,14 @@ export default {
     }
   },
   methods: {
+    updateChartColors(color) {
+      this.chartOptions = {
+        ...this.chartOptions,
+        ...{
+          colors: [color]
+        }
+      };
+    },
     updateLegendColors() {
       this.chartOptions = {
         ...this.chartOptions,
@@ -94,6 +105,9 @@ export default {
     }
   },
   watch: {
+    themeColor() {
+      this.updateChartColors(this.themeColor);
+    },
     solveTimes: {
       handler: function() {
         this.updateChart();
