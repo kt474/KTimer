@@ -1,4 +1,4 @@
-# Rubik's cube timer
+# KTimer
 
 ## Project setup
 

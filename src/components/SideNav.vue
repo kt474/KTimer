@@ -190,9 +190,7 @@
             ></v-slider>
             <p class="footer-text mb-0 mt-3">
               Created by Kevin Tian, please report any bugs/issues
-              <a
-                href="https://github.com/kt474/rubiks-cube-timer/issues"
-                target="_blank"
+              <a href="https://github.com/kt474/ktimer/issues" target="_blank"
                 >here</a
               >
             </p>
