@@ -103,7 +103,7 @@
       <v-btn
         small
         @click.stop="settings = true"
-        class="mt-2"
+        class="mt-2 button-min-width"
         color="blue-grey lighten-2"
         dark
       >
@@ -146,7 +146,7 @@
               max="20"
               label="Timer Size"
               thumb-size="24"
-              thumb-color="blue"
+              thumb-color="primary"
               thumb-label="always"
             ></v-slider>
           </v-card-text>
@@ -175,7 +175,7 @@
               max="900"
               label="Width"
               thumb-size="24"
-              thumb-color="blue"
+              thumb-color="primary"
               thumb-label="always"
             ></v-slider>
             <v-slider
@@ -185,10 +185,9 @@
               max="500"
               label="Height"
               thumb-size="24"
-              thumb-color="blue"
+              thumb-color="primary"
               thumb-label="always"
             ></v-slider>
-
             <p class="footer-text mb-0 mt-3">
               Created by Kevin Tian, please report any bugs/issues
               <a
@@ -201,7 +200,75 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="settings = false">
+            <v-btn color="primary darken-1" text @click="settings = false">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-btn
+        small
+        @click.stop="themeSettings = true"
+        class="mt-2 button-min-width theme-button"
+        color="blue-grey lighten-2"
+        dark
+      >
+        <v-icon small>mdi-palette</v-icon>
+      </v-btn>
+      <v-dialog overlay-opacity="0.2" v-model="themeSettings" max-width="400px">
+        <v-card>
+          <v-toolbar color="primary" class="text-h5" dark>Theme</v-toolbar>
+          <p class="text-h6 mt-3 mb-0 ml-4"></p>
+          <v-card-text>
+            <v-radio-group v-model="themeColor" column>
+              <div class="d-flex justify-space-around mt-2">
+                <div>
+                  <v-radio
+                    label="Blue"
+                    color="#1976D2"
+                    value="#1976D2"
+                  ></v-radio>
+                  <v-radio
+                    label="Red"
+                    color="#E53935"
+                    value="#E53935"
+                  ></v-radio>
+                  <v-radio
+                    label="Green"
+                    color="#43A047"
+                    value="#43A047"
+                  ></v-radio>
+                  <v-radio
+                    label="Purple"
+                    color="#8E24AA"
+                    value="#8E24AA"
+                  ></v-radio>
+                </div>
+                <div>
+                  <v-radio
+                    label="Pink"
+                    color="#D81B60"
+                    value="#D81B60"
+                  ></v-radio>
+                  <v-radio
+                    label="Orange"
+                    color="#F57C00"
+                    value="#F57C00"
+                  ></v-radio>
+                  <v-radio
+                    label="Yellow"
+                    color="#F9A825"
+                    value="#F9A825"
+                  ></v-radio>
+                  <v-radio label="Black" color="#000" value="#000"></v-radio>
+                </div>
+              </div>
+            </v-radio-group>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary darken-1" text @click="themeSettings = false">
               Close
             </v-btn>
           </v-card-actions>
@@ -243,7 +310,9 @@ export default {
       ],
       addedTime: null,
       dialog: false,
-      settings: false
+      settings: false,
+      themeSettings: false,
+      themeColor: "#1976D2"
     };
   },
   computed: {
@@ -331,6 +400,10 @@ export default {
     this.loadLocalStorage();
   },
   watch: {
+    themeColor() {
+      this.updateTheme(this.themeColor);
+      localStorage.themeColor = this.themeColor;
+    },
     timerSize() {
       localStorage.timerSize = this.timerSize;
       this.$store.commit("updateTimerSize", this.timerSize);
@@ -376,6 +449,10 @@ export default {
     }
   },
   methods: {
+    updateTheme(color) {
+      this.$vuetify.theme.themes.light.primary = color;
+      this.$vuetify.theme.themes.dark.primary = color;
+    },
     changeSelect() {
       this.showSelect = false;
       this.$nextTick(() => {
@@ -383,6 +460,9 @@ export default {
       });
     },
     loadLocalStorage() {
+      if (localStorage.themeColor) {
+        this.themeColor = localStorage.themeColor;
+      }
       if (localStorage.timerSize) {
         this.timerSize = JSON.parse(localStorage.timerSize);
       }
@@ -481,6 +561,12 @@ export default {
 };
 </script>
 <style scoped>
+.theme-button {
+  margin-left: 6px;
+}
+.button-min-width {
+  min-width: 0 !important;
+}
 .export-icon {
   margin-top: 2px;
   margin-left: 4px;

@@ -19,7 +19,7 @@
           dark
           height="30"
           width="30"
-          color="blue lighten-1"
+          color="primary lighten-1"
           class="mb-1"
           @click.stop="newScramble"
         >
