@@ -135,7 +135,13 @@
               </div>
               <div>
                 <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
-                <v-btn small @click.stop="exportTimes" color="primary" dark>
+                <v-btn
+                  aria-label="export"
+                  small
+                  @click.stop="exportTimes"
+                  color="primary"
+                  dark
+                >
                   Export
                   <v-icon class="export-icon" small>mdi-download</v-icon>
                 </v-btn>
@@ -161,6 +167,7 @@
                 label="Hide chart"
               ></v-checkbox>
               <v-btn
+                aria-label="default"
                 small
                 @click.stop="resetDefault"
                 class="mr-2"
@@ -200,7 +207,12 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary darken-1" text @click="settings = false">
+            <v-btn
+              aria-label="close"
+              color="primary darken-1"
+              text
+              @click="settings = false"
+            >
               Close
             </v-btn>
           </v-card-actions>
@@ -269,7 +281,12 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary darken-1" text @click="themeSettings = false">
+            <v-btn
+              aria-label="close"
+              color="primary darken-1"
+              text
+              @click="themeSettings = false"
+            >
               Close
             </v-btn>
           </v-card-actions>

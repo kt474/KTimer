@@ -45,6 +45,7 @@
       </template>
       <template v-slot:[`item.remove`]="{ item }">
         <v-btn
+          aria-label="close"
           text
           icon
           @click="removeTime(item.session, item.name)"
