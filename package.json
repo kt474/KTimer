@@ -11,7 +11,7 @@
     "apexcharts": "^3.32.1",
     "core-js": "^3.6.5",
     "dateformat": "^5.0.2",
-    "lodash": "^4.17.21",
+    "lodash.mean": "^4.1.0",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.6.2",
     "vuetify": "^2.4.0",

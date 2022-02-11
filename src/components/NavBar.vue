@@ -1,10 +1,18 @@
 <template>
   <v-app-bar :height="navBarHeight" :value="hideNav" app color="primary" dark>
-    <v-app-bar-nav-icon @click="openDrawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon
+      @click="openDrawer"
+      aria-label="drawer"
+    ></v-app-bar-nav-icon>
     <div class="mt-n6 wrapper">
       <div class="d-flex align-center mx-auto mt-3 select-wrapper">
-        <v-toolbar-title class="text-h5 mr-3">Scramble: </v-toolbar-title>
+        <label for="scramble">
+          <v-toolbar-title class="text-h5 mr-3">
+            Scramble:
+          </v-toolbar-title>
+        </label>
         <v-select
+          id="scramble"
           v-if="showSelect"
           dense
           outlined
@@ -21,6 +29,7 @@
           width="30"
           color="primary lighten-1"
           class="mb-1"
+          aria-label="scramble"
           @click.stop="newScramble"
         >
           <v-icon small>mdi-refresh</v-icon>

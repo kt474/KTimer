@@ -13,10 +13,11 @@
           <p class="text-h6">KTimer</p>
         </v-list-item-title>
         <div class="d-flex mt-1">
-          <p class="text--secondary pr-3">
+          <label for="session" class="text--secondary pr-3">
             Session
-          </p>
+          </label>
           <v-select
+            id="session"
             v-if="showSelect"
             dense
             height="20"
@@ -102,6 +103,7 @@
     <v-list-item class="d-flex align-center px-3 pb-2">
       <v-btn
         small
+        aria-label="settings"
         @click.stop="settings = true"
         class="mt-2 button-min-width"
         color="blue-grey lighten-2"
@@ -206,6 +208,7 @@
       </v-dialog>
       <v-btn
         small
+        aria-label="theme"
         @click.stop="themeSettings = true"
         class="mt-2 button-min-width theme-button"
         color="blue-grey lighten-2"
@@ -282,7 +285,7 @@
 <script>
 import sideNavTable from "@/components/SideNavTable";
 import dateFormat from "dateformat";
-import { mean } from "lodash";
+import mean from "lodash.mean";
 export default {
   name: "SideNav",
   components: {
