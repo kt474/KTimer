@@ -32,7 +32,7 @@
           aria-label="scramble"
           @click.stop="newScramble"
         >
-          <v-icon small>mdi-refresh</v-icon>
+          <v-icon small>{{ refreshIcon }}</v-icon>
         </v-btn>
       </div>
       <div class="d-flex justify-center mx-auto mt-n4 text-wrap scramble-text ">
@@ -43,9 +43,11 @@
 </template>
 
 <script>
+import { mdiRefresh } from "@mdi/js";
 export default {
   name: "NavBar",
   data: () => ({
+    refreshIcon: mdiRefresh,
     items: ["2x2", "3x3", "4x4", "5x5"],
     scrambleType: "3x3",
     showSelect: true,

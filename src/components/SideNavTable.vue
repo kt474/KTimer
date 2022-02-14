@@ -52,8 +52,8 @@
           medium
           color="red darken-2"
         >
-          <v-icon>
-            mdi-close
+          <v-icon large class="mr-3">
+            {{ closeIcon }}
           </v-icon>
         </v-btn>
       </template>
@@ -104,11 +104,13 @@
 </template>
 
 <script>
+import { mdiClose } from "@mdi/js";
 export default {
   name: "SideNavTable",
   props: ["sortDesc"],
   data() {
     return {
+      closeIcon: mdiClose,
       solveModal: false,
       sortBy: "name",
       clickedSolve: {},

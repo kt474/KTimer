@@ -109,7 +109,7 @@
         color="blue-grey lighten-2"
         dark
       >
-        <v-icon small>mdi-cog</v-icon>
+        <v-icon small>{{ settingsIcon }}</v-icon>
       </v-btn>
       <v-dialog overlay-opacity="0.2" v-model="settings" max-width="400px">
         <v-card>
@@ -143,7 +143,7 @@
                   dark
                 >
                   Export
-                  <v-icon class="export-icon" small>mdi-download</v-icon>
+                  <v-icon class="export-icon" small>{{ downloadIcon }}</v-icon>
                 </v-btn>
               </div>
             </div>
@@ -226,7 +226,7 @@
         color="blue-grey lighten-2"
         dark
       >
-        <v-icon small>mdi-palette</v-icon>
+        <v-icon small>{{ paletteIcon }}</v-icon>
       </v-btn>
       <v-dialog overlay-opacity="0.2" v-model="themeSettings" max-width="400px">
         <v-card>
@@ -303,6 +303,7 @@
 import sideNavTable from "@/components/SideNavTable";
 import dateFormat from "dateformat";
 import mean from "lodash.mean";
+import { mdiPalette, mdiDownload, mdiCog } from "@mdi/js";
 export default {
   name: "SideNav",
   components: {
@@ -310,6 +311,9 @@ export default {
   },
   data() {
     return {
+      paletteIcon: mdiPalette,
+      downloadIcon: mdiDownload,
+      settingsIcon: mdiCog,
       showSelect: true,
       timerSize: 14,
       chartWidth: 675,
