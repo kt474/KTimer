@@ -1,7 +1,7 @@
 <template>
   <apex-chart
     v-if="!noChart"
-    class="d-flex justify-center align-center"
+    class="d-flex justify-center align-center chart"
     :class="{ 'apex-chart': hideChartDuringSolve }"
     type="line"
     :width="chartWidth"
@@ -64,9 +64,6 @@ export default {
             type: "line",
             zoom: {
               enabled: false
-            },
-            toolbar: {
-              show: false
             }
           },
           tooltip: {
@@ -132,9 +129,6 @@ export default {
           type: "line",
           zoom: {
             enabled: false
-          },
-          toolbar: {
-            show: false
           }
         },
         colors: ["#1976d2"],
@@ -177,5 +171,8 @@ export default {
 <style scoped>
 .apex-chart {
   display: none !important;
+}
+.chart {
+  color: #000 !important;
 }
 </style>
