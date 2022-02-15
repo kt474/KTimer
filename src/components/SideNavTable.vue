@@ -175,8 +175,8 @@ export default {
 
 <style scoped>
 .solve-table {
-  overflow: auto;
-  max-height: 70vh;
+  overflow: auto !important;
+  max-height: 65vh;
 }
 .disable-cursor {
   cursor: not-allowed !important;

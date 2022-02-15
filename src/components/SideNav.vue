@@ -597,6 +597,8 @@ export default {
   font-size: 0.75rem;
 }
 .card {
+  height: 100%;
+  overflow: hidden !important;
   box-shadow: none !important;
 }
 .session-select {
