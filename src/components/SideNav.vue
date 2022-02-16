@@ -322,7 +322,7 @@ export default {
       session: 1,
       sortDesc: true,
       hideAll: false,
-      removeChart: false,
+      removeChart: this.isMobile,
       clickStart: this.isMobile,
       items: [1, 2],
       rules: [
@@ -339,9 +339,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
+      return this.$vuetify.breakpoint.mdAndDown;
     },
     solves() {
       return this.currentSessionTimes.length;
