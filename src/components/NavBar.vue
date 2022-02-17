@@ -35,7 +35,10 @@
           <v-icon small>{{ refreshIcon }}</v-icon>
         </v-btn>
       </div>
-      <div class="d-flex justify-center mx-auto mt-n4 text-wrap scramble-text ">
+      <div
+        class="d-flex justify-center mx-auto mt-n4 text-wrap scramble-text"
+        :class="isMobile ? 'max-width-mobile' : 'max-width-desktop'"
+      >
         <p>{{ currentScrambleText }}</p>
       </div>
     </div>
@@ -54,11 +57,18 @@ export default {
     drawer: true
   }),
   computed: {
+    isMobile() {
+      return this.$vuetify.breakpoint.mdAndDown;
+    },
     navBarHeight() {
+      let result = 0;
+      if (this.isMobile) {
+        result = result + 50;
+      }
       if (this.scrambleType === "3x3" || this.scrambleType === "2x2") {
-        return 90;
-      } else if (this.scrambleType === "4x4") return 110;
-      else return 130;
+        return 90 + result;
+      } else if (this.scrambleType === "4x4") return 110 + result;
+      else return 130 + result;
     },
     currentScrambleText() {
       return this.currentScramble.join(" ");
@@ -173,9 +183,14 @@ export default {
   width: 10px;
   font-size: 1.25rem;
 }
+.max-width-mobile {
+  max-width: 550px;
+}
+.max-width-desktop {
+  max-width: 1000px;
+}
 .scramble-text {
   font-size: 1.5rem;
-  max-width: 1000px;
   letter-spacing: 4px;
   line-height: 1.5rem;
   text-align: center;

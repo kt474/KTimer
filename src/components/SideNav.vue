@@ -315,15 +315,15 @@ export default {
       downloadIcon: mdiDownload,
       settingsIcon: mdiCog,
       showSelect: true,
-      timerSize: 14,
+      timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 14,
       chartWidth: 675,
       chartHeight: 275,
       darkMode: this.$vuetify.theme.dark,
       session: 1,
       sortDesc: true,
       hideAll: false,
-      removeChart: this.isMobile,
-      clickStart: this.isMobile,
+      removeChart: this.$vuetify.breakpoint.mdAndDown,
+      clickStart: this.$vuetify.breakpoint.mdAndDown,
       items: [1, 2],
       rules: [
         value => !!value || "Input required",
@@ -338,9 +338,6 @@ export default {
     };
   },
   computed: {
-    isMobile() {
-      return this.$vuetify.breakpoint.mdAndDown;
-    },
     solves() {
       return this.currentSessionTimes.length;
     },
@@ -480,6 +477,9 @@ export default {
       });
     },
     loadLocalStorage() {
+      this.$store.commit("updateClickStart", this.clickStart);
+      this.$store.commit("updateRemoveChart", this.removeChart);
+      this.$store.commit("updateTimerSize", this.timerSize);
       if (localStorage.themeColor) {
         this.themeColor = localStorage.themeColor;
       }
