@@ -31,5 +31,4 @@ Contributions are welcome, please report any issues or requests in the [issues](
 
 ## Acknowledgements
 
-- [Scramble Display](https://github.com/cubing/scramble-display)
 - [Logoipsum](https://logoipsum.com/)
