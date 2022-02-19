@@ -158,7 +158,8 @@ export default {
           plusTwo: false,
           dnf: false,
           session: this.$store.state.session,
-          scramble: this.scramble
+          scramble: this.scramble,
+          scrambleType: this.scrambleType
         });
         this.newScramble();
         this.resetTime = true;

@@ -69,12 +69,15 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Time"
-                        v-model="addedTime"
-                        :rules="rules"
-                        hide-details="auto"
-                      ></v-text-field>
+                      <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-text-field
+                          label="Time"
+                          v-model="addedTime"
+                          :rules="rules"
+                          hide-details="auto"
+                          required
+                        ></v-text-field>
+                      </v-form>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -84,7 +87,12 @@
                 <v-btn color="blue darken-1" text @click="dialog = false">
                   Close
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="addTime()">
+                <v-btn
+                  :disabled="!valid"
+                  color="blue darken-1"
+                  text
+                  @click="addTime()"
+                >
                   Save
                 </v-btn>
               </v-card-actions>
@@ -325,10 +333,13 @@ export default {
       removeChart: this.$vuetify.breakpoint.mdAndDown,
       clickStart: this.$vuetify.breakpoint.mdAndDown,
       items: [1, 2],
+      valid: true,
       rules: [
         value => !!value || "Input required",
-        value => (value && value.length >= 3) || "Min 3 characters",
-        value => (value && value.includes(":")) || "':' required"
+        value => {
+          const pattern = /^(\d+):(\d+)$|(^(\d+):(\d+):(\d+)$)/;
+          return pattern.test(value) || "Invalid format - Ex: 9:30 or 1:20:12";
+        }
       ],
       addedTime: null,
       dialog: false,
@@ -556,15 +567,19 @@ export default {
       this.$store.commit("clearTimes", this.$store.state.session);
     },
     addTime() {
-      this.$store.commit("addTime", {
-        baseTime: this.convertDateToTime(this.addedTime),
-        time: this.addedTime,
-        remove: null,
-        plusTwo: false,
-        dnf: false,
-        session: this.$store.state.session
-      });
-      this.dialog = false;
+      if (this.$refs.form.validate()) {
+        this.$store.commit("addTime", {
+          baseTime: this.convertDateToTime(this.addedTime),
+          time: this.addedTime,
+          remove: null,
+          plusTwo: false,
+          dnf: false,
+          session: this.$store.state.session,
+          scramble: null,
+          scrambleType: null
+        });
+        this.dialog = false;
+      }
     },
     convertDateToTime(date) {
       const t = date.split(":");

@@ -13,7 +13,7 @@
       </v-navigation-drawer>
     </keep-alive>
     <nav-bar @openDrawer="onClickChild" />
-    <v-main>
+    <v-main class="main">
       <timer />
       <chart class="mt-n3" />
     </v-main>
@@ -53,4 +53,9 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.main {
+  height: 100vh;
+  overflow: hidden;
+}
+</style>

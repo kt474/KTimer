@@ -9,15 +9,16 @@ Contributions are welcome, please report any issues or requests in the [issues](
 
 ## Features
 
-- Light/dark mode toggle
-- Scrambles for 2x2-5x5
-- Interactive chart
-- Fullscreen mode
-- Works Offline
-- Touch screen support
+- Mobile & tablet touch screen support
 - Customize timer and chart size
 - Eight color themes
-- Export times to csv
+- Scrambles for 2x2-5x5
+- Light/dark mode toggle
+- Interactive chart
+- Fullscreen mode
+- Works offline
+- Export times 
+- Multiple sessions
 - Solves saved in local storage
 
 ## Run Locally

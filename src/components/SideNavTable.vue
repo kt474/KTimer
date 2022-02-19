@@ -11,6 +11,12 @@
             <span class="font-weight-regular">{{ clickedSolve.time }}</span>
           </p>
           <p class="text-h6">
+            Type:
+            <span class="font-weight-regular">{{
+              clickedSolve.scrambleType
+            }}</span>
+          </p>
+          <p class="text-h6">
             Scramble:
             <span class="font-weight-regular">
               {{ clickedSolve.scramble ? clickedSolve.scramble.join(" ") : "" }}
