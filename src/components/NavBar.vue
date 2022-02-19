@@ -37,7 +37,7 @@
       </div>
       <div
         class="d-flex justify-center mx-auto mt-n4 text-wrap scramble-text"
-        :class="isMobile ? 'max-width-mobile' : 'max-width-desktop'"
+        :class="isTablet ? 'max-width-mobile' : 'max-width-desktop'"
       >
         <p>{{ currentScrambleText }}</p>
       </div>
@@ -57,18 +57,38 @@ export default {
     drawer: true
   }),
   computed: {
-    isMobile() {
+    isPhone() {
+      return this.$vuetify.breakpoint.xs;
+    },
+    isTablet() {
       return this.$vuetify.breakpoint.mdAndDown;
     },
     navBarHeight() {
-      let result = 0;
-      if (this.isMobile) {
-        result = result + 50;
-      }
-      if (this.scrambleType === "3x3" || this.scrambleType === "2x2") {
-        return 90 + result;
-      } else if (this.scrambleType === "4x4") return 110 + result;
-      else return 130 + result;
+      const heights = {
+        phone: {
+          "2x2": 120,
+          "3x3": 140,
+          "4x4": 220,
+          "5x5": 270
+        },
+        tablet: {
+          "2x2": 100,
+          "3x3": 120,
+          "4x4": 160,
+          "5x5": 200
+        },
+        desktop: {
+          "2x2": 90,
+          "3x3": 90,
+          "4x4": 130,
+          "5x5": 150
+        }
+      };
+      if (this.isPhone) {
+        return heights.phone[this.scrambleType];
+      } else if (this.isTablet) {
+        return heights.tablet[this.scrambleType];
+      } else return heights.desktop[this.scrambleType];
     },
     currentScrambleText() {
       return this.currentScramble.join(" ");

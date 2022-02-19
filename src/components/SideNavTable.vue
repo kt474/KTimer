@@ -33,6 +33,7 @@
       :sort-desc.sync="sortDesc"
       hide-default-header
       hide-default-footer
+      mobile-breakpoint="0"
       class="elevation-0 solve-table"
     >
       <template v-slot:[`item.name`]="{ item }">
