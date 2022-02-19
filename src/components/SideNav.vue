@@ -138,7 +138,7 @@
                 <v-checkbox
                   class="mt-0"
                   v-model="clickStart"
-                  label="Click to start"
+                  label="Click/touch to start"
                 ></v-checkbox>
               </div>
               <div>

@@ -34,13 +34,18 @@
     <v-data-table
       :headers="headers"
       :items="currentTimes"
-      :items-per-page="50"
+      :items-per-page="150"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       hide-default-header
       hide-default-footer
       mobile-breakpoint="0"
-      class="elevation-0 solve-table"
+      class="elevation-0 enable-scroll"
+      :class="{
+        'phone-table-height': isPhone,
+        'tablet-table-height': isTablet,
+        'desktop-table-height': isDesktop
+      }"
     >
       <template v-slot:[`item.name`]="{ item }">
         <p class="font-weight-bold mb-0 ml-1">{{ item.name }}</p>
@@ -136,6 +141,15 @@ export default {
     };
   },
   computed: {
+    isPhone() {
+      return this.$vuetify.breakpoint.xs;
+    },
+    isTablet() {
+      return this.$vuetify.breakpoint.md || this.$vuetify.breakpoint.sm;
+    },
+    isDesktop() {
+      return !this.isPhone && !this.isTablet;
+    },
     currentSessionTimes() {
       if (this.$store.state.session === 1) {
         return this.$store.state.times;
@@ -181,9 +195,17 @@ export default {
 </script>
 
 <style scoped>
-.solve-table {
+.phone-table-height {
+  max-height: 400px;
+}
+.tablet-table-height {
+  max-height: 500px;
+}
+.desktop-table-height {
+  max-height: 62vh;
+}
+.enable-scroll {
   overflow: auto !important;
-  max-height: 65vh;
 }
 .disable-cursor {
   cursor: not-allowed !important;

@@ -15,7 +15,7 @@
     <nav-bar @openDrawer="onClickChild" />
     <v-main class="main">
       <timer />
-      <chart class="mt-n3" />
+      <chart class="mt-n2" />
     </v-main>
   </v-app>
 </template>
@@ -55,7 +55,8 @@ export default {
 </script>
 <style scoped>
 .main {
-  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
   overflow: hidden;
 }
 </style>
