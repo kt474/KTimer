@@ -101,9 +101,57 @@
           <h4 class="font-weight-regular pl-4">
             Mean: <span class="font-weight-bold">{{ currentMean }}</span>
           </h4>
-          <h4 class="font-weight-regular pl-4">
-            Best: <span class="font-weight-bold">{{ currentBest }}</span>
+          <h4
+            class="font-weight-regular pl-4 cursor-pointer"
+            @click="bestTimeModal = true"
+          >
+            Best: <span class="font-weight-bold">{{ currentBest.time }}</span>
           </h4>
+          <v-dialog
+            overlay-opacity="0.2"
+            v-model="bestTimeModal"
+            max-width="400px"
+          >
+            <v-card>
+              <v-toolbar color="primary" class="text-h5" dark>
+                Solve {{ currentBest.name }}
+              </v-toolbar>
+              <div class="ma-2 pa-2">
+                <p class="text-h6">
+                  Time:
+                  <span class="font-weight-regular">{{
+                    currentBest.time
+                  }}</span>
+                </p>
+                <p class="text-h6">
+                  Type:
+                  <span class="font-weight-regular">{{
+                    currentBest.scrambleType
+                  }}</span>
+                </p>
+                <p class="text-h6">
+                  Scramble:
+                  <span class="font-weight-regular">
+                    {{
+                      currentBest && currentBest.scramble
+                        ? currentBest.scramble.join(" ")
+                        : ""
+                    }}
+                  </span>
+                </p>
+              </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="bestTimeModal = false"
+                >
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
     </v-list-item>
@@ -345,7 +393,8 @@ export default {
       dialog: false,
       settings: false,
       themeSettings: false,
-      themeColor: "#1976D2"
+      themeColor: "#1976D2",
+      bestTimeModal: false
     };
   },
   computed: {
@@ -364,9 +413,10 @@ export default {
       const validTimes = this.currentSessionTimes.filter(time => !time.dnf);
       if (validTimes.length) {
         const times = validTimes.map(time => time.baseTime);
-        return this.convertTime(Math.min(...times));
+        const index = times.indexOf(Math.min(...times));
+        return this.currentSessionTimes[index];
       }
-      return "00:00";
+      return {};
     },
     currentMean() {
       const validTimes = this.currentSessionTimes.filter(time => !time.dnf);
@@ -596,6 +646,9 @@ export default {
 };
 </script>
 <style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
 .theme-button {
   margin-left: 6px;
 }

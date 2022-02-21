@@ -15,11 +15,15 @@ export const store = new Vuex.Store({
     isSolving: false,
     removeChart: false,
     clickStart: false,
+    inspectionTime: false,
     chartWidth: 675,
     chartHeight: 300,
     timerSize: 14
   },
   mutations: {
+    updateInspectionTime(state, payload) {
+      state.inspectionTime = payload;
+    },
     updateScrambleType(state, payload) {
       state.scrambleType = payload;
     },

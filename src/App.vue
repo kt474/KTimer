@@ -54,6 +54,9 @@ export default {
 };
 </script>
 <style scoped>
+.main::-webkit-scrollbar {
+  display: none;
+}
 .main {
   max-width: 100%;
   max-height: 100%;
