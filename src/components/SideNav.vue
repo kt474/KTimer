@@ -42,12 +42,80 @@
           >
             Reset
           </v-btn>
-          <h4 class="font-weight-regular pl-4">
+          <h4
+            class="font-weight-regular pl-4 cursor-pointer"
+            @click="ao5Modal = true"
+          >
             ao5: <span class="font-weight-bold">{{ averageFive }}</span>
           </h4>
-          <h4 class="font-weight-regular pl-1">
+          <v-dialog overlay-opacity="0.2" v-model="ao5Modal" max-width="400px">
+            <v-card>
+              <v-toolbar color="primary" class="text-h5" dark>
+                Average of Five {{ averageFive }}
+              </v-toolbar>
+              <div class="ma-2 pa-2">
+                <v-container>
+                  <v-row v-for="solve in lastFiveSolves" :key="solve.name">
+                    <p class="text-h6">
+                      Solve {{ solve.name }}:
+                      <span class="font-weight-regular">{{ solve.time }}</span>
+                    </p>
+                    <p class="text-h6 mt-n4">
+                      Scramble:
+                      <span class="font-weight-regular">{{
+                        solve.scramble.join(" ")
+                      }}</span>
+                    </p>
+                    <v-divider class="mt-n2"></v-divider>
+                  </v-row>
+                </v-container>
+              </div>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="ao5Modal = false">
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <h4
+            class="font-weight-regular pl-1 cursor-pointer"
+            @click="ao12Modal = true"
+          >
             ao12: <span class="font-weight-bold">{{ averageTwelve }}</span>
           </h4>
+          <v-dialog overlay-opacity="0.2" v-model="ao12Modal" max-width="400px">
+            <v-card>
+              <v-toolbar color="primary" class="text-h5" dark>
+                Average of Twelve {{ averageTwelve }}
+              </v-toolbar>
+              <div class="ma-2 pa-2">
+                <v-container>
+                  <v-row v-for="solve in last12Solves" :key="solve.name">
+                    <p class="text-h6">
+                      Solve {{ solve.name }}:
+                      <span class="font-weight-regular">{{ solve.time }}</span>
+                    </p>
+                    <p class="text-h6 mt-n4">
+                      Scramble:
+                      <span class="font-weight-regular">{{
+                        solve.scramble.join(" ")
+                      }}</span>
+                    </p>
+                    <v-divider class="mt-n2"></v-divider>
+                  </v-row>
+                </v-container>
+              </div>
+              <v-divider></v-divider>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="ao12Modal = false">
+                  Close
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
         <div class="d-flex justify-space-between align-center pb-2">
           <v-btn
@@ -82,6 +150,7 @@
                   </v-row>
                 </v-container>
               </v-card-text>
+              <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="dialog = false">
@@ -105,7 +174,10 @@
             class="font-weight-regular pl-4 cursor-pointer"
             @click="bestTimeModal = true"
           >
-            Best: <span class="font-weight-bold">{{ currentBest.time }}</span>
+            Best:
+            <span class="font-weight-bold">{{
+              currentBest.time ? currentBest.time : "00:00"
+            }}</span>
           </h4>
           <v-dialog
             overlay-opacity="0.2"
@@ -140,6 +212,7 @@
                   </span>
                 </p>
               </div>
+              <v-divider></v-divider>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
@@ -359,6 +432,7 @@
 import sideNavTable from "@/components/SideNavTable";
 import dateFormat from "dateformat";
 import mean from "lodash.mean";
+import takeRight from "lodash.takeright";
 import { mdiPalette, mdiDownload, mdiCog } from "@mdi/js";
 export default {
   name: "SideNav",
@@ -394,10 +468,18 @@ export default {
       settings: false,
       themeSettings: false,
       themeColor: "#1976D2",
-      bestTimeModal: false
+      bestTimeModal: false,
+      ao5Modal: false,
+      ao12Modal: false
     };
   },
   computed: {
+    lastFiveSolves() {
+      return takeRight(this.currentSessionTimes, 5);
+    },
+    last12Solves() {
+      return takeRight(this.currentSessionTimes, 12);
+    },
     solves() {
       return this.currentSessionTimes.length;
     },
