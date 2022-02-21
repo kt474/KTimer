@@ -282,9 +282,6 @@ export default {
       if (localStorage.removeChart) {
         this.removeChart = JSON.parse(localStorage.removeChart);
       }
-      if (localStorage.session) {
-        this.session = JSON.parse(localStorage.session);
-      }
       if (localStorage.getItem("solves")) {
         try {
           const solves = JSON.parse(localStorage.getItem("solves"));
@@ -346,10 +343,6 @@ export default {
     removeChart() {
       localStorage.removeChart = this.removeChart;
       this.$store.commit("updateRemoveChart", this.removeChart);
-    },
-    session() {
-      localStorage.session = this.session;
-      this.$store.commit("updateSession", this.session);
     },
     currentSessionTimes() {
       const parsed = JSON.stringify(this.currentTimes);

@@ -57,6 +57,17 @@ export default {
       items: [1, 2]
     };
   },
+  mounted() {
+    if (localStorage.session) {
+      this.session = JSON.parse(localStorage.session);
+    }
+  },
+  watch: {
+    session() {
+      localStorage.session = this.session;
+      this.$store.commit("updateSession", this.session);
+    }
+  },
   methods: {
     changeSelect() {
       this.showSelect = false;
