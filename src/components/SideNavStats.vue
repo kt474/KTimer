@@ -2,7 +2,7 @@
   <v-list-item class="px-3">
     <div>
       <div class="d-flex justify-space-between align-center pt-2">
-        <v-btn depressed small color="error" @click="clearTimes()" class="my-2">
+        <v-btn small color="error" @click="clearTimes()" class="my-2">
           Reset
         </v-btn>
         <h4
@@ -85,7 +85,6 @@
       <div class="d-flex justify-space-between align-center pb-2">
         <v-btn
           small
-          depressed
           class="my-2"
           color="primary"
           dark

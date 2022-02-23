@@ -31,6 +31,11 @@
                 v-model="clickStart"
                 label="Click/touch to start"
               ></v-checkbox>
+              <v-checkbox
+                class="mt-0"
+                v-model="inspectionTime"
+                label="Inspection time"
+              ></v-checkbox>
             </div>
             <div>
               <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
@@ -198,6 +203,7 @@ export default {
       settingsIcon: mdiCog,
       sortDesc: true,
       hideAll: false,
+      inspectionTime: false,
       removeChart: this.$vuetify.breakpoint.mdAndDown,
       clickStart: this.$vuetify.breakpoint.mdAndDown,
       settings: false,
@@ -255,6 +261,9 @@ export default {
       this.$store.commit("updateClickStart", this.clickStart);
       this.$store.commit("updateRemoveChart", this.removeChart);
       this.$store.commit("updateTimerSize", this.timerSize);
+      if (localStorage.inspectionTime) {
+        this.inspectionTime = JSON.parse(localStorage.inspectionTime);
+      }
       if (localStorage.themeColor) {
         this.themeColor = localStorage.themeColor;
       }
@@ -308,6 +317,10 @@ export default {
     this.loadLocalStorage();
   },
   watch: {
+    inspectionTime() {
+      localStorage.inspectionTime = this.inspectionTime;
+      this.$store.commit("updateInspectionTime", this.inspectionTime);
+    },
     themeColor() {
       this.updateTheme(this.themeColor);
       localStorage.themeColor = this.themeColor;

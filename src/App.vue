@@ -15,7 +15,7 @@
     <nav-bar @openDrawer="onClickChild" />
     <v-main class="main">
       <timer />
-      <chart class="mt-n2" />
+      <chart />
     </v-main>
   </v-app>
 </template>
