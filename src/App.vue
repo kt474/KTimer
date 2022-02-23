@@ -9,7 +9,7 @@
         width="340"
         app
       >
-        <side-nav />
+        <side-nav @closeDrawer="onClickChild" />
       </v-navigation-drawer>
     </keep-alive>
     <nav-bar @openDrawer="onClickChild" />
@@ -47,8 +47,8 @@ export default {
     }
   },
   methods: {
-    onClickChild(value) {
-      this.drawer = value;
+    onClickChild() {
+      this.drawer = !this.drawer;
     }
   }
 };

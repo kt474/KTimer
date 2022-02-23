@@ -36,6 +36,9 @@
     <v-divider></v-divider>
     <side-nav-table :sort-desc="sortDesc" />
     <v-divider></v-divider>
+    <div v-if="isPhone" class="d-flex justify-center mt-2">
+      <v-btn @click="closeDrawer" small aria-label="drawer">Close Menu</v-btn>
+    </div>
   </v-card>
 </template>
 <script>
@@ -57,6 +60,11 @@ export default {
       items: [1, 2]
     };
   },
+  computed: {
+    isPhone() {
+      return this.$vuetify.breakpoint.xs;
+    }
+  },
   mounted() {
     if (localStorage.session) {
       this.session = JSON.parse(localStorage.session);
@@ -69,6 +77,9 @@ export default {
     }
   },
   methods: {
+    closeDrawer() {
+      this.$emit("closeDrawer");
+    },
     changeSelect() {
       this.showSelect = false;
       this.$nextTick(() => {
