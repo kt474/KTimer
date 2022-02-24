@@ -13,8 +13,8 @@
       </v-navigation-drawer>
     </keep-alive>
     <nav-bar @openDrawer="onClickChild" />
-    <v-main class="main">
-      <timer />
+    <v-main class="d-flex align-center justify-center">
+      <timer class="mt-n12" />
       <chart />
     </v-main>
   </v-app>
@@ -53,13 +53,4 @@ export default {
   }
 };
 </script>
-<style scoped>
-.main::-webkit-scrollbar {
-  display: none;
-}
-.main {
-  max-width: 100%;
-  max-height: 100%;
-  overflow: hidden;
-}
-</style>
+<style scoped></style>

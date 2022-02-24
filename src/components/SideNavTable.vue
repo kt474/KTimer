@@ -196,8 +196,12 @@ export default {
 </script>
 
 <style scoped>
+h4:hover {
+  color: #d32f2f;
+  font-weight: bold !important;
+}
 .phone-table-height {
-  max-height: 400px;
+  max-height: 300px;
 }
 .tablet-table-height {
   max-height: 500px;

@@ -357,13 +357,16 @@ export default {
       localStorage.removeChart = this.removeChart;
       this.$store.commit("updateRemoveChart", this.removeChart);
     },
-    currentSessionTimes() {
-      const parsed = JSON.stringify(this.currentTimes);
-      if (this.$store.state.session === 1) {
-        localStorage.setItem("solves", parsed);
-      } else if (this.$store.state.session === 2) {
-        localStorage.setItem("solves2", parsed);
-      }
+    currentSessionTimes: {
+      handler: function() {
+        const parsed = JSON.stringify(this.currentTimes);
+        if (this.$store.state.session === 1) {
+          localStorage.setItem("solves", parsed);
+        } else if (this.$store.state.session === 2) {
+          localStorage.setItem("solves2", parsed);
+        }
+      },
+      deep: true
     }
   }
 };

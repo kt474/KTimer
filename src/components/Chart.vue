@@ -109,6 +109,7 @@ export default {
       handler: function() {
         this.updateChart();
       },
+      deep: true,
       immediate: true
     },
     darkMode() {
