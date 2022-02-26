@@ -22,6 +22,7 @@ export default {
   name: "Timer",
   data: () => ({
     currentTime: 0,
+    lastTime: 0,
     greenTimer: false,
     resetTime: true,
     timeStep: 400,
@@ -67,7 +68,6 @@ export default {
           this.pressedAt = Date.now();
           if (this.resetTime) {
             this.greenTimer = true;
-            this.currentTime = 0;
           }
         }
       }
@@ -75,7 +75,10 @@ export default {
     onTouchEnd(event) {
       if (this.clickStart) {
         if (event.type === "touchend") {
-          if (this.currentTime === 0 && Date.now() - this.pressedAt >= 400) {
+          if (
+            (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+            Date.now() - this.pressedAt >= 400
+          ) {
             this.startEnable = true;
             this.pressedAt = 0;
             this.onSpacebar();
@@ -95,7 +98,6 @@ export default {
           this.pressedAt = Date.now();
           if (this.resetTime) {
             this.greenTimer = true;
-            this.currentTime = 0;
           }
         }
       }
@@ -103,7 +105,10 @@ export default {
     onMouseUp(event) {
       if (this.clickStart) {
         if (event.type === "mouseup") {
-          if (this.currentTime === 0 && Date.now() - this.pressedAt >= 400) {
+          if (
+            (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+            Date.now() - this.pressedAt >= 400
+          ) {
             this.startEnable = true;
             this.pressedAt = 0;
             this.onSpacebar();
@@ -128,7 +133,6 @@ export default {
         }
         if (this.resetTime) {
           this.greenTimer = true;
-          this.currentTime = 0;
         }
       }
     },
@@ -139,17 +143,19 @@ export default {
       }
     },
     onSpacebar() {
-      if (this.resetTime) {
+      if (this.resetTime && this.startEnable) {
         this.reset();
         this.resetTime = false;
       }
       if (this.currentTime === 0 && this.startEnable) {
+        this.lastTime = 0;
         this.$store.commit("updateIsSolving", true);
         this.start();
         this.startEnable = false;
         this.greenTimer = false;
-      } else if (this.currentTime !== 0) {
+      } else if (this.currentTime !== 0 && this.currentTime !== this.lastTime) {
         this.stop();
+        this.lastTime = this.currentTime;
         this.$store.commit("updateIsSolving", false);
         this.$store.commit("addTime", {
           baseTime: this.currentTime,
