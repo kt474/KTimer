@@ -7,11 +7,8 @@
     class="d-flex justify-center align-center py-4"
     :class="{ 'timer-height': noChart }"
   >
-    <p
-      :style="`font-size: ${timerSize}rem`"
-      :class="{ 'timer-color': greenTimer }"
-    >
-      {{ time }}
+    <p :style="`font-size: ${timerSize}rem`" :class="timerColor">
+      {{ inspectionActive ? inspectionTimer : time }}
     </p>
   </v-container>
 </template>
@@ -21,13 +18,21 @@ import dateFormat from "dateformat";
 export default {
   name: "Timer",
   data: () => ({
+    timer: 0,
+    inspectionId: 0,
     currentTime: 0,
     lastTime: 0,
     greenTimer: false,
     resetTime: true,
     timeStep: 400,
     pressedAt: 0,
-    startEnable: false
+    startEnable: false,
+    inspectionTimer: 15,
+    inspectionActive: false,
+    yellowTimer: false,
+    greenInspectionTimer: false,
+    clickInspectionColor: false,
+    clicked: false
   }),
 
   mounted() {
@@ -39,6 +44,41 @@ export default {
     window.removeEventListener("keydown", this.onKeyDown);
   },
   computed: {
+    isSolving() {
+      return this.$store.state.isSolving;
+    },
+    timerColor() {
+      if (this.clickStart && this.inspectionEnabled && this.clicked) {
+        if (this.isSolving) {
+          if (this.inspectionActive && !this.clickInspectionColor) {
+            return "red-timer";
+          }
+          if (this.clickInspectionColor) {
+            return "inspection-click-color";
+          }
+        }
+      }
+      if (this.greenTimer && !this.inspectionEnabled) {
+        return "timer-color";
+      }
+      if (this.isSolving) {
+        if (this.inspectionEnabled) {
+          if (this.inspectionActive && !this.yellowTimer) {
+            return "red-timer";
+          }
+          if (this.yellowTimer && !this.greenInspectionTimer) {
+            return "yellow-timer";
+          }
+          if (this.greenInspectionTimer) {
+            return "green-timer";
+          }
+        }
+      }
+      return "default-timer";
+    },
+    inspectionEnabled() {
+      return this.$store.state.inspectionTime;
+    },
     scrambleType() {
       return this.$store.state.scrambleType;
     },
@@ -60,14 +100,37 @@ export default {
       return dateFormat(date, format);
     }
   },
+  watch: {
+    inspectionTimer() {
+      if (this.inspectionTimer === 0) {
+        this.$store.commit("addTime", {
+          baseTime: "DNF",
+          time: "DNF",
+          remove: null,
+          plusTwo: false,
+          dnf: true,
+          session: this.$store.state.session,
+          scramble: this.scramble,
+          scrambleType: this.scrambleType
+        });
+        this.stopInspection();
+        this.resetInspection();
+        this.$store.commit("updateIsSolving", false);
+      }
+    }
+  },
   methods: {
     onTouchStart(event) {
       if (this.clickStart) {
         if (event.type === "touchstart") {
           event.preventDefault();
+          this.clicked = true;
           this.pressedAt = Date.now();
           if (this.resetTime) {
             this.greenTimer = true;
+          }
+          if (this.inspectionActive) {
+            this.clickInspectionColor = true;
           }
         }
       }
@@ -75,18 +138,54 @@ export default {
     onTouchEnd(event) {
       if (this.clickStart) {
         if (event.type === "touchend") {
-          if (
-            (this.currentTime === 0 || this.currentTime === this.lastTime) &&
-            Date.now() - this.pressedAt >= 400
-          ) {
-            this.startEnable = true;
-            this.pressedAt = 0;
-            this.onSpacebar();
-          } else if (this.currentTime !== 0) {
-            this.onSpacebar();
+          this.clicked = false;
+          if (this.inspectionEnabled) {
+            this.clickInspectionColor = false;
+            this.yellowTimer = false;
+            this.$store.commit("updateIsSolving", true);
+            if (
+              !this.inspectionActive &&
+              (this.currentTime === 0 || this.currentTime === this.lastTime)
+            ) {
+              this.startInspection();
+            }
+            if (
+              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+              Date.now() - this.pressedAt >= 400 &&
+              this.inspectionTimer !== 15
+            ) {
+              this.startEnable = true;
+              this.stopInspection();
+              this.resetInspection();
+              this.pressedAt = 0;
+              this.onSpacebar();
+            }
+            if (this.inspectionActive && !this.startEnable) {
+              return;
+            }
+            if (this.inspectionTimer !== 15) {
+              this.stopInspection();
+            }
+            if (this.currentTime !== 0) {
+              this.onSpacebar();
+            } else {
+              this.greenTimer = false;
+              this.currentTime = 0;
+            }
           } else {
-            this.greenTimer = false;
-            this.currentTime = 0;
+            if (
+              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+              Date.now() - this.pressedAt >= 400
+            ) {
+              this.startEnable = true;
+              this.pressedAt = 0;
+              this.onSpacebar();
+            } else if (this.currentTime !== 0) {
+              this.onSpacebar();
+            } else {
+              this.greenTimer = false;
+              this.currentTime = 0;
+            }
           }
         }
       }
@@ -95,9 +194,13 @@ export default {
       if (this.clickStart) {
         if (event.type === "mousedown") {
           event.preventDefault();
+          this.clicked = true;
           this.pressedAt = Date.now();
           if (this.resetTime) {
             this.greenTimer = true;
+          }
+          if (this.inspectionActive) {
+            this.clickInspectionColor = true;
           }
         }
       }
@@ -105,18 +208,54 @@ export default {
     onMouseUp(event) {
       if (this.clickStart) {
         if (event.type === "mouseup") {
-          if (
-            (this.currentTime === 0 || this.currentTime === this.lastTime) &&
-            Date.now() - this.pressedAt >= 400
-          ) {
-            this.startEnable = true;
-            this.pressedAt = 0;
-            this.onSpacebar();
-          } else if (this.currentTime !== 0) {
-            this.onSpacebar();
+          this.clicked = false;
+          if (this.inspectionEnabled) {
+            this.clickInspectionColor = false;
+            this.yellowTimer = false;
+            this.$store.commit("updateIsSolving", true);
+            if (
+              !this.inspectionActive &&
+              (this.currentTime === 0 || this.currentTime === this.lastTime)
+            ) {
+              this.startInspection();
+            }
+            if (
+              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+              Date.now() - this.pressedAt >= 400 &&
+              this.inspectionTimer !== 15
+            ) {
+              this.startEnable = true;
+              this.stopInspection();
+              this.resetInspection();
+              this.pressedAt = 0;
+              this.onSpacebar();
+            }
+            if (this.inspectionActive && !this.startEnable) {
+              return;
+            }
+            if (this.inspectionTimer !== 15) {
+              this.stopInspection();
+            }
+            if (this.currentTime !== 0) {
+              this.onSpacebar();
+            } else {
+              this.greenTimer = false;
+              this.currentTime = 0;
+            }
           } else {
-            this.greenTimer = false;
-            this.currentTime = 0;
+            if (
+              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+              Date.now() - this.pressedAt >= 400
+            ) {
+              this.startEnable = true;
+              this.pressedAt = 0;
+              this.onSpacebar();
+            } else if (this.currentTime !== 0) {
+              this.onSpacebar();
+            } else {
+              this.greenTimer = false;
+              this.currentTime = 0;
+            }
           }
         }
       }
@@ -127,9 +266,18 @@ export default {
         if (this.pressedAt === 0) {
           this.pressedAt = Date.now();
         }
-        if (Date.now() - this.pressedAt >= this.timeStep) {
-          this.startEnable = true;
-          this.pressedAt = 0;
+        if (this.inspectionActive) {
+          this.yellowTimer = true;
+          if (Date.now() - this.pressedAt >= this.timeStep) {
+            this.startEnable = true;
+            this.greenInspectionTimer = true;
+            this.pressedAt = 0;
+          }
+        } else if (!this.inspectionEnabled) {
+          if (Date.now() - this.pressedAt >= this.timeStep) {
+            this.startEnable = true;
+            this.pressedAt = 0;
+          }
         }
         if (this.resetTime) {
           this.greenTimer = true;
@@ -139,7 +287,23 @@ export default {
     onKeyUp(event) {
       if (event.code === "Space") {
         this.pressedAt = 0;
-        this.onSpacebar();
+        this.yellowTimer = false;
+        this.greenInspectionTimer = false;
+        if (this.inspectionEnabled) {
+          this.$store.commit("updateIsSolving", true);
+          if (this.inspectionActive && !this.startEnable) {
+            return;
+          }
+          if (!this.inspectionActive) {
+            this.startInspection();
+          }
+          if (this.inspectionTimer !== 15) {
+            this.stopInspection();
+            this.onSpacebar();
+          }
+        } else {
+          this.onSpacebar();
+        }
       }
     },
     onSpacebar() {
@@ -169,9 +333,11 @@ export default {
         });
         this.newScramble();
         this.resetTime = true;
+        this.resetInspection();
       } else {
         this.greenTimer = false;
         this.resetTime = true;
+        this.resetInspection();
       }
     },
     start() {
@@ -184,6 +350,19 @@ export default {
     },
     reset() {
       this.currentTime = 0;
+    },
+    startInspection() {
+      this.inspectionActive = true;
+      this.inspectionId = setInterval(() => {
+        this.inspectionTimer -= 1;
+      }, 1000);
+    },
+    stopInspection() {
+      clearInterval(this.inspectionId);
+      this.inspectionActive = false;
+    },
+    resetInspection() {
+      this.inspectionTimer = 15;
     },
     newScramble() {
       let newScramble;
@@ -243,6 +422,25 @@ export default {
 .timer-height {
   height: 90%;
 }
+.default-timer {
+  color: #000000;
+}
+.red-timer {
+  color: #ff1744;
+}
+.green-timer {
+  color: #00c853 !important;
+}
+.yellow-timer {
+  color: #ffc400;
+}
+.inspection-click-color {
+  animation-name: inspection-color-change;
+  animation-fill-mode: forwards;
+  animation-duration: 400ms;
+  animation-timing-function: step-end;
+  color: #000;
+}
 .timer-color {
   animation-name: color-change;
   animation-fill-mode: forwards;
@@ -253,6 +451,14 @@ export default {
 @keyframes color-change {
   0% {
     color: #ff1744;
+  }
+  100% {
+    color: #00c853;
+  }
+}
+@keyframes inspection-color-change {
+  0% {
+    color: #ffc400;
   }
   100% {
     color: #00c853;

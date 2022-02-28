@@ -40,6 +40,7 @@
             <div>
               <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
               <v-btn
+                class="mt-1"
                 aria-label="export"
                 small
                 @click.stop="exportTimes"
