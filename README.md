@@ -9,7 +9,7 @@ Contributions are welcome, please report any issues or requests in the [issues](
 
 ## Features
 
-- Mobile & tablet touch screen support
+- Mobile/tablet touch screen support
 - Customize timer and chart size
 - Eight color themes
 - Scrambles for 2x2-5x5
