@@ -18,7 +18,7 @@ Contributions are welcome, please report any issues or requests in the [issues](
 - Fullscreen mode
 - Works offline
 - Export times 
-- Multiple sessions
+- Inspection time
 - Solves saved in local storage
 
 ## Run Locally

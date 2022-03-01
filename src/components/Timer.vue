@@ -18,7 +18,7 @@ import dateFormat from "dateformat";
 export default {
   name: "Timer",
   data: () => ({
-    timer: 0,
+    timerId: 0,
     inspectionId: 0,
     currentTime: 0,
     lastTime: 0,
@@ -120,6 +120,57 @@ export default {
     }
   },
   methods: {
+    mobileInputEnd() {
+      this.clicked = false;
+      if (this.inspectionEnabled) {
+        this.clickInspectionColor = false;
+        this.yellowTimer = false;
+        this.$store.commit("updateIsSolving", true);
+        if (
+          !this.inspectionActive &&
+          (this.currentTime === 0 || this.currentTime === this.lastTime)
+        ) {
+          this.startInspection();
+        }
+        if (
+          (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+          Date.now() - this.pressedAt >= 400 &&
+          this.inspectionTimer !== 15
+        ) {
+          this.startEnable = true;
+          this.stopInspection();
+          this.resetInspection();
+          this.pressedAt = 0;
+          this.onSpacebar();
+        }
+        if (this.inspectionActive && !this.startEnable) {
+          return;
+        }
+        if (this.inspectionTimer !== 15) {
+          this.stopInspection();
+        }
+        if (this.currentTime !== 0) {
+          this.onSpacebar();
+        } else {
+          this.greenTimer = false;
+          this.reset();
+        }
+      } else {
+        if (
+          (this.currentTime === 0 || this.currentTime === this.lastTime) &&
+          Date.now() - this.pressedAt >= 400
+        ) {
+          this.startEnable = true;
+          this.pressedAt = 0;
+          this.onSpacebar();
+        } else if (this.currentTime !== 0) {
+          this.onSpacebar();
+        } else {
+          this.greenTimer = false;
+          this.reset();
+        }
+      }
+    },
     onTouchStart(event) {
       if (this.clickStart) {
         if (event.type === "touchstart") {
@@ -138,55 +189,7 @@ export default {
     onTouchEnd(event) {
       if (this.clickStart) {
         if (event.type === "touchend") {
-          this.clicked = false;
-          if (this.inspectionEnabled) {
-            this.clickInspectionColor = false;
-            this.yellowTimer = false;
-            this.$store.commit("updateIsSolving", true);
-            if (
-              !this.inspectionActive &&
-              (this.currentTime === 0 || this.currentTime === this.lastTime)
-            ) {
-              this.startInspection();
-            }
-            if (
-              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
-              Date.now() - this.pressedAt >= 400 &&
-              this.inspectionTimer !== 15
-            ) {
-              this.startEnable = true;
-              this.stopInspection();
-              this.resetInspection();
-              this.pressedAt = 0;
-              this.onSpacebar();
-            }
-            if (this.inspectionActive && !this.startEnable) {
-              return;
-            }
-            if (this.inspectionTimer !== 15) {
-              this.stopInspection();
-            }
-            if (this.currentTime !== 0) {
-              this.onSpacebar();
-            } else {
-              this.greenTimer = false;
-              this.currentTime = 0;
-            }
-          } else {
-            if (
-              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
-              Date.now() - this.pressedAt >= 400
-            ) {
-              this.startEnable = true;
-              this.pressedAt = 0;
-              this.onSpacebar();
-            } else if (this.currentTime !== 0) {
-              this.onSpacebar();
-            } else {
-              this.greenTimer = false;
-              this.currentTime = 0;
-            }
-          }
+          this.mobileInputEnd();
         }
       }
     },
@@ -208,55 +211,7 @@ export default {
     onMouseUp(event) {
       if (this.clickStart) {
         if (event.type === "mouseup") {
-          this.clicked = false;
-          if (this.inspectionEnabled) {
-            this.clickInspectionColor = false;
-            this.yellowTimer = false;
-            this.$store.commit("updateIsSolving", true);
-            if (
-              !this.inspectionActive &&
-              (this.currentTime === 0 || this.currentTime === this.lastTime)
-            ) {
-              this.startInspection();
-            }
-            if (
-              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
-              Date.now() - this.pressedAt >= 400 &&
-              this.inspectionTimer !== 15
-            ) {
-              this.startEnable = true;
-              this.stopInspection();
-              this.resetInspection();
-              this.pressedAt = 0;
-              this.onSpacebar();
-            }
-            if (this.inspectionActive && !this.startEnable) {
-              return;
-            }
-            if (this.inspectionTimer !== 15) {
-              this.stopInspection();
-            }
-            if (this.currentTime !== 0) {
-              this.onSpacebar();
-            } else {
-              this.greenTimer = false;
-              this.currentTime = 0;
-            }
-          } else {
-            if (
-              (this.currentTime === 0 || this.currentTime === this.lastTime) &&
-              Date.now() - this.pressedAt >= 400
-            ) {
-              this.startEnable = true;
-              this.pressedAt = 0;
-              this.onSpacebar();
-            } else if (this.currentTime !== 0) {
-              this.onSpacebar();
-            } else {
-              this.greenTimer = false;
-              this.currentTime = 0;
-            }
-          }
+          this.mobileInputEnd();
         }
       }
     },
@@ -341,12 +296,12 @@ export default {
       }
     },
     start() {
-      this.timer = setInterval(() => {
+      this.timerId = setInterval(() => {
         this.currentTime += 10;
       }, 10);
     },
     stop() {
-      clearInterval(this.timer);
+      clearInterval(this.timerId);
     },
     reset() {
       this.currentTime = 0;
