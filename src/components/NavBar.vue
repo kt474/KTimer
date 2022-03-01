@@ -39,7 +39,7 @@
         class="d-flex justify-center mx-auto mt-n4 text-wrap scramble-text"
         :class="isTablet ? 'max-width-mobile' : 'max-width-desktop'"
       >
-        <p>{{ currentScrambleText }}</p>
+        <p class="scramble-p">{{ currentScrambleText }}</p>
       </div>
     </div>
   </v-app-bar>
@@ -67,20 +67,20 @@ export default {
       const heights = {
         phone: {
           "2x2": 120,
-          "3x3": 140,
-          "4x4": 220,
-          "5x5": 270
+          "3x3": 145,
+          "4x4": 225,
+          "5x5": 275
         },
         tablet: {
           "2x2": 100,
           "3x3": 120,
-          "4x4": 160,
+          "4x4": 170,
           "5x5": 200
         },
         desktop: {
-          "2x2": 90,
-          "3x3": 90,
-          "4x4": 130,
+          "2x2": 100,
+          "3x3": 100,
+          "4x4": 140,
           "5x5": 150
         }
       };
@@ -127,7 +127,7 @@ export default {
       } else if (this.scrambleType === "2x2") {
         newScramble = this.generateScramble(9);
       } else if (this.scrambleType === "4x4") {
-        newScramble = this.generateBigScramble(35);
+        newScramble = this.generateBigScramble(40);
       } else if (this.scrambleType === "5x5") {
         newScramble = this.generateBigScramble(50);
       }
@@ -158,7 +158,15 @@ export default {
       }
       const result = [];
       baseMoves.forEach(move => {
-        result.push(move + append[Math.floor(Math.random() * 6)]);
+        if (length === 40) {
+          if (["R", "U", "F"].includes(move)) {
+            result.push(move + append[Math.floor(Math.random() * 6)]);
+          } else {
+            result.push(
+              move + append.slice(0, 4)[Math.floor(Math.random() * 3)]
+            );
+          }
+        } else result.push(move + append[Math.floor(Math.random() * 6)]);
       });
       return result;
     },
@@ -207,13 +215,16 @@ export default {
   max-width: 550px;
 }
 .max-width-desktop {
-  max-width: 1000px;
+  max-width: 900px;
 }
 .scramble-text {
   font-size: 1.5rem;
   letter-spacing: 4px;
   line-height: 1.5rem;
   text-align: center;
+}
+.scramble-p {
+  line-height: 1.7rem;
 }
 .wrapper {
   width: 100%;

@@ -74,7 +74,7 @@ export default {
           }
         }
       }
-      return "default-timer";
+      return this.$vuetify.theme.dark ? "white-timer" : "black-timer";
     },
     inspectionEnabled() {
       return this.$store.state.inspectionTime;
@@ -371,7 +371,7 @@ export default {
       } else if (this.scrambleType === "2x2") {
         newScramble = this.generateScramble(9);
       } else if (this.scrambleType === "4x4") {
-        newScramble = this.generateBigScramble(35);
+        newScramble = this.generateBigScramble(40);
       } else if (this.scrambleType === "5x5") {
         newScramble = this.generateBigScramble(50);
       }
@@ -411,7 +411,15 @@ export default {
       }
       const result = [];
       baseMoves.forEach(move => {
-        result.push(move + append[Math.floor(Math.random() * 6)]);
+        if (length === 40) {
+          if (["R", "U", "F"].includes(move)) {
+            result.push(move + append[Math.floor(Math.random() * 6)]);
+          } else {
+            result.push(
+              move + append.slice(0, 4)[Math.floor(Math.random() * 3)]
+            );
+          }
+        } else result.push(move + append[Math.floor(Math.random() * 6)]);
       });
       return result;
     }
@@ -422,8 +430,11 @@ export default {
 .timer-height {
   height: 90%;
 }
-.default-timer {
+.black-timer {
   color: #000000;
+}
+.white-timer {
+  color: #ffffff;
 }
 .red-timer {
   color: #ff1744;
