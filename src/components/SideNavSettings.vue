@@ -10,11 +10,16 @@
     >
       <v-icon small>{{ settingsIcon }}</v-icon>
     </v-btn>
-    <v-dialog overlay-opacity="0.2" v-model="settings" max-width="400px">
+    <v-dialog
+      scrollable
+      overlay-opacity="0.2"
+      v-model="settings"
+      max-width="400px"
+    >
       <v-card>
         <v-toolbar color="primary" class="text-h5" dark>Settings</v-toolbar>
-        <p class="text-h6 mt-3 mb-0 ml-4">General</p>
         <v-card-text>
+          <p class="text-h6 black--text mb-0 mt-3 ml-n2">General</p>
           <div class="d-flex justify-space-between mt-0">
             <div>
               <v-checkbox
@@ -62,9 +67,7 @@
             thumb-color="primary"
             thumb-label="always"
           ></v-slider>
-        </v-card-text>
-        <p class="text-h6 ml-4">Chart Options</p>
-        <v-card-text>
+          <p class="text-h6 black--text mt-2 ml-n2">Chart Options</p>
           <div class="d-flex justify-space-between mb-2">
             <v-checkbox
               class="mt-0"
