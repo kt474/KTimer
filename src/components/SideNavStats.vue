@@ -233,7 +233,7 @@ export default {
       if (validTimes.length) {
         const times = validTimes.map(time => time.baseTime);
         const index = times.indexOf(Math.min(...times));
-        return this.currentSessionTimes[index];
+        return validTimes[index];
       }
       return {};
     },
