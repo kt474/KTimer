@@ -13,7 +13,7 @@
           <p class="text-h6">KTimer</p>
         </v-list-item-title>
         <div class="d-flex mt-1">
-          <label for="session" class="text--secondary pr-3">
+          <label for="session" class=" pr-3">
             Session
           </label>
           <v-select

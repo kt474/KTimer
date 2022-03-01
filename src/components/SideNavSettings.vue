@@ -19,7 +19,12 @@
       <v-card>
         <v-toolbar color="primary" class="text-h5" dark>Settings</v-toolbar>
         <v-card-text>
-          <p class="text-h6 black--text mb-0 mt-3 ml-n2">General</p>
+          <p
+            class="text-h6 mb-0 mt-3 ml-n2"
+            :class="this.$vuetify.theme.dark ? 'white--text' : 'black--text'"
+          >
+            General
+          </p>
           <div class="d-flex justify-space-between mt-0">
             <div>
               <v-checkbox
@@ -67,7 +72,12 @@
             thumb-color="primary"
             thumb-label="always"
           ></v-slider>
-          <p class="text-h6 black--text mt-2 ml-n2">Chart Options</p>
+          <p
+            class="text-h6 black--text mt-2 ml-n2"
+            :class="this.$vuetify.theme.dark ? 'white--text' : 'black--text'"
+          >
+            Chart Options
+          </p>
           <div class="d-flex justify-space-between mb-2">
             <v-checkbox
               class="mt-0"
