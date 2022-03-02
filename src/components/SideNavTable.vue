@@ -204,7 +204,7 @@ h4:hover {
   max-height: 300px;
 }
 .tablet-table-height {
-  max-height: 500px;
+  max-height: 450px;
 }
 .desktop-table-height {
   max-height: 62vh;
