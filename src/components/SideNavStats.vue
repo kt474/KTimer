@@ -142,7 +142,7 @@
         >
           Best:
           <span class="font-weight-bold">{{
-            currentBest.time ? currentBest.time : "00:00"
+            currentBest.time ? convertTime(currentBest.baseTime) : "00:00"
           }}</span>
         </h4>
         <v-dialog
