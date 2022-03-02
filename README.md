@@ -4,11 +4,13 @@ An open source material design speedcubing timer built with [Vue.js](https://vue
 
 Contributions are welcome, please report any issues or requests in the [issues](https://github.com/kt474/KTimer/issues) tab.
 
-![screenshot](./public/page_screenshot.png)
+| ![screenshot](./public/page_screenshot.png) |
+|--|
+
 ## Features
 
 - Mobile/tablet touch screen support
-- Customize timer and chart  size
+- Customize timer and chart size
 - Eight color themes
 - Scrambles for 2x2-5x5
 - Light/dark mode toggle
