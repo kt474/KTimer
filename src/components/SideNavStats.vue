@@ -2,7 +2,26 @@
   <v-list-item class="px-3">
     <div>
       <div class="d-flex justify-space-between align-center pt-2">
-        <v-btn small color="error" @click="clearTimes()" class="my-2">
+        <v-dialog overlay-opacity="0.2" v-model="resetTimes" max-width="400px">
+          <v-card>
+            <v-toolbar color="primary" class="text-h5" dark>
+              Reset all times?
+            </v-toolbar>
+            <div class="mx-2 px-2">
+              <v-container> </v-container>
+            </div>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary darken-1" text @click="resetTimes = false">
+                Cancel
+              </v-btn>
+              <v-btn color="primary darken-1" text @click="clearTimes">
+                Confirm
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-btn small color="error" @click="resetTimes = true" class="my-2">
           Reset
         </v-btn>
         <h4
@@ -201,6 +220,7 @@ export default {
       bestTimeModal: false,
       ao5Modal: false,
       ao12Modal: false,
+      resetTimes: false,
       addedTime: null,
       valid: true,
       addTimeModal: false,
@@ -305,6 +325,7 @@ export default {
     },
     clearTimes() {
       this.$store.commit("clearTimes", this.$store.state.session);
+      this.resetTimes = false;
     },
     addTime() {
       if (this.$refs.form.validate()) {
