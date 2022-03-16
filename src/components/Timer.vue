@@ -95,7 +95,7 @@ export default {
       return this.$store.state.removeChart;
     },
     time() {
-      let format = this.currentTime > 60000 ? "M:ss:L" : "s:L";
+      let format = this.currentTime > 60000 ? "M:ss.L" : "s.L";
       let date = new Date(this.currentTime);
       return dateFormat(date, format);
     }

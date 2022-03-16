@@ -142,7 +142,7 @@
         >
           Best:
           <span class="font-weight-bold">{{
-            currentBest.time ? convertTime(currentBest.baseTime) : "00:00"
+            currentBest.time ? convertTime(currentBest.baseTime) : "00.00"
           }}</span>
         </h4>
         <v-dialog
@@ -207,8 +207,8 @@ export default {
       rules: [
         value => !!value || "Input required",
         value => {
-          const pattern = /^(\d+):(\d+)$|(^(\d+):(\d+):(\d+)$)/;
-          return pattern.test(value) || "Invalid format - Ex: 9:30 or 1:20:12";
+          const pattern = /^(\d+)\.(\d+)$|(^(\d+):(\d+)\.(\d+)$)/;
+          return pattern.test(value) || "Invalid format - Ex: 9.30 or 1:20.12";
         }
       ]
     };
@@ -243,7 +243,7 @@ export default {
         const times = validTimes.map(time => time.baseTime);
         return this.convertTime(mean(times));
       }
-      return "00:00";
+      return "00.00";
     },
     averageFive() {
       const currentLength = this.currentSessionTimes.length;
@@ -263,7 +263,7 @@ export default {
         temp.pop();
         return this.convertTime(mean(temp));
       }
-      return "00:00";
+      return "00.00";
     },
     averageTwelve() {
       const currentLength = this.currentSessionTimes.length;
@@ -283,17 +283,22 @@ export default {
         temp.pop();
         return this.convertTime(mean(temp));
       }
-      return "00:00";
+      return "00.00";
     }
   },
   methods: {
     convertTime(time) {
-      const format = time > 60000 ? "M:ss:L" : "ss:L";
+      const format = time > 60000 ? "M:ss.L" : "ss.L";
       const date = new Date(time);
       return dateFormat(date, format);
     },
     convertDateToTime(date) {
-      const t = date.split(":");
+      const t = date
+        .split(":")
+        .join(",")
+        .split(".")
+        .join(",")
+        .split(",");
       return t.length >= 3
         ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10
         : +t[0] * 1000 + +t[1] * 10;

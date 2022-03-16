@@ -82,7 +82,7 @@ export const store = new Vuex.Store({
         times = state.timesS2;
       }
       const newBaseTime = times[payload.index - 1].baseTime + 2000;
-      const format = newBaseTime > 60000 ? "M:ss:L" : "ss:L";
+      const format = newBaseTime > 60000 ? "M:ss.L" : "s.L";
       const time = new Date(newBaseTime);
       const newTime = dateFormat(time, format);
       times[payload.index - 1].baseTime = newBaseTime;
