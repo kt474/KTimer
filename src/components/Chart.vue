@@ -29,9 +29,7 @@ export default {
       return this.$store.state.chartHeight;
     },
     solveTimes() {
-      return this.$store.state.session === 1
-        ? this.$store.state.times
-        : this.$store.state.timesS2;
+      return this.$store.state["times" + this.$store.state.session];
     },
     noChart() {
       return this.$store.state.removeChart;

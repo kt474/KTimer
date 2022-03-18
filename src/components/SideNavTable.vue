@@ -152,12 +152,7 @@ export default {
       return !this.isPhone && !this.isTablet;
     },
     currentSessionTimes() {
-      if (this.$store.state.session === 1) {
-        return this.$store.state.times;
-      } else if (this.$store.state.session === 2) {
-        return this.$store.state.timesS2;
-      }
-      return [];
+      return this.$store.state["times" + this.$store.state.session];
     },
     currentTimes() {
       const times = this.currentSessionTimes;

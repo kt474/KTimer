@@ -234,12 +234,7 @@ export default {
       return times;
     },
     currentSessionTimes() {
-      if (this.$store.state.session === 1) {
-        return this.$store.state.times;
-      } else if (this.$store.state.session === 2) {
-        return this.$store.state.timesS2;
-      }
-      return [];
+      return this.$store.state["times" + this.$store.state.session];
     },
     solves() {
       return this.currentSessionTimes.length;
@@ -305,24 +300,17 @@ export default {
       if (localStorage.removeChart) {
         this.removeChart = JSON.parse(localStorage.removeChart);
       }
-      if (localStorage.getItem("solves")) {
-        try {
-          const solves = JSON.parse(localStorage.getItem("solves"));
-          solves.forEach(solve => {
-            this.$store.commit("addTime", solve);
-          });
-        } catch (e) {
-          localStorage.removeItem("solves");
-        }
-      }
-      if (localStorage.getItem("solves2")) {
-        try {
-          const solves = JSON.parse(localStorage.getItem("solves2"));
-          solves.forEach(solve => {
-            this.$store.commit("addTime", solve);
-          });
-        } catch (e) {
-          localStorage.removeItem("solves2");
+      for (let i = 1; i <= 10; i++) {
+        let current = "solves" + i;
+        if (localStorage.getItem(current)) {
+          try {
+            const solves = JSON.parse(localStorage.getItem(current));
+            solves.forEach(solve => {
+              this.$store.commit("addTime", solve);
+            });
+          } catch (e) {
+            localStorage.removeItem(current);
+          }
         }
       }
     }
@@ -374,11 +362,8 @@ export default {
     currentSessionTimes: {
       handler: function() {
         const parsed = JSON.stringify(this.currentTimes);
-        if (this.$store.state.session === 1) {
-          localStorage.setItem("solves", parsed);
-        } else if (this.$store.state.session === 2) {
-          localStorage.setItem("solves2", parsed);
-        }
+        const solves = "solves" + this.$store.state.session;
+        localStorage.setItem(solves, parsed);
       },
       deep: true
     }

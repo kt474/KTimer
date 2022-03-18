@@ -4,10 +4,22 @@ import dateFormat from "dateformat";
 
 Vue.use(Vuex);
 
+function getTimesArray(session) {
+  return "times" + session;
+}
+
 export const store = new Vuex.Store({
   state: {
-    times: [],
-    timesS2: [],
+    times1: [],
+    times2: [],
+    times3: [],
+    times4: [],
+    times5: [],
+    times6: [],
+    times7: [],
+    times8: [],
+    times9: [],
+    times10: [],
     session: 1,
     currentScramble: [],
     scrambleType: "3x3",
@@ -55,32 +67,20 @@ export const store = new Vuex.Store({
       state.session = currentSession;
     },
     buttonPressed(state, payload) {
-      let times;
-      if (payload.session === 1) {
-        times = state.times;
-      } else if (payload.session === 2) {
-        times = state.timesS2;
-      }
+      let current = getTimesArray(payload.session);
+      let times = state[current];
       times[payload.index - 1][payload.prop] = true;
     },
     dnf(state, payload) {
-      let times;
-      if (payload.session === 1) {
-        times = state.times;
-      } else if (payload.session === 2) {
-        times = state.timesS2;
-      }
+      let current = getTimesArray(payload.session);
+      let times = state[current];
       times[payload.index - 1].dnf = true;
       times[payload.index - 1].baseTime = "DNF";
       times[payload.index - 1].time = "DNF";
     },
     plusTwo(state, payload) {
-      let times;
-      if (payload.session === 1) {
-        times = state.times;
-      } else if (payload.session === 2) {
-        times = state.timesS2;
-      }
+      let current = getTimesArray(payload.session);
+      let times = state[current];
       const newBaseTime = times[payload.index - 1].baseTime + 2000;
       const format = newBaseTime > 60000 ? "M:ss.L" : "s.L";
       const time = new Date(newBaseTime);
@@ -89,27 +89,19 @@ export const store = new Vuex.Store({
       times[payload.index - 1].time = newTime;
     },
     addTime(state, payload) {
-      if (payload.session === 1) {
-        state.times.push(payload);
-      } else if (payload.session === 2) {
-        state.timesS2.push(payload);
-      }
+      let current = getTimesArray(payload.session);
+      let times = state[current];
+      times.push(payload);
     },
     removeTime(state, payload) {
-      if (payload.session === 1) {
-        state.times = state.times.filter(item => item.name !== payload.index);
-      } else if (payload.session === 2) {
-        state.timesS2 = state.timesS2.filter(
-          item => item.name !== payload.index
-        );
-      }
+      let current = getTimesArray(payload.session);
+      state[current] = state[current].filter(
+        item => item.name !== payload.index
+      );
     },
     clearTimes(state, session) {
-      if (session === 1) {
-        state.times = [];
-      } else if (session === 2) {
-        state.timesS2 = [];
-      }
+      let current = getTimesArray(session);
+      state[current] = [];
     }
   }
 });
