@@ -35,7 +35,7 @@
     <v-data-table
       :headers="headers"
       :items="currentTimes"
-      :items-per-page="150"
+      :items-per-page="1000"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       hide-default-header
