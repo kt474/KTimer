@@ -105,7 +105,7 @@
                   >
                     <v-card>
                       <v-toolbar color="primary" class="text-h5" dark>
-                        Average of Five {{ averageFive }}
+                        Average of 5: {{ averageFive }}
                       </v-toolbar>
                       <div class="mx-2 px-2">
                         <v-container>
@@ -161,7 +161,7 @@
                   >
                     <v-card>
                       <v-toolbar color="primary" class="text-h5" dark>
-                        Average of Twelve {{ averageTwelve }}
+                        Average of 12: {{ averageTwelve }}
                       </v-toolbar>
                       <div class="mx-2 px-2">
                         <v-container>
@@ -292,7 +292,7 @@
                 >
                   <v-card>
                     <v-toolbar color="primary" class="text-h5" dark>
-                      Average of 50 {{ averageFifty }}
+                      Average of 50: {{ averageFifty }}
                     </v-toolbar>
                     <div class="mx-2 px-2">
                       <v-container>
@@ -345,7 +345,7 @@
                 >
                   <v-card>
                     <v-toolbar color="primary" class="text-h5" dark>
-                      Average of 100 {{ averageHundred }}
+                      Average of 100: {{ averageHundred }}
                     </v-toolbar>
                     <div class="mx-2 px-2">
                       <v-container>
@@ -387,6 +387,115 @@
                 </v-dialog>
               </v-col>
             </v-row>
+            <v-divider class="mb-2 mt-2 ml-n4"></v-divider>
+            <v-row>
+              <v-col class="ao5 py-3 pl-0">
+                <h4
+                  class="font-weight-regular stat-width cursor-pointer"
+                  @click.stop="ao500Modal = true"
+                >
+                  ao500
+                  <span class="font-weight-bold">{{ average500 }}</span>
+                </h4>
+                <v-dialog
+                  overlay-opacity="0.2"
+                  v-model="ao500Modal"
+                  max-width="400px"
+                >
+                  <v-card>
+                    <v-toolbar color="primary" class="text-h5" dark>
+                      Average of 500: {{ average500 }}
+                    </v-toolbar>
+                    <div class="mx-2 px-2">
+                      <v-container>
+                        <div v-for="solve in last500Solves" :key="solve.name">
+                          <p class="text-h6 mt-2">
+                            Solve {{ solve.name }}:
+                            <span class="font-weight-regular">{{
+                              solve.time
+                            }}</span>
+                          </p>
+                          <div></div>
+                          <p class="text-h6">
+                            Scramble:
+                            <span class="font-weight-regular">{{
+                              solve && solve.scramble
+                                ? solve.scramble.join(" ")
+                                : "N/A"
+                            }}</span>
+                          </p>
+                          <v-divider class="mt-n2"></v-divider>
+                        </div>
+                      </v-container>
+                    </div>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary darken-1"
+                        text
+                        @click="ao500Modal = false"
+                      >
+                        Close
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-col>
+              <v-col class="ao12 py-3 pl-0">
+                <h4
+                  class="font-weight-regular stat-width cursor-pointer"
+                  @click.stop="ao1000Modal = true"
+                >
+                  ao1000
+                  <span class="font-weight-bold">{{ average1000 }}</span>
+                </h4>
+                <v-dialog
+                  overlay-opacity="0.2"
+                  v-model="ao1000Modal"
+                  max-width="400px"
+                >
+                  <v-card>
+                    <v-toolbar color="primary" class="text-h5" dark>
+                      Average of 1000: {{ average1000 }}
+                    </v-toolbar>
+                    <div class="mx-2 px-2">
+                      <v-container>
+                        <div v-for="solve in last1000Solves" :key="solve.name">
+                          <p class="text-h6 mt-2">
+                            Solve {{ solve.name }}:
+                            <span class="font-weight-regular">{{
+                              solve.time
+                            }}</span>
+                          </p>
+                          <div></div>
+                          <p class="text-h6">
+                            Scramble:
+                            <span class="font-weight-regular">{{
+                              solve && solve.scramble
+                                ? solve.scramble.join(" ")
+                                : "N/A"
+                            }}</span>
+                          </p>
+                          <v-divider class="mt-n2"></v-divider>
+                        </div>
+                      </v-container>
+                    </div>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary darken-1"
+                        text
+                        @click="ao1000Modal = false"
+                      >
+                        Close
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -407,6 +516,8 @@ export default {
       ao12Modal: false,
       ao50Modal: false,
       ao100Modal: false,
+      ao500Modal: false,
+      ao1000Modal: false,
       resetTimes: false,
       addedTime: null,
       valid: true,
@@ -423,6 +534,12 @@ export default {
   computed: {
     currentSessionTimes() {
       return this.$store.state["times" + this.$store.state.session];
+    },
+    last500Solves() {
+      return takeRight(this.currentSessionTimes, 500);
+    },
+    last1000Solves() {
+      return takeRight(this.currentSessionTimes, 500);
     },
     lastFiftySolves() {
       return takeRight(this.currentSessionTimes, 50);
@@ -464,6 +581,12 @@ export default {
     },
     averageHundred() {
       return this.getAverage(100);
+    },
+    average500() {
+      return this.getAverage(500);
+    },
+    average1000() {
+      return this.getAverage(1000);
     }
   },
   methods: {
