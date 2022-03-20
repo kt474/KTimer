@@ -166,6 +166,11 @@
                   color="#8E24AA"
                   value="#8E24AA"
                 ></v-radio>
+                <v-radio
+                  label="Indigo"
+                  color="#3949AB"
+                  value="#3949AB"
+                ></v-radio>
               </div>
               <div>
                 <v-radio label="Pink" color="#D81B60" value="#D81B60"></v-radio>
@@ -179,6 +184,7 @@
                   color="#F9A825"
                   value="#F9A825"
                 ></v-radio>
+                <v-radio label="Cyan" color="#00B8D4" value="#00B8D4"></v-radio>
                 <v-radio label="Black" color="#000" value="#000"></v-radio>
               </div>
             </div>

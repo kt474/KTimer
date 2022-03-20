@@ -11,7 +11,7 @@ Contributions are welcome, please report any issues or requests in the [issues](
 
 - Mobile/tablet touch screen support
 - Customize timer and chart size
-- Eight color themes
+- 10 color themes
 - Scrambles for 2x2-5x5
 - Light/dark mode toggle
 - Interactive chart
