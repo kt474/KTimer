@@ -95,7 +95,7 @@
                     class="font-weight-regular stat-width"
                     @click.stop="ao5Modal = true"
                   >
-                    ao5
+                    Ao5
                     <span class="font-weight-bold">{{ averageFive }}</span>
                   </h4>
                   <v-dialog
@@ -151,7 +151,7 @@
                     class="font-weight-regular stat-width"
                     @click.stop="ao12Modal = true"
                   >
-                    ao12
+                    Ao12
                     <span class="font-weight-bold">{{ averageTwelve }}</span>
                   </h4>
                   <v-dialog
@@ -282,7 +282,7 @@
                   class="font-weight-regular stat-width cursor-pointer"
                   @click.stop="ao50Modal = true"
                 >
-                  ao50
+                  Ao50
                   <span class="font-weight-bold">{{ averageFifty }}</span>
                 </h4>
                 <v-dialog
@@ -335,7 +335,7 @@
                   class="font-weight-regular stat-width cursor-pointer"
                   @click.stop="ao100Modal = true"
                 >
-                  ao100
+                  Ao100
                   <span class="font-weight-bold">{{ averageHundred }}</span>
                 </h4>
                 <v-dialog
@@ -394,7 +394,7 @@
                   class="font-weight-regular stat-width cursor-pointer"
                   @click.stop="ao500Modal = true"
                 >
-                  ao500
+                  Ao500
                   <span class="font-weight-bold">{{ average500 }}</span>
                 </h4>
                 <v-dialog
@@ -447,7 +447,7 @@
                   class="font-weight-regular stat-width cursor-pointer"
                   @click.stop="ao1000Modal = true"
                 >
-                  ao1000
+                  Ao1000
                   <span class="font-weight-bold">{{ average1000 }}</span>
                 </h4>
                 <v-dialog
