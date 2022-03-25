@@ -220,7 +220,7 @@
                     <span class="font-weight-bold">{{
                       currentBest.time
                         ? convertTime(currentBest.baseTime)
-                        : "00.00"
+                        : "0.00"
                     }}</span>
                   </h4>
 
@@ -568,7 +568,7 @@ export default {
         const times = validTimes.map(time => time.baseTime);
         return this.convertTime(mean(times));
       }
-      return "00.00";
+      return "0.00";
     },
     averageFive() {
       return this.getAverage(5);
@@ -608,10 +608,10 @@ export default {
         temp.pop();
         return this.convertTime(mean(temp));
       }
-      return "00.00";
+      return "0.00";
     },
     convertTime(time) {
-      const format = time > 60000 ? "M:ss.L" : "ss.L";
+      const format = time > 60000 ? "M:ss.L" : "s.L";
       const date = new Date(time);
       return dateFormat(date, format);
     },
