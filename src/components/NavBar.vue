@@ -230,10 +230,13 @@ export default {
     }
     if (localStorage.scramble) {
       this.$store.commit("newScramble", localStorage.scramble);
-      await randomScrambleForEvent(this.scrambleMapping[this.scrambleType]);
     } else {
-      await this.newScramble();
+      const defaultScramble =
+        "R F' L' F U B' L2 F' D' B2 U B2 U B2 D' F2 D F2 L' B2 L";
+      this.$store.commit("newScramble", defaultScramble);
+      localStorage.scramble = defaultScramble;
     }
+    await randomScrambleForEvent(this.scrambleMapping[this.scrambleType]);
   }
 };
 </script>
