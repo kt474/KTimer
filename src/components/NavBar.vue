@@ -4,7 +4,7 @@
       @click="openDrawer"
       aria-label="drawer"
     ></v-app-bar-nav-icon>
-    <div class="wrapper">
+    <div v-if="!hideScramble" class="wrapper">
       <div class="d-flex align-center mx-auto" :class="selectWidth">
         <label>
           <v-toolbar-title class="text-h5 mr-3"> Scramble: </v-toolbar-title>
@@ -58,6 +58,7 @@ import { mdiRefresh } from "@mdi/js";
 import { randomScrambleForEvent } from "cubing/scramble";
 export default {
   name: "NavBar",
+  props: ["currentDrawerState"],
   data: () => ({
     refreshIcon: mdiRefresh,
     items: [
@@ -88,10 +89,12 @@ export default {
       Skewb: "skewb",
       "Square-1": "sq1"
     },
-    showSelect: true,
-    drawer: true
+    showSelect: true
   }),
   computed: {
+    hideScramble() {
+      return this.currentDrawerState & this.isPhone;
+    },
     selectWidth() {
       if (this.scrambleType === "Megaminx") {
         return "select-wrapper-big";
@@ -214,8 +217,7 @@ export default {
       });
     },
     openDrawer() {
-      this.drawer = !this.drawer;
-      this.$emit("openDrawer", this.drawer);
+      this.$emit("openDrawer");
     }
   },
   async mounted() {

@@ -11,7 +11,7 @@
         <side-nav @closeDrawer="onClickChild" />
       </v-navigation-drawer>
     </keep-alive>
-    <nav-bar @openDrawer="onClickChild" />
+    <nav-bar @openDrawer="onClickChild" :current-drawer-state="this.drawer" />
     <v-main class="d-flex align-center justify-center">
       <timer class="mt-n12" />
       <chart />
