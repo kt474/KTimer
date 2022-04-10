@@ -99,6 +99,7 @@
                     <span class="font-weight-bold">{{ averageFive }}</span>
                   </h4>
                   <v-dialog
+                    scrollable
                     overlay-opacity="0.2"
                     v-model="ao5Modal"
                     max-width="400px"
@@ -107,7 +108,7 @@
                       <v-toolbar color="primary" class="text-h5" dark>
                         Average of 5: {{ averageFive }}
                       </v-toolbar>
-                      <div class="mx-2 px-2">
+                      <v-card-text class="mx-2 px-2">
                         <v-container>
                           <div
                             v-for="solve in lastFiveSolves"
@@ -129,7 +130,7 @@
                             <v-divider class="mt-n2"></v-divider>
                           </div>
                         </v-container>
-                      </div>
+                      </v-card-text>
                       <v-divider></v-divider>
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -153,6 +154,7 @@
                     <span class="font-weight-bold">{{ averageTwelve }}</span>
                   </h4>
                   <v-dialog
+                    scrollable
                     overlay-opacity="0.2"
                     v-model="ao12Modal"
                     max-width="400px"
@@ -161,7 +163,7 @@
                       <v-toolbar color="primary" class="text-h5" dark>
                         Average of 12: {{ averageTwelve }}
                       </v-toolbar>
-                      <div class="mx-2 px-2">
+                      <v-card-text class="mx-2 px-2">
                         <v-container>
                           <div v-for="solve in last12Solves" :key="solve.name">
                             <p class="text-h6 mt-2">
@@ -180,7 +182,7 @@
                             <v-divider class="mt-n2"></v-divider>
                           </div>
                         </v-container>
-                      </div>
+                      </v-card-text>
                       <v-divider></v-divider>
                       <v-card-actions>
                         <v-spacer></v-spacer>
@@ -282,6 +284,7 @@
                   <span class="font-weight-bold">{{ averageFifty }}</span>
                 </h4>
                 <v-dialog
+                  scrollable
                   overlay-opacity="0.2"
                   v-model="ao50Modal"
                   max-width="400px"
@@ -290,7 +293,7 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 50: {{ averageFifty }}
                     </v-toolbar>
-                    <div class="mx-2 px-2">
+                    <v-card-text class="mx-2 px-2">
                       <v-container>
                         <div v-for="solve in lastFiftySolves" :key="solve.name">
                           <p class="text-h6 mt-2">
@@ -309,7 +312,7 @@
                           <v-divider class="mt-n2"></v-divider>
                         </div>
                       </v-container>
-                    </div>
+                    </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -333,6 +336,7 @@
                   <span class="font-weight-bold">{{ averageHundred }}</span>
                 </h4>
                 <v-dialog
+                  scrollable
                   overlay-opacity="0.2"
                   v-model="ao100Modal"
                   max-width="400px"
@@ -341,7 +345,7 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 100: {{ averageHundred }}
                     </v-toolbar>
-                    <div class="mx-2 px-2">
+                    <v-card-text class="mx-2 px-2">
                       <v-container>
                         <div
                           v-for="solve in lastHundredSolves"
@@ -363,7 +367,7 @@
                           <v-divider class="mt-n2"></v-divider>
                         </div>
                       </v-container>
-                    </div>
+                    </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -390,6 +394,7 @@
                   <span class="font-weight-bold">{{ average500 }}</span>
                 </h4>
                 <v-dialog
+                  scrollable
                   overlay-opacity="0.2"
                   v-model="ao500Modal"
                   max-width="400px"
@@ -398,7 +403,7 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 500: {{ average500 }}
                     </v-toolbar>
-                    <div class="mx-2 px-2">
+                    <v-card-text class="mx-2 px-2">
                       <v-container>
                         <div v-for="solve in last500Solves" :key="solve.name">
                           <p class="text-h6 mt-2">
@@ -417,7 +422,7 @@
                           <v-divider class="mt-n2"></v-divider>
                         </div>
                       </v-container>
-                    </div>
+                    </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -441,6 +446,7 @@
                   <span class="font-weight-bold">{{ average1000 }}</span>
                 </h4>
                 <v-dialog
+                  scrollable
                   overlay-opacity="0.2"
                   v-model="ao1000Modal"
                   max-width="400px"
@@ -449,7 +455,7 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 1000: {{ average1000 }}
                     </v-toolbar>
-                    <div class="mx-2 px-2">
+                    <v-card-text class="mx-2 px-2">
                       <v-container>
                         <div v-for="solve in last1000Solves" :key="solve.name">
                           <p class="text-h6 mt-2">
@@ -468,7 +474,7 @@
                           <v-divider class="mt-n2"></v-divider>
                         </div>
                       </v-container>
-                    </div>
+                    </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
                       <v-spacer></v-spacer>

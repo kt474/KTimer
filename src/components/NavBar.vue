@@ -146,7 +146,7 @@ export default {
           "4x4": 185,
           "5x5": 225,
           "6x6": 275,
-          "7x7": 305,
+          "7x7": 325,
           Clock: 150,
           Megaminx: 235,
           Pyraminx: 100,
@@ -235,6 +235,10 @@ export default {
         "R F' L' F U B' L2 F' D' B2 U B2 U B2 D' F2 D F2 L' B2 L";
       this.$store.commit("newScramble", defaultScramble);
       localStorage.scramble = defaultScramble;
+      //make sure the select menu is at 3x3
+      this.scrambleType = "3x3";
+      this.$store.commit("updateScrambleType", "3x3");
+      localStorage.scrambleType = 1;
     }
     await randomScrambleForEvent(this.scrambleMapping[this.scrambleType]);
   }
@@ -259,7 +263,6 @@ export default {
   max-width: 330px;
 }
 .max-width-tablet {
-  display: inline-block;
   max-width: 550px;
 }
 .max-width-desktop {
