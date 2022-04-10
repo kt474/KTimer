@@ -123,9 +123,7 @@
                             <p class="text-h6">
                               Scramble:
                               <span class="font-weight-regular">{{
-                                solve && solve.scramble
-                                  ? solve.scramble.join(" ")
-                                  : "N/A"
+                                solve && solve.scramble ? solve.scramble : "N/A"
                               }}</span>
                             </p>
                             <v-divider class="mt-n2"></v-divider>
@@ -176,9 +174,7 @@
                             <p class="text-h6">
                               Scramble:
                               <span class="font-weight-regular">{{
-                                solve && solve.scramble
-                                  ? solve.scramble.join(" ")
-                                  : "N/A"
+                                solve && solve.scramble ? solve.scramble : "N/A"
                               }}</span>
                             </p>
                             <v-divider class="mt-n2"></v-divider>
@@ -251,7 +247,7 @@
                           <span class="font-weight-regular">
                             {{
                               currentBest && currentBest.scramble
-                                ? currentBest.scramble.join(" ")
+                                ? currentBest.scramble
                                 : ""
                             }}
                           </span>
@@ -307,9 +303,7 @@
                           <p class="text-h6">
                             Scramble:
                             <span class="font-weight-regular">{{
-                              solve && solve.scramble
-                                ? solve.scramble.join(" ")
-                                : "N/A"
+                              solve && solve.scramble ? solve.scramble : "N/A"
                             }}</span>
                           </p>
                           <v-divider class="mt-n2"></v-divider>
@@ -363,9 +357,7 @@
                           <p class="text-h6">
                             Scramble:
                             <span class="font-weight-regular">{{
-                              solve && solve.scramble
-                                ? solve.scramble.join(" ")
-                                : "N/A"
+                              solve && solve.scramble ? solve.scramble : "N/A"
                             }}</span>
                           </p>
                           <v-divider class="mt-n2"></v-divider>
@@ -419,9 +411,7 @@
                           <p class="text-h6">
                             Scramble:
                             <span class="font-weight-regular">{{
-                              solve && solve.scramble
-                                ? solve.scramble.join(" ")
-                                : "N/A"
+                              solve && solve.scramble ? solve.scramble : "N/A"
                             }}</span>
                           </p>
                           <v-divider class="mt-n2"></v-divider>
@@ -472,9 +462,7 @@
                           <p class="text-h6">
                             Scramble:
                             <span class="font-weight-regular">{{
-                              solve && solve.scramble
-                                ? solve.scramble.join(" ")
-                                : "N/A"
+                              solve && solve.scramble ? solve.scramble : "N/A"
                             }}</span>
                           </p>
                           <v-divider class="mt-n2"></v-divider>
@@ -523,8 +511,8 @@ export default {
       valid: true,
       addTimeModal: false,
       rules: [
-        value => !!value || "Input required",
-        value => {
+        (value) => !!value || "Input required",
+        (value) => {
           const pattern = /^(\d+)\.(\d{2,})$|(^(\d+):(\d+)\.(\d{2,})$)/;
           return pattern.test(value) || "Invalid format - Ex: 9.30 or 1:20.12";
         }
@@ -554,18 +542,18 @@ export default {
       return takeRight(this.currentSessionTimes, 12);
     },
     currentBest() {
-      const validTimes = this.currentSessionTimes.filter(time => !time.dnf);
+      const validTimes = this.currentSessionTimes.filter((time) => !time.dnf);
       if (validTimes.length) {
-        const times = validTimes.map(time => time.baseTime);
+        const times = validTimes.map((time) => time.baseTime);
         const index = times.indexOf(Math.min(...times));
         return validTimes[index];
       }
       return {};
     },
     currentMean() {
-      const validTimes = this.currentSessionTimes.filter(time => !time.dnf);
+      const validTimes = this.currentSessionTimes.filter((time) => !time.dnf);
       if (validTimes.length) {
-        const times = validTimes.map(time => time.baseTime);
+        const times = validTimes.map((time) => time.baseTime);
         return this.convertTime(mean(times));
       }
       return "0.00";
@@ -593,14 +581,14 @@ export default {
     getAverage(numberOfSolves) {
       const currentLength = this.currentSessionTimes.length;
       if (currentLength >= numberOfSolves) {
-        let temp = this.currentSessionTimes.map(time => time.baseTime);
+        let temp = this.currentSessionTimes.map((time) => time.baseTime);
         temp = temp.slice(currentLength - numberOfSolves, currentLength + 1);
-        const dnfCount = temp.filter(time => time === "DNF").length;
+        const dnfCount = temp.filter((time) => time === "DNF").length;
         if (dnfCount >= 2) {
           return "DNF";
         }
         if (dnfCount === 1) {
-          temp = temp.filter(item => item !== "DNF");
+          temp = temp.filter((item) => item !== "DNF");
           temp.push("filler");
         }
         temp.sort((a, b) => a - b);
@@ -616,12 +604,7 @@ export default {
       return dateFormat(date, format);
     },
     convertDateToTime(date) {
-      const t = date
-        .split(":")
-        .join(",")
-        .split(".")
-        .join(",")
-        .split(",");
+      const t = date.split(":").join(",").split(".").join(",").split(",");
       return t.length >= 3
         ? +t[0] * 60000 + +t[1] * 1000 + +t[2] * 10
         : +t[0] * 1000 + +t[1] * 10;

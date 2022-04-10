@@ -19,7 +19,7 @@
           <p class="text-h6">
             Scramble:
             <span class="font-weight-regular">
-              {{ clickedSolve.scramble ? clickedSolve.scramble.join(" ") : "" }}
+              {{ clickedSolve.scramble ? clickedSolve.scramble : "" }}
             </span>
           </p>
         </div>
@@ -37,10 +37,11 @@
       :items="currentTimes"
       :items-per-page="1000"
       :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
+      :sort-desc.sync="tableSortProp"
       hide-default-header
       hide-default-footer
       mobile-breakpoint="0"
+      :style="{ background: $vuetify.theme.themes[theme].background }"
       class="elevation-0 enable-scroll"
       :class="{
         'phone-table-height': isPhone,
@@ -142,6 +143,12 @@ export default {
     };
   },
   computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? "dark" : "light";
+    },
+    tableSortProp() {
+      return this.sortDesc;
+    },
     isPhone() {
       return this.$vuetify.breakpoint.xs;
     },
@@ -221,7 +228,7 @@ h4:hover {
   padding-left: 0.7rem;
 }
 .text-start h4 {
-  margin-right: -1.7rem;
+  margin-right: -1.9rem;
   padding-left: 0.7rem;
 }
 </style>

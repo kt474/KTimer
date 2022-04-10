@@ -258,11 +258,11 @@ export default {
     exportTimes() {
       let result = [];
       this.currentSessionTimes.forEach((solve, index) => {
-        let scramble = solve.scramble ? solve.scramble.join(" ") : "";
+        let scramble = solve.scramble ? solve.scramble : "";
         result.push([index + 1, solve.time, scramble]);
       });
       let csv = "Solve,Time,Scramble\n";
-      result.forEach(row => {
+      result.forEach((row) => {
         csv += row.join(",");
         csv += "\n";
       });
@@ -311,7 +311,7 @@ export default {
         if (localStorage.getItem(current)) {
           try {
             const solves = JSON.parse(localStorage.getItem(current));
-            solves.forEach(solve => {
+            solves.forEach((solve) => {
               this.$store.commit("addTime", solve);
             });
           } catch (e) {
@@ -366,7 +366,7 @@ export default {
       this.$store.commit("updateRemoveChart", this.removeChart);
     },
     currentSessionTimes: {
-      handler: function() {
+      handler: function () {
         const parsed = JSON.stringify(this.currentTimes);
         const solves = "solves" + this.$store.state.session;
         localStorage.setItem(solves, parsed);

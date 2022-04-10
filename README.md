@@ -7,7 +7,7 @@ Contributions are welcome, please report any issues or requests in the [issues](
 | ![screenshot](./public/page_screenshot.png)  |
 |----------------------------------------------|
 
-## Features
+## Features 
 
 - Mobile/tablet touch screen support
 - Customize timer and chart size
@@ -17,7 +17,7 @@ Contributions are welcome, please report any issues or requests in the [issues](
 - Interactive chart
 - Fullscreen mode
 - Works offline
-- Export times 
+- Export times
 - Inspection time
 - Solves saved in local storage
 
@@ -26,10 +26,11 @@ Contributions are welcome, please report any issues or requests in the [issues](
 ```bash
   git clone https://github.com/kt474/KTimer.git
   cd ktimer
-  yarn install
-  yarn serve
+  npm install
+  npm run serve
 ```
 
 ## Acknowledgements
 
 - [Logoipsum](https://logoipsum.com/)
+- [Cubing.js](https://github.com/cubing/cubing.js)

@@ -15,7 +15,10 @@
 
 <script>
 import dateFormat from "dateformat";
+import { randomScrambleForEvent } from "cubing/scramble";
+
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Timer",
   data: () => ({
     timerId: 0,
@@ -32,7 +35,21 @@ export default {
     yellowTimer: false,
     greenInspectionTimer: false,
     clickInspectionColor: false,
-    clicked: false
+    clicked: false,
+    showLoader: false,
+    scrambleMapping: {
+      "2x2": "222",
+      "3x3": "333",
+      "4x4": "444",
+      "5x5": "555",
+      "6x6": "666",
+      "7x7": "777",
+      Clock: "clock",
+      Megaminx: "minx",
+      Pyraminx: "pyram",
+      Skewb: "skewb",
+      "Square-1": "sq1"
+    }
   }),
 
   mounted() {
@@ -319,64 +336,15 @@ export default {
     resetInspection() {
       this.inspectionTimer = 15;
     },
-    newScramble() {
-      let newScramble;
-      if (this.scrambleType === "3x3") {
-        newScramble = this.generateScramble(20);
-      } else if (this.scrambleType === "2x2") {
-        newScramble = this.generateScramble(9);
-      } else if (this.scrambleType === "4x4") {
-        newScramble = this.generateBigScramble(40);
-      } else if (this.scrambleType === "5x5") {
-        newScramble = this.generateBigScramble(50);
-      }
+    async newScramble() {
+      this.$store.commit("updateShowLoader", true);
+      let scr = await randomScrambleForEvent(
+        this.scrambleMapping[this.scrambleType]
+      );
+      this.$store.commit("updateShowLoader", false);
+      let newScramble = scr.toString();
       this.$store.commit("newScramble", newScramble);
-    },
-    generateScramble(length) {
-      const pool = ["R", "U", "L", "D", "B", "F"];
-      const append = ["2", "'", ""];
-      const baseMoves = [pool[Math.floor(Math.random() * 6)]];
-      for (let i = 1; i < length; i++) {
-        const newMove = pool[Math.floor(Math.random() * 6)];
-        if (baseMoves[i - 1] === newMove) {
-          const newPool = pool.filter(move => move !== newMove);
-          baseMoves.push(newPool[Math.floor(Math.random() * 5)]);
-        } else {
-          baseMoves.push(newMove);
-        }
-      }
-      const result = [];
-      baseMoves.forEach(move => {
-        result.push(move + append[Math.floor(Math.random() * 3)]);
-      });
-      return result;
-    },
-    generateBigScramble(length) {
-      const pool = ["R", "U", "L", "D", "B", "F"];
-      const append = ["2", "'", "", "w", "w'", "w2"];
-      const baseMoves = [pool[Math.floor(Math.random() * 6)]];
-      for (let i = 1; i < length; i++) {
-        const newMove = pool[Math.floor(Math.random() * 6)];
-        if (baseMoves[i - 1] === newMove) {
-          const newPool = pool.filter(move => move !== newMove);
-          baseMoves.push(newPool[Math.floor(Math.random() * 5)]);
-        } else {
-          baseMoves.push(newMove);
-        }
-      }
-      const result = [];
-      baseMoves.forEach(move => {
-        if (length === 40) {
-          if (["R", "U", "F"].includes(move)) {
-            result.push(move + append[Math.floor(Math.random() * 6)]);
-          } else {
-            result.push(
-              move + append.slice(0, 4)[Math.floor(Math.random() * 3)]
-            );
-          }
-        } else result.push(move + append[Math.floor(Math.random() * 6)]);
-      });
-      return result;
+      localStorage.scramble = newScramble;
     }
   }
 };

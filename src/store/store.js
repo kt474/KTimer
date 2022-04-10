@@ -21,7 +21,7 @@ export const store = new Vuex.Store({
     times9: [],
     times10: [],
     session: 1,
-    currentScramble: [],
+    currentScramble: "",
     scrambleType: "3x3",
     hideAll: false,
     isSolving: false,
@@ -30,9 +30,13 @@ export const store = new Vuex.Store({
     inspectionTime: false,
     chartWidth: 675,
     chartHeight: 300,
-    timerSize: 14
+    timerSize: 14,
+    showLoader: false
   },
   mutations: {
+    updateShowLoader(state, payload) {
+      state.showLoader = payload;
+    },
     updateInspectionTime(state, payload) {
       state.inspectionTime = payload;
     },
@@ -96,7 +100,7 @@ export const store = new Vuex.Store({
     removeTime(state, payload) {
       let current = getTimesArray(payload.session);
       state[current] = state[current].filter(
-        item => item.name !== payload.index
+        (item) => item.name !== payload.index
       );
     },
     clearTimes(state, session) {

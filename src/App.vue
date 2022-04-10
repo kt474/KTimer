@@ -3,7 +3,6 @@
     <keep-alive>
       <v-navigation-drawer
         permanent
-        class="navigation-drawer"
         v-if="drawer && !hideChartDuringSolve"
         v-model="drawer"
         width="340"

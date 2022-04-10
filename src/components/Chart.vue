@@ -14,6 +14,7 @@
 <script>
 import VueApexCharts from "vue-apexcharts";
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Chart",
   components: {
     apexChart: VueApexCharts
@@ -72,7 +73,7 @@ export default {
     },
     updateChart() {
       const times = this.solveTimes;
-      const timesArray = times.map(solve => solve.baseTime / 1000);
+      const timesArray = times.map((solve) => solve.baseTime / 1000);
       timesArray.forEach((val, index) => {
         if (isNaN(val)) {
           timesArray[index] = 0;
@@ -104,7 +105,7 @@ export default {
       this.updateChartColors(this.themeColor);
     },
     solveTimes: {
-      handler: function() {
+      handler: function () {
         this.updateChart();
       },
       deep: true,
