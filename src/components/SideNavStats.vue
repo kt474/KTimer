@@ -108,7 +108,13 @@
                       <v-toolbar color="primary" class="text-h5" dark>
                         Average of 5: {{ averageFive }}
                       </v-toolbar>
-                      <v-card-text class="mx-2 px-2">
+                      <v-card-text
+                        :class="
+                          this.$vuetify.theme.dark
+                            ? 'white--text'
+                            : 'black--text'
+                        "
+                      >
                         <v-container>
                           <div
                             v-for="solve in lastFiveSolves"
@@ -163,7 +169,13 @@
                       <v-toolbar color="primary" class="text-h5" dark>
                         Average of 12: {{ averageTwelve }}
                       </v-toolbar>
-                      <v-card-text class="mx-2 px-2">
+                      <v-card-text
+                        :class="
+                          this.$vuetify.theme.dark
+                            ? 'white--text'
+                            : 'black--text'
+                        "
+                      >
                         <v-container>
                           <div v-for="solve in last12Solves" :key="solve.name">
                             <p class="text-h6 mt-2">
@@ -293,7 +305,11 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 50: {{ averageFifty }}
                     </v-toolbar>
-                    <v-card-text class="mx-2 px-2">
+                    <v-card-text
+                      :class="
+                        this.$vuetify.theme.dark ? 'white--text' : 'black--text'
+                      "
+                    >
                       <v-container>
                         <div v-for="solve in lastFiftySolves" :key="solve.name">
                           <p class="text-h6 mt-2">
@@ -345,7 +361,11 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 100: {{ averageHundred }}
                     </v-toolbar>
-                    <v-card-text class="mx-2 px-2">
+                    <v-card-text
+                      :class="
+                        this.$vuetify.theme.dark ? 'white--text' : 'black--text'
+                      "
+                    >
                       <v-container>
                         <div
                           v-for="solve in lastHundredSolves"
@@ -403,7 +423,11 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 500: {{ average500 }}
                     </v-toolbar>
-                    <v-card-text class="mx-2 px-2">
+                    <v-card-text
+                      :class="
+                        this.$vuetify.theme.dark ? 'white--text' : 'black--text'
+                      "
+                    >
                       <v-container>
                         <div v-for="solve in last500Solves" :key="solve.name">
                           <p class="text-h6 mt-2">
@@ -455,7 +479,11 @@
                     <v-toolbar color="primary" class="text-h5" dark>
                       Average of 1000: {{ average1000 }}
                     </v-toolbar>
-                    <v-card-text class="mx-2 px-2">
+                    <v-card-text
+                      :class="
+                        this.$vuetify.theme.dark ? 'white--text' : 'black--text'
+                      "
+                    >
                       <v-container>
                         <div v-for="solve in last1000Solves" :key="solve.name">
                           <p class="text-h6 mt-2">

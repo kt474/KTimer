@@ -252,8 +252,8 @@ export default {
       this.$vuetify.theme.themes.dark.primary = color;
     },
     resetDefault() {
-      this.chartWidth = 675;
-      this.chartHeight = 275;
+      this.chartWidth = 550;
+      this.chartHeight = 250;
     },
     exportTimes() {
       let result = [];

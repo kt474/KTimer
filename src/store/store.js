@@ -28,8 +28,8 @@ export const store = new Vuex.Store({
     removeChart: false,
     clickStart: false,
     inspectionTime: false,
-    chartWidth: 675,
-    chartHeight: 300,
+    chartWidth: 550,
+    chartHeight: 250,
     timerSize: 14,
     showLoader: false
   },
