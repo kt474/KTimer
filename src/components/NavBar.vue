@@ -45,7 +45,7 @@
           color="primary lighten-3"
           height="6"
         ></v-progress-linear>
-        <p v-else class="scramble-p" :class="scrambleFont">
+        <p v-else :class="scrambleFont">
           {{ currentScramble }}
         </p>
       </div>
@@ -135,10 +135,10 @@ export default {
           "3x3": 145,
           "4x4": 250,
           "5x5": 325,
-          "6x6": 330,
-          "7x7": 355,
+          "6x6": 305,
+          "7x7": 370,
           Clock: 170,
-          Megaminx: 350,
+          Megaminx: 260,
           Pyraminx: 120,
           Skewb: 120,
           "Square-1": 205
@@ -148,10 +148,10 @@ export default {
           "3x3": 120,
           "4x4": 185,
           "5x5": 225,
-          "6x6": 275,
-          "7x7": 325,
+          "6x6": 210,
+          "7x7": 245,
           Clock: 150,
-          Megaminx: 235,
+          Megaminx: 190,
           Pyraminx: 100,
           Skewb: 100,
           "Square-1": 155
@@ -161,10 +161,10 @@ export default {
           "3x3": 100,
           "4x4": 150,
           "5x5": 170,
-          "6x6": 205,
-          "7x7": 235,
+          "6x6": 170,
+          "7x7": 180,
           Clock: 120,
-          Megaminx: 180,
+          Megaminx: 150,
           Pyraminx: 100,
           Skewb: 100,
           "Square-1": 125
@@ -272,17 +272,15 @@ export default {
 }
 .scramble-font-normal {
   font-size: 1.5rem;
+  line-height: 1.7rem;
 }
 .scramble-font-big {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
 }
 .scramble-text {
   letter-spacing: 4px;
-  line-height: 1.5rem;
   text-align: center;
-}
-.scramble-p {
-  line-height: 1.7rem;
 }
 .wrapper {
   z-index: -1;

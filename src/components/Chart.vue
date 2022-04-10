@@ -2,7 +2,6 @@
   <apex-chart
     v-if="!noChart"
     class="d-flex justify-center align-center chart"
-    :class="{ 'apex-chart': hideChartDuringSolve }"
     type="line"
     :width="chartWidth"
     :height="chartHeight"
@@ -100,9 +99,15 @@ export default {
       };
     }
   },
+  mounted() {
+    this.updateLegendColors();
+  },
   watch: {
-    themeColor() {
-      this.updateChartColors(this.themeColor);
+    themeColor: {
+      handler: function () {
+        this.updateChartColors(this.themeColor);
+      },
+      immediate: true
     },
     solveTimes: {
       handler: function () {
@@ -169,9 +174,6 @@ export default {
 </script>
 
 <style scoped>
-.apex-chart {
-  display: none !important;
-}
 .chart {
   color: #000 !important;
 }

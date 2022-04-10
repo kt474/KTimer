@@ -46,6 +46,11 @@
                 v-model="inspectionTime"
                 label="Inspection time"
               ></v-checkbox>
+              <v-checkbox
+                class="mt-0"
+                v-model="scrambleDisplay"
+                label="Hide scramble display"
+              ></v-checkbox>
             </div>
             <div>
               <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
@@ -99,7 +104,7 @@
             v-model="chartWidth"
             class="pt-4"
             min="300"
-            max="900"
+            max="800"
             label="Width"
             thumb-size="24"
             thumb-color="primary"
@@ -214,8 +219,8 @@ export default {
   name: "SideNavSettings",
   data() {
     return {
-      chartWidth: 675,
-      chartHeight: 275,
+      chartWidth: 450,
+      chartHeight: 250,
       timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 14,
       darkMode: this.$vuetify.theme.dark,
       paletteIcon: mdiPalette,
@@ -228,7 +233,8 @@ export default {
       clickStart: this.$vuetify.breakpoint.mdAndDown,
       settings: false,
       themeSettings: false,
-      themeColor: "#1976D2"
+      themeColor: "#1976D2",
+      scrambleDisplay: this.$vuetify.breakpoint.mdAndDown
     };
   },
   computed: {
@@ -252,7 +258,7 @@ export default {
       this.$vuetify.theme.themes.dark.primary = color;
     },
     resetDefault() {
-      this.chartWidth = 550;
+      this.chartWidth = 450;
       this.chartHeight = 250;
     },
     exportTimes() {
@@ -273,6 +279,7 @@ export default {
       anchor.click();
     },
     loadLocalStorage() {
+      this.$store.commit("updateScrambleDisplay", this.scrambleDisplay);
       this.$store.commit("updateClickStart", this.clickStart);
       this.$store.commit("updateRemoveChart", this.removeChart);
       this.$store.commit("updateTimerSize", this.timerSize);
@@ -305,6 +312,9 @@ export default {
       }
       if (localStorage.removeChart) {
         this.removeChart = JSON.parse(localStorage.removeChart);
+      }
+      if (localStorage.hideScrambleDisplay) {
+        this.scrambleDisplay = JSON.parse(localStorage.hideScrambleDisplay);
       }
       for (let i = 1; i <= 10; i++) {
         let current = "solves" + i;
@@ -364,6 +374,10 @@ export default {
     removeChart() {
       localStorage.removeChart = this.removeChart;
       this.$store.commit("updateRemoveChart", this.removeChart);
+    },
+    scrambleDisplay() {
+      localStorage.hideScrambleDisplay = this.scrambleDisplay;
+      this.$store.commit("updateScrambleDisplay", this.scrambleDisplay);
     },
     currentSessionTimes: {
       handler: function () {

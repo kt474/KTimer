@@ -26,14 +26,18 @@ export const store = new Vuex.Store({
     hideAll: false,
     isSolving: false,
     removeChart: false,
+    removeScrambleDisplay: false,
     clickStart: false,
     inspectionTime: false,
-    chartWidth: 550,
+    chartWidth: 450,
     chartHeight: 250,
     timerSize: 14,
     showLoader: false
   },
   mutations: {
+    updateScrambleDisplay(state, payload) {
+      state.removeScrambleDisplay = payload;
+    },
     updateShowLoader(state, payload) {
       state.showLoader = payload;
     },
