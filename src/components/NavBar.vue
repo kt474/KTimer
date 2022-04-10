@@ -219,9 +219,6 @@ export default {
     }
   },
   async mounted() {
-    if (localStorage.scramble) {
-      this.$store.commit("newScramble", localStorage.scramble);
-    }
     if (localStorage.scrambleType) {
       this.initialType = false;
       this.scrambleType = this.items[localStorage.scrambleType];
@@ -231,7 +228,12 @@ export default {
       );
       this.initialType = true;
     }
-    await randomScrambleForEvent(this.scrambleMapping[this.scrambleType]);
+    if (localStorage.scramble) {
+      this.$store.commit("newScramble", localStorage.scramble);
+      await randomScrambleForEvent(this.scrambleMapping[this.scrambleType]);
+    } else {
+      await this.newScramble();
+    }
   }
 };
 </script>
@@ -248,7 +250,6 @@ export default {
   width: 345px;
 }
 .scramble-select {
-  /*width: 20px;*/
   font-size: 1.25rem;
 }
 .max-width-mobile {
