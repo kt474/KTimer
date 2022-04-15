@@ -162,7 +162,7 @@ export default {
           "4x4": 150,
           "5x5": 170,
           "6x6": 170,
-          "7x7": 180,
+          "7x7": 190,
           Clock: 120,
           Megaminx: 150,
           Pyraminx: 100,
@@ -275,8 +275,8 @@ export default {
   line-height: 1.7rem;
 }
 .scramble-font-big {
-  font-size: 1rem;
-  line-height: 1.3rem;
+  font-size: 1.05rem;
+  line-height: 1.4rem;
 }
 .scramble-text {
   letter-spacing: 4px;

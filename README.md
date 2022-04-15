@@ -4,8 +4,8 @@ An open source material design speedcubing timer built with [Vue.js](https://vue
 
 Contributions are welcome, please report any issues or requests in the [issues](https://github.com/kt474/KTimer/issues) tab.
 
-| ![screenshot](./public/page_screenshot.png)  |
-|----------------------------------------------|
+| ![screenshot](./public/page_light.png) |
+|----------------------------------------|
 
 ## Features 
 
