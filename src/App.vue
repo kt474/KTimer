@@ -18,13 +18,14 @@
         :style="{ height: timerHeight }"
       >
         <timer />
-        <div
-          v-if="!hideChartDuringSolve"
-          class="d-flex justify-center components"
-        >
-          <chart />
-          <scramble-display />
-        </div>
+      </div>
+      <div
+        v-if="!hideChartDuringSolve"
+        class="d-flex justify-center mt-6 max-width"
+      >
+        <div v-if="hideDivider" class="divider mt-n2"></div>
+        <chart />
+        <scramble-display />
       </div>
     </v-main>
   </v-app>
@@ -51,6 +52,12 @@ export default {
     scrambleDisplay
   },
   computed: {
+    hideDivider() {
+      return (
+        !this.$store.state.removeChart ||
+        !this.$store.state.removeScrambleDisplay
+      );
+    },
     bothComponentsHidden() {
       return (
         this.$store.state.removeScrambleDisplay & this.$store.state.removeChart
@@ -79,9 +86,14 @@ export default {
 };
 </script>
 <style scoped>
-.components {
-  position: fixed;
-  bottom: 0;
-  padding: 1rem;
+.max-width {
+  width: 100%;
+}
+.divider {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin-bottom: 4px;
 }
 </style>

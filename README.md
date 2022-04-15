@@ -12,7 +12,7 @@ Contributions are welcome, please report any issues or requests in the [issues](
 - Mobile/tablet touch screen support
 - Customize timer and chart size
 - 10 color themes
-- Scrambles for all WCA puzzles
+- Scrambles and displays for all WCA puzzles
 - Light/dark mode toggle
 - Interactive chart
 - Fullscreen mode

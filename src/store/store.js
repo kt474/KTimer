@@ -29,9 +29,9 @@ export const store = new Vuex.Store({
     removeScrambleDisplay: false,
     clickStart: false,
     inspectionTime: false,
-    chartWidth: 450,
+    chartWidth: 650,
     chartHeight: 250,
-    timerSize: 14,
+    timerSize: 13,
     showLoader: false
   },
   mutations: {

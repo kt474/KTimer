@@ -1,7 +1,7 @@
 <template>
   <apex-chart
     v-if="!noChart"
-    class="d-flex justify-center align-center chart"
+    class="chart"
     type="line"
     :width="chartWidth"
     :height="chartHeight"
@@ -138,7 +138,8 @@ export default {
         },
         colors: ["#1976d2"],
         markers: {
-          size: 5
+          size: 4,
+          strokeWidth: 1
         },
         dataLabels: {
           enabled: false

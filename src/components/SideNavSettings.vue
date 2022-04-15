@@ -219,9 +219,9 @@ export default {
   name: "SideNavSettings",
   data() {
     return {
-      chartWidth: 450,
+      chartWidth: 650,
       chartHeight: 250,
-      timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 14,
+      timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 13,
       darkMode: this.$vuetify.theme.dark,
       paletteIcon: mdiPalette,
       downloadIcon: mdiDownload,
@@ -258,7 +258,7 @@ export default {
       this.$vuetify.theme.themes.dark.primary = color;
     },
     resetDefault() {
-      this.chartWidth = 450;
+      this.chartWidth = 650;
       this.chartHeight = 250;
     },
     exportTimes() {
