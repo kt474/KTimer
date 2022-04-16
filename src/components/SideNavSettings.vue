@@ -219,7 +219,7 @@ export default {
   name: "SideNavSettings",
   data() {
     return {
-      chartWidth: 650,
+      chartWidth: this.$vuetify.breakpoint.mdAndDown ? 475 : 650,
       chartHeight: 250,
       timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 13,
       darkMode: this.$vuetify.theme.dark,
@@ -258,7 +258,7 @@ export default {
       this.$vuetify.theme.themes.dark.primary = color;
     },
     resetDefault() {
-      this.chartWidth = 650;
+      this.chartWidth = this.$vuetify.breakpoint.mdAndDown ? 475 : 650;
       this.chartHeight = 250;
     },
     exportTimes() {
@@ -283,6 +283,7 @@ export default {
       this.$store.commit("updateClickStart", this.clickStart);
       this.$store.commit("updateRemoveChart", this.removeChart);
       this.$store.commit("updateTimerSize", this.timerSize);
+      this.$store.commit("updateChartWidth", this.chartWidth);
       if (localStorage.inspectionTime) {
         this.inspectionTime = JSON.parse(localStorage.inspectionTime);
       }

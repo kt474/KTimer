@@ -21,9 +21,13 @@
       </div>
       <div
         v-if="!hideChartDuringSolve"
-        class="d-flex justify-center mt-6 max-width"
+        class="d-flex justify-center mt-6 both-components"
       >
-        <div v-if="hideDivider" class="divider mt-n2"></div>
+        <div
+          v-if="hideDivider"
+          class="divider mt-n2"
+          :class="dividerBorderColor"
+        ></div>
         <chart />
         <scramble-display />
       </div>
@@ -52,6 +56,11 @@ export default {
     scrambleDisplay
   },
   computed: {
+    dividerBorderColor() {
+      return this.$vuetify.theme.dark
+        ? "dark-divider-border"
+        : "light-divider-border";
+    },
     hideDivider() {
       return (
         !this.$store.state.removeChart ||
@@ -68,7 +77,7 @@ export default {
     },
     timerHeight() {
       return this.hideChartDuringSolve || this.bothComponentsHidden
-        ? "95%"
+        ? "93%"
         : "calc(100% - " + (this.chartHeight + 40) + "px)";
     },
     theme() {
@@ -86,14 +95,21 @@ export default {
 };
 </script>
 <style scoped>
-.max-width {
+.both-components {
   width: 100%;
+  position: sticky;
+  bottom: 0;
 }
 .divider {
   position: absolute;
   width: 100%;
   height: 1px;
-  background-color: #e0e0e0;
   margin-bottom: 4px;
+}
+.light-divider-border {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.dark-divider-border {
+  background-color: rgba(255, 255, 255, 0.12);
 }
 </style>
