@@ -243,6 +243,10 @@ export default {
       localStorage.scrambleType = 1;
     }
     await randomScrambleForEvent(this.scrambleMapping[this.scrambleType]);
+    if (this.scrambleType !== "4x4") {
+      //pre cache a 4x4 scramble since it takes longest to load
+      await randomScrambleForEvent("444");
+    }
   }
 };
 </script>
