@@ -5,7 +5,7 @@
 <script>
 import { ScrambleDisplay } from "scramble-display";
 export default {
-  name: "scrambleDisplay",
+  name: "ScrambleDisplay",
   data() {
     return {
       scrambleMapping: {
@@ -24,6 +24,9 @@ export default {
     };
   },
   computed: {
+    displaySize() {
+      return this.$store.state.displaySize;
+    },
     hideDisplay() {
       return this.$store.state.removeScrambleDisplay;
     },
@@ -34,7 +37,11 @@ export default {
       return this.scrambleMapping[this.$store.state.scrambleType];
     },
     scrambleDisplay() {
-      return this.getScrambleDisplay(this.currentScramble, this.currentEvent);
+      return this.getScrambleDisplay(
+        this.currentScramble,
+        this.currentEvent,
+        this.displaySize
+      );
     }
   },
   watch: {
@@ -42,17 +49,20 @@ export default {
       const container = document.querySelector(".scramble");
       container.removeChild(container.lastElementChild);
       container.appendChild(this.scrambleDisplay);
+    },
+    displaySize() {
+      const container = document.querySelector(".scramble");
+      container.removeChild(container.lastElementChild);
+      container.appendChild(this.scrambleDisplay);
     }
   },
   methods: {
-    remountDisplay() {
-      const container = document.querySelector(".scramble");
-      container.appendChild(this.scrambleDisplay);
-    },
-    getScrambleDisplay(scramble, event) {
+    getScrambleDisplay(scramble, event, displaySize) {
       const scrambleDisplay = new ScrambleDisplay();
       scrambleDisplay.event = event;
       scrambleDisplay.scramble = scramble;
+      scrambleDisplay.style.width = displaySize + "px";
+      scrambleDisplay.style.height = displaySize / 1.5 + "px";
       return scrambleDisplay;
     }
   },

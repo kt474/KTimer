@@ -40,7 +40,7 @@ import Timer from "./components/Timer.vue";
 import SideNav from "./components/SideNav.vue";
 import NavBar from "./components/NavBar.vue";
 import Chart from "./components/Chart.vue";
-import scrambleDisplay from "./components/scrambleDisplay.vue";
+import ScrambleDisplay from "./components/ScrambleDisplay.vue";
 export default {
   name: "App",
   data() {
@@ -53,7 +53,7 @@ export default {
     SideNav,
     NavBar,
     Chart,
-    scrambleDisplay
+    ScrambleDisplay
   },
   computed: {
     dividerBorderColor() {

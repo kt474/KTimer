@@ -32,9 +32,13 @@ export const store = new Vuex.Store({
     chartWidth: 650,
     chartHeight: 250,
     timerSize: 13,
-    showLoader: false
+    showLoader: false,
+    displaySize: 375
   },
   mutations: {
+    updateDisplaySize(state, payload) {
+      state.displaySize = payload;
+    },
     updateScrambleDisplay(state, payload) {
       state.removeScrambleDisplay = payload;
     },

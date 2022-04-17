@@ -265,7 +265,7 @@ export default {
   max-width: 330px;
 }
 .max-width-tablet {
-  max-width: 550px;
+  max-width: 600px;
 }
 .max-width-desktop {
   max-width: 900px;

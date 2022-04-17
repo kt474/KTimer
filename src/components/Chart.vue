@@ -138,7 +138,7 @@ export default {
         },
         colors: ["#1976d2"],
         markers: {
-          size: 4,
+          size: 3.5,
           strokeWidth: 1
         },
         dataLabels: {

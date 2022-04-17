@@ -46,11 +46,6 @@
                 v-model="inspectionTime"
                 label="Inspection time"
               ></v-checkbox>
-              <v-checkbox
-                class="mt-0"
-                v-model="scrambleDisplay"
-                label="Hide scramble display"
-              ></v-checkbox>
             </div>
             <div>
               <v-switch v-model="darkMode" inset label="Dark mode"></v-switch>
@@ -87,7 +82,7 @@
             <v-checkbox
               class="mt-0"
               v-model="removeChart"
-              label="Hide chart"
+              label="Hide"
             ></v-checkbox>
             <v-btn
               aria-label="default"
@@ -116,6 +111,39 @@
             min="200"
             max="500"
             label="Height"
+            thumb-size="24"
+            thumb-color="primary"
+            thumb-label="always"
+          ></v-slider>
+          <p
+            class="text-h6 black--text mt-2 ml-n2"
+            :class="this.$vuetify.theme.dark ? 'white--text' : 'black--text'"
+          >
+            Scramble Display
+          </p>
+          <div class="d-flex justify-space-between mb-2">
+            <v-checkbox
+              class="mt-0"
+              v-model="scrambleDisplay"
+              label="Hide"
+            ></v-checkbox>
+            <v-btn
+              aria-label="default"
+              small
+              @click.stop="resetDefaultDisplay"
+              class="mr-2"
+              color="primary"
+              dark
+            >
+              Reset Default
+            </v-btn>
+          </div>
+          <v-slider
+            v-model="displaySize"
+            class="pt-4"
+            min="200"
+            max="500"
+            label="Size"
             thumb-size="24"
             thumb-color="primary"
             thumb-label="always"
@@ -219,6 +247,7 @@ export default {
   name: "SideNavSettings",
   data() {
     return {
+      displaySize: 375,
       chartWidth: this.$vuetify.breakpoint.mdAndDown ? 475 : 650,
       chartHeight: 250,
       timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 13,
@@ -261,6 +290,9 @@ export default {
       this.chartWidth = this.$vuetify.breakpoint.mdAndDown ? 475 : 650;
       this.chartHeight = 250;
     },
+    resetDefaultDisplay() {
+      this.displaySize = 375;
+    },
     exportTimes() {
       let result = [];
       this.currentSessionTimes.forEach((solve, index) => {
@@ -292,6 +324,9 @@ export default {
       }
       if (localStorage.timerSize) {
         this.timerSize = JSON.parse(localStorage.timerSize);
+      }
+      if (localStorage.displaySize) {
+        this.displaySize = JSON.parse(localStorage.displaySize);
       }
       if (localStorage.chartWidth) {
         this.chartWidth = JSON.parse(localStorage.chartWidth);
@@ -347,6 +382,10 @@ export default {
     timerSize() {
       localStorage.timerSize = this.timerSize;
       this.$store.commit("updateTimerSize", this.timerSize);
+    },
+    displaySize() {
+      localStorage.displaySize = this.displaySize;
+      this.$store.commit("updateDisplaySize", this.displaySize);
     },
     chartWidth() {
       localStorage.chartWidth = this.chartWidth;
