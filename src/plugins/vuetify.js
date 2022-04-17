@@ -9,8 +9,11 @@ export default new Vuetify({
   },
   theme: {
     themes: {
-      light: {},
+      light: {
+        primary: "#1976D2"
+      },
       dark: {
+        primary: "#1976D2",
         background: "#212121"
       }
     }
