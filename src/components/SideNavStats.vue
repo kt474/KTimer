@@ -656,8 +656,8 @@ export default {
           plusTwo: false,
           dnf: false,
           session: this.$store.state.session,
-          scramble: null,
-          scrambleType: null
+          scramble: this.$store.state.currentScramble,
+          scrambleType: this.$store.state.scrambleType
         });
         this.addTimeModal = false;
       }

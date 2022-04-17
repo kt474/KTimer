@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
     chartHeight: 250,
     timerSize: 13,
     showLoader: false,
-    displaySize: 375
+    displaySize: 385
   },
   mutations: {
     updateDisplaySize(state, payload) {

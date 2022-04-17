@@ -99,7 +99,7 @@
             v-model="chartWidth"
             class="pt-4"
             min="300"
-            max="800"
+            max="900"
             label="Width"
             thumb-size="24"
             thumb-color="primary"
@@ -247,7 +247,7 @@ export default {
   name: "SideNavSettings",
   data() {
     return {
-      displaySize: 375,
+      displaySize: 385,
       chartWidth: this.$vuetify.breakpoint.mdAndDown ? 475 : 650,
       chartHeight: 250,
       timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 13,
@@ -291,7 +291,7 @@ export default {
       this.chartHeight = 250;
     },
     resetDefaultDisplay() {
-      this.displaySize = 375;
+      this.displaySize = 385;
     },
     exportTimes() {
       let result = [];
