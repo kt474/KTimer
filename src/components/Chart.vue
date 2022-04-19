@@ -157,6 +157,9 @@ export default {
             opacity: 0.5
           }
         },
+        xaxis: {
+          tickAmount: 15
+        },
         yaxis: [
           {
             min: 0,
