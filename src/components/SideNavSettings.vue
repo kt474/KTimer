@@ -251,7 +251,7 @@ export default {
       chartWidth: this.$vuetify.breakpoint.mdAndDown ? 475 : 650,
       chartHeight: 250,
       timerSize: this.$vuetify.breakpoint.smAndDown ? 8 : 13,
-      darkMode: this.$vuetify.theme.dark,
+      darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches,
       paletteIcon: mdiPalette,
       downloadIcon: mdiDownload,
       settingsIcon: mdiCog,
@@ -311,6 +311,7 @@ export default {
       anchor.click();
     },
     loadLocalStorage() {
+      this.$vuetify.theme.dark = this.darkMode;
       this.$store.commit("updateScrambleDisplay", this.scrambleDisplay);
       this.$store.commit("updateClickStart", this.clickStart);
       this.$store.commit("updateRemoveChart", this.removeChart);
