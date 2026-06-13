@@ -154,6 +154,10 @@
               >here</a
             >
           </p>
+          <p class="footer-text mb-0 mt-3">
+            Check out my other project,
+            <a href="https://ffwrapped.com" target="_blank">ffwrapped</a>
+          </p>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
